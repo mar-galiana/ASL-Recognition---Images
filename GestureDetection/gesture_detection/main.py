@@ -1,20 +1,14 @@
 import numpy as np
 from dataset import Dataset
 from sklearn.metrics import confusion_matrix
-from sklearn.linear_model import SGDClassifier
 from classification.transformer import Transformer
+from classification.training import Training
 
 
 def load_dataset():
     test_data = Dataset("dataset/gesture_image_data/test", environment="test", width=80)
     train_data = Dataset("dataset/gesture_image_data/test", environment="train", width=80)
     return train_data, test_data
-
-
-def training(x_train_prepared, y_train):
-    sgd_clf = SGDClassifier(random_state=42, max_iter=1000, tol=1e-3)
-    sgd_clf.fit(x_train_prepared, y_train)
-    return sgd_clf
 
 
 def testing(data, transformer, sgd_clf):
@@ -44,10 +38,11 @@ def start():
     train_data, test_data = load_dataset()
     print('vamos a transformer')
     transformer = Transformer()
-    x_train_prepared = transformer.perform(train_data)
+    transformer.perform(train_data)
     y_train = np.array(train_data.get_data()['label'])
-    sgd_clf = training(x_train_prepared, y_train)
-    testing(test_data, transformer, sgd_clf)
+    training = Training()
+    training.perform(transformer.x_prepared, y_train)
+    testing(test_data, transformer, training.sgd_clf)
 
 
 if __name__ == "__main__":

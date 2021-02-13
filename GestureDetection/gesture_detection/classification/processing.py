@@ -1,7 +1,6 @@
 import skimage
 from skimage.transform import resize
 from skimage.transform import rescale
-from gesture_detection.exception.error import ClassificationNotPrepared
 from gesture_detection.classification.iclassification import IClassification
 
 

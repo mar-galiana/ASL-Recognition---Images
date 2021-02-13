@@ -1,7 +1,7 @@
-from iclassification import IClassification
+from gesture_detection.classification.iclassification import IClassification
 
 
 class Testing(IClassification):
 
-    def perform(self):
+    def perform(self, information):
         pass
