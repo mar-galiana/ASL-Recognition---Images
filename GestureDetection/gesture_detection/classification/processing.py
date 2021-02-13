@@ -7,28 +7,19 @@ from gesture_detection.classification.iclassification import IClassification
 
 class Processing(IClassification):
 
-    def __init__(self):
-        self.scale = 1 / 3
-        self.image = self.width = self.height = None
-
-    def prepare(self, image, width, height):
-        self.image = image
+    def __init__(self, width, height):
         self.width = width
         self.height = height
 
-    def perform(self):
-        """
-        image_hog, image_hog_img = hog(image, orientations=8, pixels_per_cell=(16, 16), cells_per_block=(1, 1),
-                                       visualize=True)
+    def prepare(self, width, height):
+        self.width = width
+        self.height = height
 
-        print('number of pixels: ', image.shape[0] * image.shape[1])
-        print('number of hog features: ', image_hog.shape[0])
-        """
+    def perform(self, image):
 
-        if self.image is None:
-            raise ClassificationNotPrepared()
+        # if image is None:
+        #     raise ClassificationNotPrepared()
 
-        image = resize(self.image, (self.width, self.height))
-        self.image = None
+        image = resize(image, (self.width, self.height))
 
         return image

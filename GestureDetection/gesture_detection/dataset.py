@@ -24,7 +24,7 @@ class Dataset:
             'label': [],
             'data': []
         }
-        processing = Processing()
+        processing = Processing(self.width, self.height)
 
         # read all images in PATH, resize and write to DESTINATION_PATH
         for subdir in os.listdir(self.src):
@@ -36,8 +36,8 @@ class Dataset:
             for file in os.listdir(current_path):
                 src = os.path.join(current_path, file)
                 image = imread(src, as_gray=True)
-                processing.prepare(image, self.width, self.height)
-                image = processing.perform()
+                # processing.prepare(image, self.width, self.height)
+                image = processing.perform(image)
                 self.__data['label'].append(subdir)
                 self.__data['data'].append(image)
 
