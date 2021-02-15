@@ -10,15 +10,7 @@ class Processing(IClassification):
         self.width = width
         self.height = height
 
-    def prepare(self, width, height):
-        self.width = width
-        self.height = height
-
     def perform(self, image):
 
-        # if image is None:
-        #     raise ClassificationNotPrepared()
-
         image = resize(image, (self.width, self.height))
-
         return image

@@ -11,7 +11,7 @@ class Training(IClassification):
 
     def perform(self, *information):
         if len(information) != self.NUMBER_PARAMETERS:
-            raise ParametersMissing(NUMBER_PARAMETERS)
+            raise ParametersMissing(self.NUMBER_PARAMETERS)
 
         x_prepared = information[0]
         y = information[1]

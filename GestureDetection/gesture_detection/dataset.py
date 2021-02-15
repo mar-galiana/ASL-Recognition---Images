@@ -1,25 +1,29 @@
 import os
 import joblib
-import skimage
-from skimage.io import imread
+import numpy as np
+from skimage import io
+from enumeration import Environment
 from classification.processing import Processing
+from sklearn.model_selection import train_test_split
 
 
 class Dataset:
 
     BASE_PATH = f"{os.getcwd()}/assets/"
     BASE_NAME = "sign_gesture"
+    DATASET_SRC = "dataset/gesture_image_data/"
 
-    def __init__(self, src, environment="train", width=150, height=None):
-        self.src = f"{os.getcwd()}/{src}"
+    def __init__(self, environment=Environment.TRAIN, width=150, height=None):
         self.__data = None
         self.width = width
-        self.environment = environment
+        self.environment = environment.value
         self.height = (height, width)[height is None]
-        self.pickle_src = f"{self.BASE_PATH}{self.BASE_NAME}_{self.environment}_{self.width}x{self.height}px.pkl"
+        self.src = f"{os.getcwd()}/{self.DATASET_SRC}"
+        self.base_pickle_src = f"{self.BASE_PATH}{self.BASE_NAME}_%s_{self.width}x{self.height}px.pkl"
+        self.pickle_src = self.base_pickle_src % self.environment
 
     def __write_pickle(self):
-        self.__data = {
+        data = {
             'description': f"resized ({int(self.width)}x{int(self.height)}) sign images in rgb",
             'label': [],
             'data': []
@@ -35,13 +39,29 @@ class Dataset:
 
             for file in os.listdir(current_path):
                 src = os.path.join(current_path, file)
-                image = imread(src, as_gray=True)
-                # processing.prepare(image, self.width, self.height)
+                image = io.imread(src, as_gray=True)
                 image = processing.perform(image)
-                self.__data['label'].append(subdir)
-                self.__data['data'].append(image)
+                data['label'].append(subdir)
+                data['data'].append(image)
 
-        joblib.dump(self.__data, self.pickle_src)
+        x = np.array(data['data'])
+        y = np.array(data['label'])
+        x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.3, shuffle=True, random_state=42)
+
+        self.__write_data_pickle(x_train, y_train, Environment.TRAIN.value)
+        self.__write_data_pickle(x_test, y_test, Environment.TEST.value)
+
+    def __write_data_pickle(self, x, y, environment):
+        environment_data = {
+            'description': f"resized ({int(self.width)}x{int(self.height)}) {environment}ing sign images in rgb ",
+            'label': y,
+            'data': x
+        }
+
+        joblib.dump(environment_data, self.base_pickle_src % environment)
+
+        if environment == Environment.TRAIN.value:
+            self.__data = environment_data
 
     def __read_pickle(self):
         self.__data = joblib.load(self.pickle_src)
