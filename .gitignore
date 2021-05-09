@@ -1,5 +1,6 @@
-/GestureDetection/venv/
-/GestureDetection/.idea/
-/GestureDetection/dataset/
-/GestureDetection/assets/
-
+/SignGestureDetection/venv/
+/SignGestureDetection/.idea/
+/SignGestureDetection/dataset/
+/SignGestureDetection/assets/
+/tensorflow_macos/
+/Memoria/
