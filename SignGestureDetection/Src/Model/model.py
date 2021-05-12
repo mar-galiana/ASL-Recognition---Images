@@ -3,11 +3,9 @@ import joblib
 import numpy as np
 from skimage import io
 from skimage.transform import resize
-from Model.environment import Environment
+from Src.Model.environment import Environment
 from sklearn.model_selection import train_test_split
-
-from Model.environment import Environment
-from Exception.modelException import EnvironmentException
+from Src.Exception.modelException import EnvironmentException
 
 
 class Model:

@@ -1,9 +1,9 @@
 from enum import Enum
-from Model.model import Model
-from Exception.inputException import InputException
-from ExectuionFactory.helpStrategy import HelpStrategy
-from ExectuionFactory.saveDatabaseStrategy import SaveDatabaseStrategy
-from ExectuionFactory.executeAlgorithmStrategy import ExecuteAlgorithmStrategy
+from Src.Model.model import Model
+from Src.Exception.inputException import InputException
+from Src.ExectuionFactory.helpStrategy import HelpStrategy
+from Src.ExectuionFactory.saveDatabaseStrategy import SaveDatabaseStrategy
+from Src.ExectuionFactory.executeAlgorithmStrategy import ExecuteAlgorithmStrategy
 
 
 class ExecutionFactory:
@@ -34,14 +34,14 @@ class ExecutionFactory:
         if len(self.arguments) != 1:
             raise InputException("This strategy requires arguments to be executed")
 
-        return SaveDatabaseStrategy(self.model, self.arguments)
+        return SaveDatabaseStrategy(self.logger, self.model, self.arguments)
 
     def execute_algorithm(self):
 
         if len(self.arguments) != 1:
             raise InputException("This strategy requires arguments to be executed")
 
-        return ExecuteAlgorithmStrategy(self.arguments)
+        return ExecuteAlgorithmStrategy(self.logger, self.arguments)
 
     def help(self):
         return HelpStrategy(self.logger)

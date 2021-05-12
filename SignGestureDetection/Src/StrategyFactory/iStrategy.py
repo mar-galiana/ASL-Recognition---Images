@@ -6,3 +6,4 @@ class IStrategy(ABC):
     @abstractmethod
     def execute(self):
         pass
+

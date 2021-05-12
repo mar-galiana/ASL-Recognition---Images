@@ -1,4 +1,4 @@
-from ExectuionFactory.iStrategy import IStrategy
+from Src.ExectuionFactory.iStrategy import IStrategy
 
 
 class HelpStrategy(IStrategy):
@@ -23,3 +23,4 @@ class HelpStrategy(IStrategy):
                                   "\tThis strategy will show all the needed arguments information in order to run "
                                   "this project. It needs the argument:\n "
                                   "\t\t--help")
+

@@ -1,0 +1,55 @@
+from unittest import TestCase
+from unittest.mock import Mock
+from Src.Model.model import Model
+from Src.Logger.Logger import Logger
+from Src.Exception.inputException import InputException
+from Src.StrategyFactory.saveDatabaseStrategy import SaveDatabaseStrategy
+
+
+class TestSaveDatabaseStrategy(TestCase):
+
+    def setUp(self):
+        self.logger = Mock(Logger)
+        self.model = Mock(Model)
+
+    def tearDown(self):
+        self.logger = None
+        self.model = None
+
+    def test_WhenIncorrectArgumentIsEntered_WhileStrategyClassWorksAsExpected_ThenInputExceptionIsThrown(self):
+        raised_exception = False
+        arguments = ["nothing"]
+        try:
+            self.saveDatabaseStrategy = SaveDatabaseStrategy(self.logger, self.model, arguments)
+            self.saveDatabaseStrategy.execute()
+        except InputException:
+            raised_exception = True
+
+        self.assertEqual(self.logger.write_info.call_count, 0)
+        self.assertTrue(raised_exception, "Exception hasn't been raised when incorrect argument has been entered")
+
+    def test_WhenArgumentsValueIsTrue_WhileStrategyClassWorksAsExpected_ThenIWriteInfoIsCalledOnce(self):
+        raised_exception = False
+        arguments = ["true"]
+
+        try:
+            self.saveDatabaseStrategy = SaveDatabaseStrategy(self.logger, self.model, arguments)
+            self.saveDatabaseStrategy.execute()
+        except InputException:
+            raised_exception = True
+
+        self.assertEqual(self.logger.write_info.call_count, 1)
+        self.assertFalse(raised_exception, "Exception has been raised when correct argument has been entered")
+
+    def test_WhenArgumentsValueIsFalse_WhileStrategyClassWorksAsExpected_ThenIWriteInfoIsCalledOnce(self):
+        raised_exception = False
+        arguments = ["false"]
+
+        try:
+            self.saveDatabaseStrategy = SaveDatabaseStrategy(self.logger, self.model, arguments)
+            self.saveDatabaseStrategy.execute()
+        except InputException:
+            raised_exception = True
+
+        self.assertEqual(self.logger.write_info.call_count, 1)
+        self.assertFalse(raised_exception, "Exception has been raised when correct argument has been entered")

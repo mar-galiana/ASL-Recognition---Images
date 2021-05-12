@@ -1,7 +1,7 @@
 import sys
-from Logger.Logger import Logger
-from Exception.inputException import InputException
-from ExectuionFactory.strategyFactoy import ExecutionFactory
+from Src.Logger.Logger import Logger
+from Src.Exception.inputException import InputException
+from Src.StrategyFactory.strategyFactoy import ExecutionFactory
 
 
 if __name__ == '__main__':

@@ -1,11 +1,11 @@
-from Model.environment import Environment
-from ExectuionFactory.iStrategy import IStrategy
-from Exception.inputException import InputException
+from Src.StrategyFactory.iStrategy import IStrategy
+from Src.Exception.inputException import InputException
 
 
 class SaveDatabaseStrategy(IStrategy):
 
-    def __init__(self, model, arguments):
+    def __init__(self, logger, model, arguments):
+        self.logger = logger
         self.model = model
 
         if arguments[0] != "true" and arguments[0] != "false":
@@ -15,3 +15,4 @@ class SaveDatabaseStrategy(IStrategy):
 
     def execute(self):
         self.model.create_pickle(self.environments_separated)
+        self.logger.write_info("Test and Train pickles have been created")
