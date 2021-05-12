@@ -8,7 +8,8 @@ from ExectuionFactory.executeAlgorithmStrategy import ExecuteAlgorithmStrategy
 
 class ExecutionFactory:
 
-    def __init__(self, strategy, arguments):
+    def __init__(self, logger, strategy, arguments):
+        self.logger = logger
         self.execution_strategy = strategy
         self.arguments = arguments
         self.model = Model()
@@ -42,9 +43,8 @@ class ExecutionFactory:
 
         return ExecuteAlgorithmStrategy(self.arguments)
 
-    @staticmethod
-    def help():
-        return HelpStrategy()
+    def help(self):
+        return HelpStrategy(self.logger)
 
 
 class Strategies(Enum):
