@@ -1,9 +1,9 @@
 from enum import Enum
 from Src.Model.model import Model
 from Src.Exception.inputException import InputException
-from Src.ExectuionFactory.helpStrategy import HelpStrategy
-from Src.ExectuionFactory.saveDatabaseStrategy import SaveDatabaseStrategy
-from Src.ExectuionFactory.executeAlgorithmStrategy import ExecuteAlgorithmStrategy
+from Src.StrategyFactory.helpStrategy import HelpStrategy
+from Src.StrategyFactory.saveDatabaseStrategy import SaveDatabaseStrategy
+from Src.StrategyFactory.executeAlgorithmStrategy import ExecuteAlgorithmStrategy
 
 
 class ExecutionFactory:
