@@ -21,14 +21,11 @@ class ExecutionFactory:
         }
 
     def get_execution_strategy(self):
-        if self.execution_strategy in self.strategy_switcher:
-            strategy_method = self.strategy_switcher.get(self.execution_strategy)
-            strategy = strategy_method()
-
-        else:
+        if self.execution_strategy not in self.strategy_switcher:
             raise InputException(self.execution_strategy + " is not a valid strategy")
 
-        return strategy
+        strategy_method = self.strategy_switcher.get(self.execution_strategy)
+        return strategy_method()
 
     def save_database(self):
         if len(self.arguments) != 1:
