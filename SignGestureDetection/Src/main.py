@@ -6,10 +6,17 @@ from Src.StrategyFactory.strategyFactoy import ExecutionFactory
 
 if __name__ == '__main__':
 
-    if len(sys.argv) <= 1:
-        raise InputException("a strategy needs to be defined in order to execute it")
-
     logger = Logger()
-    strategy_factory = ExecutionFactory(logger, sys.argv[1], sys.argv[2:])
-    strategy = strategy_factory.get_execution_strategy()
-    strategy.execute()
+
+    try:
+        if len(sys.argv) <= 1:
+            raise InputException("A strategy needs to be defined in order to execute it")
+
+        strategy_factory = ExecutionFactory(logger, sys.argv[1], sys.argv[2:])
+        strategy = strategy_factory.get_execution_strategy()
+        strategy.execute()
+
+    except Exception as e:
+        logger.write_error(e.message)
+
+

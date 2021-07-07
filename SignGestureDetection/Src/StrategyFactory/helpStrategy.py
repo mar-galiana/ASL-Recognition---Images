@@ -8,8 +8,6 @@ class HelpStrategy(IStrategy):
 
     def execute(self):
         self.logger.write_message("This project contains three different strategies:\n"
-                                  "* Execute Algorithm:\n"
-                                  "\n\n"
 
                                   "* Save Database:\n"
                                   "\tThis strategy will save all the images inside the directory "
@@ -17,7 +15,15 @@ class HelpStrategy(IStrategy):
                                   "you need the following arguments:\n "
                                   "\t\t--saveDatabase <boolean>\n"
                                   "\tThe boolean will be true if the directory Gesture_image_data contains the images "
-                                  "separated in test and train\n\n "
+                                  "separated in test and train\n\n"
+
+                                  "* Train Neural Network:\n"
+                                  "\tThis strategy will train an specific neural network based on one of the models "
+                                  "stored in the Dataset/Pickels. To execute it you need the following arguments:\n "
+                                  "\t\t--trainNeuralNetwork <string>\n"
+                                  "\tThe string specifies the type of Neural Network to train, the possibilities are:\n"
+                                  "\t\t* nn: Basic Neural Network.\n "
+                                  "\t\t* cnn: Convolutional Neural Network.\n\n"
 
                                   "* Help:\n"
                                   "\tThis strategy will show all the needed arguments information in order to run "

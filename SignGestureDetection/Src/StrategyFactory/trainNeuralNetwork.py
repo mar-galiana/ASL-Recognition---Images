@@ -1,10 +1,12 @@
-from enum import Enum
+import os
 from Src.StrategyFactory.iStrategy import IStrategy
 from Src.Exception.inputException import InputException
-from Src.Algorithms.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
+from Src.NeuralNetworks.neuralNetwork import NeuralNetwork
+from Src.NeuralNetworks.enumerations import NeuralNetworkEnum
+from Src.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 
 
-class ExecuteAlgorithmStrategy(IStrategy):
+class TrainNeuralNetwork(IStrategy):
 
     def __init__(self, logger, model, arguments):
         self.logger = logger
@@ -12,18 +14,17 @@ class ExecuteAlgorithmStrategy(IStrategy):
         self.arguments = arguments
 
         self.algorithm_switcher = {
-            Algorithms.CNN.value: ConvolutionalNeuralNetwork(self.logger, self.model),
+            NeuralNetworkEnum.CNN.value: ConvolutionalNeuralNetwork(self.logger, self.model),
+            NeuralNetworkEnum.NN.value: NeuralNetwork(self.logger, self.model),
         }
 
     def execute(self):
         if self.arguments[0] not in self.algorithm_switcher:
             raise InputException(self.arguments[0] + " is not a valid strategy")
 
+        os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
         algorithm_execution = self.algorithm_switcher.get(self.arguments[0])
         algorithm_execution.execute()
 
-        self.logger.write_info("Algorithm executed successfully")
-
-
-class Algorithms(Enum):
-    CNN = "cnn"
+        self.logger.write_info("Strategy executed successfully")

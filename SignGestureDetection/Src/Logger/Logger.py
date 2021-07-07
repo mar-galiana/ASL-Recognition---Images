@@ -7,7 +7,7 @@ class Logger(ILogger):
         print(message)
 
     def write_info(self, message):
-        print("INFO: " + message)
+        print("[INFO]: " + message)
 
     def write_error(self, message):
-        print("ERROR: " + message)
+        print("[ERROR]: " + message)
