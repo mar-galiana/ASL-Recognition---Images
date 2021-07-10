@@ -1,5 +1,5 @@
 import sys
-from Src.Logger.Logger import Logger
+from Src.Logger.logger import Logger
 from Src.Exception.inputException import InputException
 from Src.StrategyFactory.strategyFactoy import ExecutionFactory
 

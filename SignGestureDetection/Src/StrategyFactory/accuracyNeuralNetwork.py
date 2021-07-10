@@ -13,7 +13,7 @@ from Src.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 from Src.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 
 
-class UseNeuralNetwork(IStrategy):
+class AccuracyNeuralNetwork(IStrategy):
 
     def __init__(self, logger, model, arguments):
         self.logger = logger

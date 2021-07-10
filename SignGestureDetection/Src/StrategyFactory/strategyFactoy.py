@@ -2,7 +2,7 @@ from enum import Enum
 from Src.Model.model import Model
 from Src.Exception.inputException import InputException
 from Src.StrategyFactory.helpStrategy import HelpStrategy
-from Src.StrategyFactory.useNeuralNetwork import UseNeuralNetwork
+from Src.StrategyFactory.accuracyNeuralNetwork import AccuracyNeuralNetwork
 from Src.StrategyFactory.trainNeuralNetwork import TrainNeuralNetwork
 from Src.StrategyFactory.saveDatabaseStrategy import SaveDatabaseStrategy
 
@@ -19,7 +19,7 @@ class ExecutionFactory:
             Strategies.HELP.value: lambda: self.help(),
             Strategies.SAVE_DATABASE.value: lambda: self.save_database(),
             Strategies.TRAIN_NEURAL_NETWORK.value: lambda: self.train_neural_network(),
-            Strategies.USE_NEURAL_NETWORK.value: lambda: self.use_neural_network()
+            Strategies.ACCURACY_NEURAL_NETWORK.value: lambda: self.use_neural_network()
         }
 
     def get_execution_strategy(self):
@@ -49,7 +49,7 @@ class ExecutionFactory:
             raise InputException("This strategy requires arguments to be executed")
 
         self.logger.write_info("Arguments entered: " + ",".join(self.arguments))
-        return UseNeuralNetwork(self.logger, self.model, self.arguments)
+        return AccuracyNeuralNetwork(self.logger, self.model, self.arguments)
 
     def help(self):
         return HelpStrategy(self.logger)
@@ -59,4 +59,4 @@ class Strategies(Enum):
     HELP = "--help"
     SAVE_DATABASE = "--saveDatabase"
     TRAIN_NEURAL_NETWORK = "--trainNeuralNetwork"
-    USE_NEURAL_NETWORK = "--useNeuralNetwork"
+    ACCURACY_NEURAL_NETWORK = "--accuracyNeuralNetwork"

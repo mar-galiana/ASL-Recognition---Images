@@ -25,7 +25,6 @@ class NeuralNetwork(INeuralNetwork):
         self.nn_util.save_keras_model(sequential_model, NeuralNetworkEnum.NN)
 
     def __prepare_images(self):
-
         # Flattening the images from the 150x150 pixels to 1D 787 pixels
         x_train = self.resize_data(Environment.TRAIN)
         x_test = self.resize_data(Environment.TEST)
