@@ -8,7 +8,7 @@ from Src.NeuralNetworks.neuralNetwork import NeuralNetwork
 from Src.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 
 
-class TestModel(TestCase):
+class TestNeuralNetwork(TestCase):
 
     def setUp(self):
         self.model = Mock(Model)
