@@ -2,7 +2,7 @@ from unittest import TestCase
 from unittest.mock import Mock
 from Src.Model.model import Model
 from Src.Logger.logger import Logger
-from Src.Exception.inputException import InputException
+from Src.Exception.inputOutputException import InputException
 from Src.StrategyFactory.saveDatabaseStrategy import SaveDatabaseStrategy
 
 

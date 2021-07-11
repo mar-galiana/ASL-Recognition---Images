@@ -3,7 +3,7 @@ from Src.Model.model import Model
 from keras.models import Sequential
 from Src.Logger.logger import Logger
 from unittest.mock import Mock, patch
-from Src.Exception.inputException import InputException
+from Src.Exception.inputOutputException import InputException
 from Src.NeuralNetworks.enumerations import NeuralNetworkEnum
 from Src.StrategyFactory.accuracyNeuralNetwork import AccuracyNeuralNetwork
 

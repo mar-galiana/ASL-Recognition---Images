@@ -6,6 +6,7 @@ from skimage.transform import resize
 from Src.Model.enumerations import Environment, Image
 from sklearn.model_selection import train_test_split
 from Src.Exception.modelException import EnvironmentException
+from Src.Exception.inputOutputException import PathDoesNotExistException
 
 
 class Model:
@@ -92,7 +93,7 @@ class Model:
         if os.path.exists(pickle_src):
             data = joblib.load(pickle_src)
         else:
-            raise EnvironmentException("The pickle needs to exists before using it")
+            raise PathDoesNotExistException("The pickle needs to exists before using it")
 
         return data
 

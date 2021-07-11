@@ -6,7 +6,7 @@ from keras.preprocessing import image
 from sklearn.metrics import accuracy_score
 from Src.Model.enumerations import Environment
 from Src.StrategyFactory.iStrategy import IStrategy
-from Src.Exception.inputException import InputException
+from Src.Exception.inputOutputException import InputException
 from Src.NeuralNetworks.neuralNetwork import NeuralNetwork
 from Src.NeuralNetworks.enumerations import NeuralNetworkEnum
 from Src.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork

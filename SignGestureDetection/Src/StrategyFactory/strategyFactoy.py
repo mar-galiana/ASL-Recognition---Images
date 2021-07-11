@@ -1,6 +1,6 @@
 from enum import Enum
 from Src.Model.model import Model
-from Src.Exception.inputException import InputException
+from Src.Exception.inputOutputException import InputException
 from Src.StrategyFactory.helpStrategy import HelpStrategy
 from Src.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 from Src.StrategyFactory.trainNeuralNetwork import TrainNeuralNetwork
