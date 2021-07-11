@@ -14,10 +14,10 @@ from Src.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 
 class ConvolutionalNeuralNetwork(INeuralNetwork):
 
-    def __init__(self, logger, model):
+    def __init__(self, logger, model, nn_util):
         self.model = model
         self.logger = logger
-        self.nn_util = NeuralNetworkUtil(self.model)
+        self.nn_util = nn_util
 
     def resize_data(self, environment):
         shape = self.model.get_x(environment).shape

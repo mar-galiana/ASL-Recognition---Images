@@ -28,10 +28,10 @@ class AccuracyNeuralNetwork(IStrategy):
 
     def __get_neural_network_model(self):
         if self.arguments[0] == NeuralNetworkEnum.CNN.value:
-            nn = ConvolutionalNeuralNetwork(self.logger, self.model)
+            nn = ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util)
             nn_model = self.nn_util.load_keras_model(NeuralNetworkEnum.CNN)
         elif self.arguments[0] == NeuralNetworkEnum.NN.value:
-            nn = NeuralNetwork(self.logger, self.model)
+            nn = NeuralNetwork(self.logger, self.model, self.nn_util)
             nn_model = self.nn_util.load_keras_model(NeuralNetworkEnum.NN)
         else:
             raise InputException(self.arguments[0] + " is not a valid neural network")

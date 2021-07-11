@@ -44,7 +44,7 @@ class ExecutionFactory:
             raise InputException("This strategy requires arguments to be executed")
 
         self.logger.write_info("Arguments entered: " + ",".join(self.arguments))
-        return TrainNeuralNetwork(self.logger, self.model, self.arguments)
+        return TrainNeuralNetwork(self.logger, self.model, self.nn_util, self.arguments)
 
     def get_accuracy_neural_network(self):
         if len(self.arguments) != 1:

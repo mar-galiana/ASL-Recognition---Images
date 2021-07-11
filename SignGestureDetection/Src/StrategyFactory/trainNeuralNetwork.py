@@ -8,14 +8,15 @@ from Src.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNet
 
 class TrainNeuralNetwork(IStrategy):
 
-    def __init__(self, logger, model, arguments):
+    def __init__(self, logger, model, nn_util, arguments):
         self.logger = logger
         self.model = model
+        self.nn_util = nn_util
         self.arguments = arguments
 
         self.algorithm_switcher = {
-            NeuralNetworkEnum.CNN.value: ConvolutionalNeuralNetwork(self.logger, self.model),
-            NeuralNetworkEnum.NN.value: NeuralNetwork(self.logger, self.model),
+            NeuralNetworkEnum.CNN.value: ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util),
+            NeuralNetworkEnum.NN.value: NeuralNetwork(self.logger, self.model, self.nn_util),
         }
 
     def execute(self):
