@@ -5,6 +5,7 @@ from keras.utils import np_utils
 from Src.Model.enumerations import Environment
 from sklearn.preprocessing import LabelEncoder
 from Src.NeuralNetworks.enumerations import NeuralNetworkEnum
+from Src.Exception.modelException import EnvironmentException
 
 
 class NeuralNetworkUtil:
