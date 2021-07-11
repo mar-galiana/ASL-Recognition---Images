@@ -55,6 +55,6 @@ class TestTrainNeuralNetwork(TestCase):
         except InputException:
             raised_exception = True
 
-        self.assertEqual(mock_cnn.call_count, 1)
         self.assertEqual(self.logger.write_info.call_count, 1)
+        self.assertEqual(mock_cnn.call_count, 1)
         self.assertFalse(raised_exception, "Exception has been raised when correct argument has been entered")

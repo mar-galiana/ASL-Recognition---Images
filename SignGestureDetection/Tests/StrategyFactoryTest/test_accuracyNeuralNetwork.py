@@ -31,8 +31,8 @@ class TestAccuracyNeuralNetwork(TestCase):
         raised_exception = False
         arguments = ["nothing"]
         try:
-            self.accuracyNeuralNetwork = AccuracyNeuralNetwork(self.logger, self.model, self.mock_nn_util, arguments)
-            self.accuracyNeuralNetwork.execute()
+            accuracy_neural_network = AccuracyNeuralNetwork(self.logger, self.model, self.mock_nn_util, arguments)
+            accuracy_neural_network.execute()
         except InputException:
             raised_exception = True
 
@@ -46,14 +46,14 @@ class TestAccuracyNeuralNetwork(TestCase):
         arguments = [NeuralNetworkEnum.NN.value]
 
         try:
-            self.accuracyNeuralNetwork = AccuracyNeuralNetwork(self.logger, self.model, self.mock_nn_util, arguments)
-            self.accuracyNeuralNetwork.execute()
+            accuracy_neural_network = AccuracyNeuralNetwork(self.logger, self.model, self.mock_nn_util, arguments)
+            accuracy_neural_network.execute()
         except InputException:
             raised_exception = True
 
         self.assertEqual(self.logger.write_info.call_count, 2)
         self.assertEqual(mock_nn.call_count, 1)
-        self.assertFalse(raised_exception, "Exception hasn't been raised when incorrect argument has been entered")
+        self.assertFalse(raised_exception, "Exception has been raised when correct argument has been entered")
 
     @patch('Src.NeuralNetworks.convolutionalNeuralNetwork.ConvolutionalNeuralNetwork.resize_data', return_value=[])
     def test_WhenCNNArgumentIsEntered_WhileStrategyClassWorksAsExpected_ThenCNNIsCalledOnceAndWriteInfoTwice(self,
@@ -62,11 +62,11 @@ class TestAccuracyNeuralNetwork(TestCase):
         arguments = [NeuralNetworkEnum.CNN.value]
 
         try:
-            self.accuracyNeuralNetwork = AccuracyNeuralNetwork(self.logger, self.model, self.mock_nn_util, arguments)
-            self.accuracyNeuralNetwork.execute()
+            accuracy_neural_network = AccuracyNeuralNetwork(self.logger, self.model, self.mock_nn_util, arguments)
+            accuracy_neural_network.execute()
         except InputException:
             raised_exception = True
 
-        self.assertEqual(self.logger.write_info.call_count, 2)
         self.assertEqual(mock_cnn.call_count, 1)
-        self.assertFalse(raised_exception, "Exception hasn't been raised when incorrect argument has been entered")
+        self.assertEqual(self.logger.write_info.call_count, 2)
+        self.assertFalse(raised_exception, "Exception has been raised when correct argument has been entered")
