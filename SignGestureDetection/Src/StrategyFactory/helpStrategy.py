@@ -25,6 +25,16 @@ class HelpStrategy(IStrategy):
                                   "\t\t* nn: Basic Neural Network.\n "
                                   "\t\t* cnn: Convolutional Neural Network.\n\n"
 
+                                  "* Accuracy Neural Network:\n"
+                                  "\tThis strategy will show the accuracy of the Neural Network selected. In order to "
+                                  "be able to do it, it will need to execute the Train Neural Network before, so a "
+                                  "model is stored in the Assets/NeuralNetworkModel directory. To execute it you need "
+                                  "the following arguments:\n "
+                                  "\t\t--accuracyNeuralNetwork <string>\n"
+                                  "\tThe string specifies the type of Neural Network to use, the possibilities are:\n"
+                                  "\t\t* nn: Basic Neural Network.\n "
+                                  "\t\t* cnn: Convolutional Neural Network.\n\n"
+
                                   "* Help:\n"
                                   "\tThis strategy will show all the needed arguments information in order to run "
                                   "this project. It needs the argument:\n "
