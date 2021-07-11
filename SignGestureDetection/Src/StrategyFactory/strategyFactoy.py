@@ -1,9 +1,11 @@
 from enum import Enum
 from Src.Model.model import Model
-from Src.Exception.inputException import InputException
+from Src.Exception.inputOutputException import InputException
 from Src.StrategyFactory.helpStrategy import HelpStrategy
+from Src.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
+from Src.StrategyFactory.trainNeuralNetwork import TrainNeuralNetwork
 from Src.StrategyFactory.saveDatabaseStrategy import SaveDatabaseStrategy
-from Src.StrategyFactory.executeAlgorithmStrategy import ExecuteAlgorithmStrategy
+from Src.StrategyFactory.accuracyNeuralNetwork import AccuracyNeuralNetwork
 
 
 class ExecutionFactory:
@@ -13,35 +15,44 @@ class ExecutionFactory:
         self.execution_strategy = strategy
         self.arguments = arguments
         self.model = Model()
+        self.nn_util = NeuralNetworkUtil(self.model)
 
         self.strategy_switcher = {
             Strategies.HELP.value: lambda: self.help(),
             Strategies.SAVE_DATABASE.value: lambda: self.save_database(),
-            Strategies.EXECUTE_ALGORITHM.value: lambda: self.execute_algorithm()
+            Strategies.TRAIN_NEURAL_NETWORK.value: lambda: self.train_neural_network(),
+            Strategies.ACCURACY_NEURAL_NETWORK.value: lambda: self.get_accuracy_neural_network()
         }
 
     def get_execution_strategy(self):
-        if self.execution_strategy in self.strategy_switcher:
-            strategy_method = self.strategy_switcher.get(self.execution_strategy)
-            strategy = strategy_method()
-
-        else:
+        if self.execution_strategy not in self.strategy_switcher:
             raise InputException(self.execution_strategy + " is not a valid strategy")
 
-        return strategy
+        self.logger.write_info("Strategy selected: " + self.execution_strategy)
+        strategy_method = self.strategy_switcher.get(self.execution_strategy)
+        return strategy_method()
 
     def save_database(self):
         if len(self.arguments) != 1:
             raise InputException("This strategy requires arguments to be executed")
 
+        self.logger.write_info("Arguments entered: " + ",".join(self.arguments))
         return SaveDatabaseStrategy(self.logger, self.model, self.arguments)
 
-    def execute_algorithm(self):
-
+    def train_neural_network(self):
         if len(self.arguments) != 1:
             raise InputException("This strategy requires arguments to be executed")
 
-        return ExecuteAlgorithmStrategy(self.logger, self.arguments)
+        self.logger.write_info("Arguments entered: " + ",".join(self.arguments))
+        return TrainNeuralNetwork(self.logger, self.model, self.nn_util, self.arguments)
+
+    def get_accuracy_neural_network(self):
+        if len(self.arguments) != 1:
+            raise InputException("This strategy requires arguments to be executed")
+
+        self.logger.write_info("Arguments entered: " + ",".join(self.arguments))
+
+        return AccuracyNeuralNetwork(self.logger, self.model, self.nn_util, self.arguments)
 
     def help(self):
         return HelpStrategy(self.logger)
@@ -50,4 +61,5 @@ class ExecutionFactory:
 class Strategies(Enum):
     HELP = "--help"
     SAVE_DATABASE = "--saveDatabase"
-    EXECUTE_ALGORITHM = "--executeAlgorithm"
+    TRAIN_NEURAL_NETWORK = "--trainNeuralNetwork"
+    ACCURACY_NEURAL_NETWORK = "--accuracyNeuralNetwork"

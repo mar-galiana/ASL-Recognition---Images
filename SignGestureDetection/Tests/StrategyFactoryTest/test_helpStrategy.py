@@ -1,6 +1,6 @@
 from unittest import TestCase
 from unittest.mock import Mock
-from Src.Logger.Logger import Logger
+from Src.Logger.logger import Logger
 from Src.StrategyFactory.helpStrategy import HelpStrategy
 
 

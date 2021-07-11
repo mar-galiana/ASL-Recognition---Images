@@ -1,16 +1,19 @@
 from unittest import TestCase
-from unittest.mock import Mock
 from Src.Model.model import Model
 from Src.Logger.logger import Logger
+from unittest.mock import Mock, patch
 from Src.Exception.inputOutputException import InputException
-from Src.StrategyFactory.saveDatabaseStrategy import SaveDatabaseStrategy
+from Src.NeuralNetworks.enumerations import NeuralNetworkEnum
+from Src.StrategyFactory.trainNeuralNetwork import TrainNeuralNetwork
+from Src.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 
 
-class TestSaveDatabaseStrategy(TestCase):
+class TestTrainNeuralNetwork(TestCase):
 
     def setUp(self):
         self.logger = Mock(Logger)
         self.model = Mock(Model)
+        self.nn_util = Mock(NeuralNetworkUtil)
 
     def tearDown(self):
         self.logger = None
@@ -20,36 +23,40 @@ class TestSaveDatabaseStrategy(TestCase):
         raised_exception = False
         arguments = ["nothing"]
         try:
-            self.saveDatabaseStrategy = SaveDatabaseStrategy(self.logger, self.model, arguments)
-            self.saveDatabaseStrategy.execute()
+            self.trainNeuralNetwork = TrainNeuralNetwork(self.logger, self.model, self.nn_util, arguments)
+            self.trainNeuralNetwork.execute()
         except InputException:
             raised_exception = True
 
         self.assertEqual(self.logger.write_info.call_count, 0)
         self.assertTrue(raised_exception, "Exception hasn't been raised when incorrect argument has been entered")
 
-    def test_WhenArgumentsValueIsTrue_WhileStrategyClassWorksAsExpected_ThenWriteInfoIsCalledOnce(self):
+    @patch('Src.StrategyFactory.trainNeuralNetwork.NeuralNetwork')
+    def test_WhenTrainingBasicNN_WhileStrategyClassWorksAsExpected_ThenWriteInfoIsCalledOnce(self, mock_nn):
         raised_exception = False
-        arguments = ["true"]
+        arguments = [NeuralNetworkEnum.NN.value]
 
         try:
-            self.saveDatabaseStrategy = SaveDatabaseStrategy(self.logger, self.model, arguments)
-            self.saveDatabaseStrategy.execute()
+            self.trainNeuralNetwork = TrainNeuralNetwork(self.logger, self.model, self.nn_util, arguments)
+            self.trainNeuralNetwork.execute()
         except InputException:
             raised_exception = True
 
+        self.assertEqual(mock_nn.call_count, 1)
         self.assertEqual(self.logger.write_info.call_count, 1)
         self.assertFalse(raised_exception, "Exception has been raised when correct argument has been entered")
 
-    def test_WhenArgumentsValueIsFalse_WhileStrategyClassWorksAsExpected_ThenWriteInfoIsCalledOnce(self):
+    @patch('Src.StrategyFactory.trainNeuralNetwork.ConvolutionalNeuralNetwork')
+    def test_WhenTrainingCNN_WhileStrategyClassWorksAsExpected_ThenWriteInfoIsCalledOnce(self, mock_cnn):
         raised_exception = False
-        arguments = ["false"]
+        arguments = [NeuralNetworkEnum.CNN.value]
 
         try:
-            self.saveDatabaseStrategy = SaveDatabaseStrategy(self.logger, self.model, arguments)
+            self.saveDatabaseStrategy = TrainNeuralNetwork(self.logger, self.model, self.nn_util, arguments)
             self.saveDatabaseStrategy.execute()
         except InputException:
             raised_exception = True
 
         self.assertEqual(self.logger.write_info.call_count, 1)
+        self.assertEqual(mock_cnn.call_count, 1)
         self.assertFalse(raised_exception, "Exception has been raised when correct argument has been entered")
