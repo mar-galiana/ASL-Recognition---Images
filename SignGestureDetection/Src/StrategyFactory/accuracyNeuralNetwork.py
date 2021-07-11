@@ -9,17 +9,16 @@ from Src.StrategyFactory.iStrategy import IStrategy
 from Src.Exception.inputException import InputException
 from Src.NeuralNetworks.neuralNetwork import NeuralNetwork
 from Src.NeuralNetworks.enumerations import NeuralNetworkEnum
-from Src.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 from Src.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 
 
 class AccuracyNeuralNetwork(IStrategy):
 
-    def __init__(self, logger, model, arguments):
+    def __init__(self, logger, model, nn_util, arguments):
         self.logger = logger
         self.model = model
+        self.nn_util = nn_util
         self.arguments = arguments
-        self.nn_util = NeuralNetworkUtil(self.model)
 
     def execute(self):
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
