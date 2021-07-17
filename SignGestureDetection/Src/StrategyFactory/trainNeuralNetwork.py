@@ -20,12 +20,12 @@ class TrainNeuralNetwork(IStrategy):
         }
 
     def execute(self):
-        if self.arguments[0] not in self.algorithm_switcher:
-            raise InputException(self.arguments[0] + " is not a valid strategy")
+        if self.arguments[1] not in self.algorithm_switcher:
+            raise InputException(self.arguments[1] + " is not a valid strategy")
 
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-        algorithm_execution = self.algorithm_switcher.get(self.arguments[0])
+        algorithm_execution = self.algorithm_switcher.get(self.arguments[1])
         algorithm_execution.execute()
 
         self.logger.write_info("Strategy executed successfully")

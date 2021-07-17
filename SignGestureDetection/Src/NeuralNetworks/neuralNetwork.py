@@ -16,7 +16,10 @@ class NeuralNetwork(INeuralNetwork):
 
     def resize_data(self, environment):
         shape = self.model.get_x(environment).shape
-        x_data = self.model.get_x(environment).reshape(shape[0], shape[1]*shape[2])
+        if len(shape) > 3:
+            x_data = self.model.get_x(environment).reshape(shape[0], shape[1]*shape[2], shape[3])
+        else:
+            x_data = self.model.get_x(environment).reshape(shape[0], shape[1]*shape[2])
         return x_data
 
     def execute(self):
@@ -43,7 +46,7 @@ class NeuralNetwork(INeuralNetwork):
         sequential_model = Sequential()
 
         # hidden layer
-        sequential_model.add(Dense(100, input_shape=(shape_train[1]*shape_train[2],), activation='relu'))
+        sequential_model.add(Dense(100, input_shape=(shape_train[1]*shape_train[2]), activation='relu'))
 
         # output layer
         sequential_model.add(Dense(n_classes, activation='softmax'))
@@ -51,5 +54,3 @@ class NeuralNetwork(INeuralNetwork):
         sequential_model = self.nn_util.train_model(sequential_model)
 
         return sequential_model
-
-

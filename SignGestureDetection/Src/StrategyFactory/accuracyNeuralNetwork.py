@@ -22,19 +22,20 @@ class AccuracyNeuralNetwork(IStrategy):
 
     def execute(self):
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+
         nn, nn_model = self.__get_neural_network_model()
         self.__perform_test_data(nn, nn_model)
         self.logger.write_info("Strategy executed successfully")
 
     def __get_neural_network_model(self):
-        if self.arguments[0] == NeuralNetworkEnum.CNN.value:
+        if self.arguments[1] == NeuralNetworkEnum.CNN.value:
             nn = ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util)
             nn_model = self.nn_util.load_keras_model(NeuralNetworkEnum.CNN)
-        elif self.arguments[0] == NeuralNetworkEnum.NN.value:
+        elif self.arguments[1] == NeuralNetworkEnum.NN.value:
             nn = NeuralNetwork(self.logger, self.model, self.nn_util)
             nn_model = self.nn_util.load_keras_model(NeuralNetworkEnum.NN)
         else:
-            raise InputException(self.arguments[0] + " is not a valid neural network")
+            raise InputException(self.arguments[1] + " is not a valid neural network")
 
         return nn, nn_model
 

@@ -33,25 +33,26 @@ class ExecutionFactory:
         return strategy_method()
 
     def save_database(self):
-        if len(self.arguments) != 1:
+        if len(self.arguments) != 3:
             raise InputException("This strategy requires arguments to be executed")
 
-        self.logger.write_info("Arguments entered: " + ",".join(self.arguments))
+        self.logger.write_info("Arguments entered: " + ", ".join(self.arguments))
         return SaveDatabaseStrategy(self.logger, self.model, self.arguments)
 
     def train_neural_network(self):
-        if len(self.arguments) != 1:
+        if len(self.arguments) != 2:
             raise InputException("This strategy requires arguments to be executed")
 
-        self.logger.write_info("Arguments entered: " + ",".join(self.arguments))
+        self.logger.write_info("Arguments entered: " + ", ".join(self.arguments))
+        self.model.set_pickel_name(self.arguments[0])
         return TrainNeuralNetwork(self.logger, self.model, self.nn_util, self.arguments)
 
     def get_accuracy_neural_network(self):
-        if len(self.arguments) != 1:
+        if len(self.arguments) != 2:
             raise InputException("This strategy requires arguments to be executed")
 
-        self.logger.write_info("Arguments entered: " + ",".join(self.arguments))
-
+        self.logger.write_info("Arguments entered: " + ", ".join(self.arguments))
+        self.model.set_pickel_name(self.arguments[0])
         return AccuracyNeuralNetwork(self.logger, self.model, self.nn_util, self.arguments)
 
     def help(self):

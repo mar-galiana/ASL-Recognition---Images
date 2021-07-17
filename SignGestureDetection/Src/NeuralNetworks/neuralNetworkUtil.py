@@ -69,8 +69,8 @@ class NeuralNetworkUtil:
             raise EnvironmentException("Environment used is not a valid one")
 
         if NeuralNetworkEnum.CNN == neural_network_type:
-            file_name = "cnn_model.h5"
+            file_name = f"cnn_{self.model.get_pickel_name()}_model"
         else:
-            file_name = "nn_model.h5"
+            file_name = f"nn_{self.model.get_pickel_name()}_model"
 
         return self.KERAS_MODEL_BASE_PATH + file_name + ".h5"
