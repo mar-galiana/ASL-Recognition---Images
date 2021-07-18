@@ -1,8 +1,7 @@
 # Internal Files
 /SignGestureDetection/venv/
 /SignGestureDetection/.idea/
-/SignGestureDetection/dataset/
-/SignGestureDetection/assets/
+/SignGestureDetection/Assets/Dataset/Gesture_image_data
 /tensorflow_macos/
 /Memoria/
 
