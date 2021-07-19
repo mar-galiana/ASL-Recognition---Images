@@ -1,8 +1,8 @@
 import os
 import numpy as np
-from enumerations import Image
-from inputModel import InputModel
-from outputModel import OutputModel
+from Model.enumerations import Image
+from Model.inputModel import InputModel
+from Model.outputModel import OutputModel
 
 
 class Model:

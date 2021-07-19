@@ -1,9 +1,9 @@
 import os
-from iStrategy import IStrategy
-from Src.Exception.inputOutputException import InputException
-from Src.NeuralNetworks.neuralNetwork import NeuralNetwork
-from Src.NeuralNetworks.enumerations import NeuralNetworkEnum
-from Src.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
+from StrategyFactory.iStrategy import IStrategy
+from NeuralNetworks.neuralNetwork import NeuralNetwork
+from Exception.inputOutputException import InputException
+from NeuralNetworks.enumerations import NeuralNetworkEnum
+from NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 
 
 class TrainNeuralNetwork(IStrategy):

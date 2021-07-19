@@ -1,10 +1,10 @@
 import numpy as np
 from keras.layers import Dense
 from keras.models import Sequential
-from Src.Model.enumerations import Environment
-from iNeuralNetwork import INeuralNetwork
-from enumerations import NeuralNetworkEnum
-from neuralNetworkUtil import NeuralNetworkUtil
+from Model.enumerations import Environment
+from NeuralNetworks.iNeuralNetwork import INeuralNetwork
+from NeuralNetworks.enumerations import NeuralNetworkEnum
+from NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 
 
 class NeuralNetwork(INeuralNetwork):

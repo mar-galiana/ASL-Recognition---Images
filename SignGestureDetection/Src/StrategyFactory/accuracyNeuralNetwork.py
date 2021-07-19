@@ -4,12 +4,12 @@ from skimage import io
 from skimage.transform import resize
 from keras.preprocessing import image
 from sklearn.metrics import accuracy_score
-from Src.Model.enumerations import Environment
-from iStrategy import IStrategy
-from Src.Exception.inputOutputException import InputException
-from Src.NeuralNetworks.neuralNetwork import NeuralNetwork
-from Src.NeuralNetworks.enumerations import NeuralNetworkEnum
-from Src.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
+from Model.enumerations import Environment
+from StrategyFactory.iStrategy import IStrategy
+from NeuralNetworks.neuralNetwork import NeuralNetwork
+from Exception.inputOutputException import InputException
+from NeuralNetworks.enumerations import NeuralNetworkEnum
+from NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 
 
 class AccuracyNeuralNetwork(IStrategy):

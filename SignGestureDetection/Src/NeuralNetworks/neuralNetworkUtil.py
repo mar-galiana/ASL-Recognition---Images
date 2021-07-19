@@ -2,10 +2,10 @@ import os
 import numpy as np
 from tensorflow import keras
 from keras.utils import np_utils
-from Src.Model.enumerations import Environment
+from Model.enumerations import Environment
 from sklearn.preprocessing import LabelEncoder
-from enumerations import NeuralNetworkEnum
-from Src.Exception.modelException import EnvironmentException
+from NeuralNetworks.enumerations import NeuralNetworkEnum
+from Exception.modelException import EnvironmentException
 
 
 class NeuralNetworkUtil:

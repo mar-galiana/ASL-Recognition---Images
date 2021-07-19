@@ -1,4 +1,4 @@
-from iStrategy import IStrategy
+from StrategyFactory.iStrategy import IStrategy
 
 
 class HelpStrategy(IStrategy):

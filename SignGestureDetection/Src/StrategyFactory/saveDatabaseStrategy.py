@@ -1,5 +1,5 @@
-from iStrategy import IStrategy
-from Src.Exception.inputOutputException import InputException
+from StrategyFactory.iStrategy import IStrategy
+from Exception.inputOutputException import InputException
 
 
 class SaveDatabaseStrategy(IStrategy):

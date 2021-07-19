@@ -1,11 +1,11 @@
 from enum import Enum
-from Src.Model.model import Model
-from Src.Exception.inputOutputException import InputException
-from Src.StrategyFactory.helpStrategy import HelpStrategy
-from Src.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
-from trainNeuralNetwork import TrainNeuralNetwork
-from saveDatabaseStrategy import SaveDatabaseStrategy
-from accuracyNeuralNetwork import AccuracyNeuralNetwork
+from Model.model import Model
+from StrategyFactory.helpStrategy import HelpStrategy
+from Exception.inputOutputException import InputException
+from NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
+from StrategyFactory.trainNeuralNetwork import TrainNeuralNetwork
+from StrategyFactory.saveDatabaseStrategy import SaveDatabaseStrategy
+from StrategyFactory.accuracyNeuralNetwork import AccuracyNeuralNetwork
 
 
 class ExecutionFactory:
