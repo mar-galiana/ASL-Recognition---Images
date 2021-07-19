@@ -1,7 +1,7 @@
 import os
 import joblib
 import numpy as np
-from Src.Model.enumerations import Environment, Image
+from enumerations import Environment, Image
 from Src.Exception.modelException import EnvironmentException
 from Src.Exception.inputOutputException import PathDoesNotExistException
 

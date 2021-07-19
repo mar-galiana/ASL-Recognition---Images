@@ -3,8 +3,8 @@ import joblib
 import numpy as np
 from skimage import io
 from skimage.transform import resize
+from enumerations import Environment, Image
 from sklearn.model_selection import train_test_split
-from Src.Model.enumerations import Environment, Image
 
 
 class OutputModel:

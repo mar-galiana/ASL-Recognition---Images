@@ -2,9 +2,9 @@ import numpy as np
 from keras.layers import Dense
 from keras.models import Sequential
 from Src.Model.enumerations import Environment
-from Src.NeuralNetworks.iNeuralNetwork import INeuralNetwork
-from Src.NeuralNetworks.enumerations import NeuralNetworkEnum
-from Src.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
+from iNeuralNetwork import INeuralNetwork
+from enumerations import NeuralNetworkEnum
+from neuralNetworkUtil import NeuralNetworkUtil
 
 
 class NeuralNetwork(INeuralNetwork):

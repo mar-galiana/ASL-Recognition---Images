@@ -3,9 +3,9 @@ from Src.Model.model import Model
 from Src.Exception.inputOutputException import InputException
 from Src.StrategyFactory.helpStrategy import HelpStrategy
 from Src.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
-from Src.StrategyFactory.trainNeuralNetwork import TrainNeuralNetwork
-from Src.StrategyFactory.saveDatabaseStrategy import SaveDatabaseStrategy
-from Src.StrategyFactory.accuracyNeuralNetwork import AccuracyNeuralNetwork
+from trainNeuralNetwork import TrainNeuralNetwork
+from saveDatabaseStrategy import SaveDatabaseStrategy
+from accuracyNeuralNetwork import AccuracyNeuralNetwork
 
 
 class ExecutionFactory:

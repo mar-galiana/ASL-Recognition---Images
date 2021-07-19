@@ -5,11 +5,11 @@ of working with image data in 2D.
 
 import numpy as np
 from keras.models import Sequential
+from iNeuralNetwork import INeuralNetwork
+from enumerations import NeuralNetworkEnum
+from neuralNetworkUtil import NeuralNetworkUtil
 from Src.Model.enumerations import Environment
 from keras.layers import Dense, Conv2D, MaxPool2D, Flatten
-from Src.NeuralNetworks.iNeuralNetwork import INeuralNetwork
-from Src.NeuralNetworks.enumerations import NeuralNetworkEnum
-from Src.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 
 
 class ConvolutionalNeuralNetwork(INeuralNetwork):
