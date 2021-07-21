@@ -18,7 +18,7 @@ class HelpStrategy(IStrategy):
                                   "\t\t\tsign_gesture_gray_150x150px\n"
                                   "\t· The second string indicates witch model to use, the possibilities are:\n"
                                   "\t\t* original: The original dataset.\n "
-                                  "\t\t* optimizer: The original dataset pre-processed to increase "
+                                  "\t\t* optimized: The original dataset pre-processed to increase "
                                   "the performance.\n\n "
                                   "\t· The first boolean will be true if the directory GestureImageData contains the "
                                   "images separated in test and train.\n"

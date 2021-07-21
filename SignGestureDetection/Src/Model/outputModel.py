@@ -44,7 +44,7 @@ class OutputModel:
             'description': f"resized ({int(self.width)}x{int(self.height)}) sign images from {dataset.value} dataset."
         }
 
-        image_path = f"{self.IMAGES_SRC}{dataset.value[0]}/"
+        image_path = f"{self.IMAGES_SRC}{dataset.value}/"
         if environments_separated:
             data[Environment.TEST] = self.__read_images(image_path + "test/", as_gray)
             data[Environment.TRAIN] = self.__read_images(image_path + "train/", as_gray)

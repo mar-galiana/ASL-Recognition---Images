@@ -12,5 +12,5 @@ class Image(Enum):
 
 
 class Dataset(Enum):
-    ORIGINAL = "GestureImageData",
+    ORIGINAL = "GestureImageData"
     OPTIMIZED = "GestureImagePreProcessedData"
