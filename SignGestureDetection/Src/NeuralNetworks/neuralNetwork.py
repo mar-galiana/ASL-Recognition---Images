@@ -16,10 +16,7 @@ class NeuralNetwork(INeuralNetwork):
 
     def resize_data(self, environment):
         shape = self.model.get_x(environment).shape
-        if len(shape) > 3:
-            x_data = self.model.get_x(environment).reshape(shape[0], shape[1]*shape[2], shape[3])
-        else:
-            x_data = self.model.get_x(environment).reshape(shape[0], shape[1]*shape[2])
+        x_data = self.model.get_x(environment).reshape(shape[0], shape[1]*shape[2])
         return x_data
 
     def execute(self):

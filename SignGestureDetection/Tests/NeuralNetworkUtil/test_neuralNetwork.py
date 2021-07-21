@@ -1,11 +1,11 @@
 import numpy as np
 from unittest import TestCase
-from Src.Model.model import Model
-from Src.Logger.logger import Logger
+from Model.model import Model
+from Logger.logger import Logger
 from unittest.mock import Mock, patch
-from Src.Model.enumerations import Environment
-from Src.NeuralNetworks.neuralNetwork import NeuralNetwork
-from Src.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
+from Model.enumerations import Environment
+from NeuralNetworks.neuralNetwork import NeuralNetwork
+from NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 
 
 class TestNeuralNetwork(TestCase):

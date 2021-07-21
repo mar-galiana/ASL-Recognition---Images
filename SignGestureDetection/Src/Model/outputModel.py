@@ -8,7 +8,7 @@ from sklearn.model_selection import train_test_split
 
 
 class OutputModel:
-    BASE_PATH = f"{os.getcwd()}/../Assets/Dataset/"
+    BASE_PATH = f"{os.getcwd()}/Assets/Dataset/"
     DATASET_SRC = BASE_PATH + "Gesture_image_data/"
     PICKELS_SRC = BASE_PATH + "Pickels/"
 
