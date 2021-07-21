@@ -37,7 +37,7 @@ class AccuracyNeuralNetwork(IStrategy):
         else:
             raise InputException(self.arguments[1] + " is not a valid neural network")
 
-        return nn, nn_mode
+        return nn, nn_model
 
     @staticmethod
     def __get_accuracy(y_pred, y_values):
@@ -57,7 +57,9 @@ class AccuracyNeuralNetwork(IStrategy):
     def __perform_test_data(self, nn, nn_model):
 
         n_classes = np.unique(self.model.get_y(Environment.TEST)).shape[0] + 1
-        x_test = nn.resize_data(Environment.TEST)
+        shape = self.model.get_x(Environment.TEST).shape
+
+        x_test = nn.resize_data(Environment.TEST, shape)
         y_test = self.nn_util.get_categorical_vectors(Environment.TEST, n_classes)
         y_pred = nn_model.predict(x_test)
 

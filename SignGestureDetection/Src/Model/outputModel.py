@@ -9,7 +9,7 @@ from Model.enumerations import Environment, Image, Dataset
 
 
 class OutputModel:
-    BASE_PATH = f"{os.getcwd()}/Assets/Dataset/"
+    BASE_PATH = f"{os.getcwd()}/../Assets/Dataset/"
     IMAGES_SRC = BASE_PATH + "Images/"
     PICKELS_SRC = BASE_PATH + "Pickels/"
 

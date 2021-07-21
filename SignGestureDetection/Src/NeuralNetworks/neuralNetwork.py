@@ -14,20 +14,21 @@ class NeuralNetwork(INeuralNetwork):
         self.logger = logger
         self.nn_util = nn_util
 
-    def resize_data(self, environment):
-        shape = self.model.get_x(environment).shape
+    def resize_data(self, environment, shape):
         x_data = self.model.get_x(environment).reshape(shape[0], shape[1]*shape[2])
         return x_data
 
     def execute(self):
-        n_classes = self.__prepare_images()
-        sequential_model = self.__build_sequential_model(n_classes)
+        shape_train = self.model.get_x(Environment.TRAIN).shape
+        shape_test = self.model.get_x(Environment.TEST).shape
+        n_classes = self.__prepare_images(shape_test, shape_train)
+        sequential_model = self.__build_sequential_model(n_classes, shape_train)
         self.nn_util.save_keras_model(sequential_model, NeuralNetworkEnum.NN)
 
-    def __prepare_images(self):
+    def __prepare_images(self, shape_test, shape_train):
         # Flattening the images from the 150x150 pixels to 1D 787 pixels
-        x_train = self.resize_data(Environment.TRAIN)
-        x_test = self.resize_data(Environment.TEST)
+        x_train = self.resize_data(Environment.TRAIN, shape_train)
+        x_test = self.resize_data(Environment.TEST, shape_test)
 
         self.model.set_x(Environment.TRAIN, x_train)
         self.model.set_x(Environment.TEST, x_test)
@@ -36,14 +37,13 @@ class NeuralNetwork(INeuralNetwork):
 
         return n_classes
 
-    def __build_sequential_model(self, n_classes):
-        shape_train = self.model.get_x(Environment.TRAIN).shape
-
+    def __build_sequential_model(self, n_classes, shape_train):
         # building a linear stack of layers with the sequential model
         sequential_model = Sequential()
 
         # hidden layer
-        sequential_model.add(Dense(100, input_shape=(shape_train[1]*shape_train[2]), activation='relu'))
+        sequential_model.add(Dense(100, input_shape=(shape_train[1]*shape_train[2],), activation='relu'))
+        # sequential_model.add(Dense(100, input_shape=(shape_train[1]), activation='relu'))
 
         # output layer
         sequential_model.add(Dense(n_classes, activation='softmax'))

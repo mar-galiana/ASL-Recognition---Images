@@ -8,6 +8,6 @@ class INeuralNetwork(ABC):
         pass
 
     @abstractmethod
-    def resize_data(self, environment):
+    def resize_data(self, environment, shape):
         pass
 
