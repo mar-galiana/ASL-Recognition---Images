@@ -3,32 +3,23 @@ import joblib
 import numpy as np
 from skimage import io
 from skimage.transform import resize
-from Model.enumerations import Environment, Image
 from sklearn.model_selection import train_test_split
+from Exception.modelException import DatasetException
+from Model.enumerations import Environment, Image, Dataset
 
 
 class OutputModel:
     BASE_PATH = f"{os.getcwd()}/Assets/Dataset/"
-    DATASET_SRC = BASE_PATH + "Gesture_image_data/"
+    IMAGES_SRC = BASE_PATH + "Images/"
     PICKELS_SRC = BASE_PATH + "Pickels/"
 
     def __init__(self, width=150, height=None):
         self.width = width
         self.height = (height, width)[height is None]
 
-    def create_pickle(self, pickel_name, environments_separated, as_gray):
+    def create_pickle(self, pickel_name, dataset, environments_separated, as_gray):
         base_pickle_src = f"{self.PICKELS_SRC}{pickel_name}/"
-
-        data = {
-            'description': f"resized ({int(self.width)}x{int(self.height)}) sign images in rgb"
-        }
-
-        if environments_separated:
-            data[Environment.TEST] = self.__read_images(self.DATASET_SRC + "test/", as_gray)
-            data[Environment.TRAIN] = self.__read_images(self.DATASET_SRC + "train/", as_gray)
-        else:
-            images_data = self.__read_images(self.DATASET_SRC, as_gray)
-            data[Environment.TEST], data[Environment.TRAIN] = self.__split_data_into_test_and_train(images_data)
+        data = self.__get_data(dataset, environments_separated, as_gray)
 
         if not os.path.isdir(base_pickle_src):
             os.mkdir(base_pickle_src)
@@ -43,6 +34,25 @@ class OutputModel:
                                       data[Environment.TRAIN][Image.LABEL.value],
                                       Environment.TRAIN.value,
                                       base_pickle_src)
+
+    def __get_data(self, dataset, environments_separated, as_gray):
+
+        if not isinstance(dataset, Dataset):
+            raise DatasetException("Dataset selected is not a valid one")
+
+        data = {
+            'description': f"resized ({int(self.width)}x{int(self.height)}) sign images from {dataset.value} dataset."
+        }
+
+        image_path = f"{self.IMAGES_SRC}{dataset.value[0]}/"
+        if environments_separated:
+            data[Environment.TEST] = self.__read_images(image_path + "test/", as_gray)
+            data[Environment.TRAIN] = self.__read_images(image_path + "train/", as_gray)
+        else:
+            images_data = self.__read_images(image_path, as_gray)
+            data[Environment.TEST], data[Environment.TRAIN] = self.__split_data_into_test_and_train(images_data)
+
+        return data
 
     @staticmethod
     def __split_data_into_test_and_train(data):

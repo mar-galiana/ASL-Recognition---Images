@@ -3,11 +3,14 @@ from Logger.iLogger import ILogger
 
 class Logger(ILogger):
 
-    def write_message(self, message):
+    @staticmethod
+    def write_message(message):
         print(message)
 
-    def write_info(self, message):
+    @staticmethod
+    def write_info(message):
         print("[INFO]: " + message)
 
-    def write_error(self, message):
+    @staticmethod
+    def write_error(message):
         print("[ERROR]: " + message)

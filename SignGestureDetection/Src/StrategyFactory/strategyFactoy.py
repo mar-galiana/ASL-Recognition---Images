@@ -33,7 +33,7 @@ class ExecutionFactory:
         return strategy_method()
 
     def save_database(self):
-        if len(self.arguments) != 3:
+        if len(self.arguments) != 4:
             raise InputException("This strategy requires arguments to be executed")
 
         self.logger.write_info("Arguments entered: " + ", ".join(self.arguments))

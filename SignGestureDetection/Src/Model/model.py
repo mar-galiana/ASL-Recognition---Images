@@ -6,17 +6,13 @@ from Model.outputModel import OutputModel
 
 
 class Model:
-    BASE_PATH = f"{os.getcwd()}/../Assets/Dataset/"
-    BASE_NAME = "sign_gesture"
-    DATASET_SRC = BASE_PATH + "Gesture_image_data/"
-    PICKELS_SRC = BASE_PATH + "Pickels/"
 
     def __init__(self, width=150, height=None):
         self.output_model = OutputModel(width, height)
         self.input_model = InputModel()
 
-    def create_pickle(self, pickel_name, environments_separated, as_gray):
-        self.output_model.create_pickle(pickel_name, environments_separated, as_gray)
+    def create_pickle(self, pickel_name, dataset, environments_separated, as_gray):
+        self.output_model.create_pickle(pickel_name, dataset, environments_separated, as_gray)
 
     def set_pickel_name(self, name):
         self.input_model.set_pickel_name(name)

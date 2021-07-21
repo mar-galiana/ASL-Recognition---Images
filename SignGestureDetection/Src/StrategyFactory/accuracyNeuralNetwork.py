@@ -37,20 +37,7 @@ class AccuracyNeuralNetwork(IStrategy):
         else:
             raise InputException(self.arguments[1] + " is not a valid neural network")
 
-        return nn, nn_model
-
-    @staticmethod
-    def __input_prepare(shape_train):
-        img_path = f"{os.getcwd()}/../Assets/Dataset/Gesture_image_data/test/0/1.jpg"
-        img = io.imread(img_path, as_gray=True)
-        # resize to target shape
-        img = resize(img, (shape_train[1], shape_train[2]))
-        # normalize
-        img = img / 255
-        # reshaping
-        img = img.reshape(1, shape_train[1]*shape_train[2])
-
-        return img
+        return nn, nn_mode
 
     @staticmethod
     def __get_accuracy(y_pred, y_values):
