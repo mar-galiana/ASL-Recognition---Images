@@ -6,9 +6,9 @@ from Src.Exception.inputOutputException import InputException
 from Src.StrategyFactory.helpStrategy import HelpStrategy
 from Src.StrategyFactory.strategyFactoy import ExecutionFactory
 from Src.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
-from Src.StrategyFactory.trainNeuralNetwork import TrainNeuralNetwork
+from Src.StrategyFactory.trainNeuralNetworkStrategy import TrainNeuralNetworkStrategy
 from Src.StrategyFactory.saveDatabaseStrategy import SaveDatabaseStrategy
-from Src.StrategyFactory.accuracyNeuralNetwork import AccuracyNeuralNetwork
+from Src.StrategyFactory.accuracyNeuralNetworkStrategy import AccuracyNeuralNetwork
 
 
 class TestExecutionFactory(TestCase):
@@ -76,7 +76,7 @@ class TestExecutionFactory(TestCase):
         except InputException:
             raised_exception = True
 
-        self.assertTrue(isinstance(strategy, TrainNeuralNetwork))
+        self.assertTrue(isinstance(strategy, TrainNeuralNetworkStrategy))
         self.assertEqual(self.logger.write_info.call_count, 2)
         self.assertFalse(raised_exception, "Exception has been raised when correct argument has been entered")
 

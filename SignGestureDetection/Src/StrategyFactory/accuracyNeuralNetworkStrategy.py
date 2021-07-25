@@ -12,7 +12,7 @@ from NeuralNetworks.enumerations import NeuralNetworkEnum
 from NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 
 
-class AccuracyNeuralNetwork(IStrategy):
+class AccuracyNeuralNetworkStrategy(IStrategy):
 
     def __init__(self, logger, model, nn_util, arguments):
         self.logger = logger

@@ -17,6 +17,6 @@ if __name__ == '__main__':
         strategy.execute()
 
     except Exception as e:
-        logger.write_error(e.message)
+        logger.write_error(str(e))
 
 

@@ -6,17 +6,19 @@ from NeuralNetworks.enumerations import NeuralNetworkEnum
 from NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 
 
-class TrainNeuralNetwork(IStrategy):
+class TrainNeuralNetworkStrategy(IStrategy):
 
-    def __init__(self, logger, model, nn_util, arguments):
+    def __init__(self, logger, model, nn_util, arguments, model_util):
         self.logger = logger
         self.model = model
         self.nn_util = nn_util
+        self.model_util = model_util
         self.arguments = arguments
 
         self.algorithm_switcher = {
-            NeuralNetworkEnum.CNN.value: ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util),
-            NeuralNetworkEnum.NN.value: NeuralNetwork(self.logger, self.model, self.nn_util),
+            NeuralNetworkEnum.CNN.value: ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util,
+                                                                    self.model_util),
+            NeuralNetworkEnum.NN.value: NeuralNetwork(self.logger, self.model, self.nn_util, self.model_util),
         }
 
     def execute(self):

@@ -52,8 +52,8 @@ class HelpStrategy(IStrategy):
                                   "/sign_gesture_gray_150x150px_train.pkl\n "
                                   "\t  You will have to enter:\n"
                                   "\t\t\tsign_gesture_gray_150x150px\n"
-                                  "\t· The second string specifies the type of Neural Network to use, the possibilities"
-                                  " are:\n"
+                                  "\t· The second string specifies the type of Neural Network to train, "
+                                  "the possibilities are:\n"
                                   "\t\t* nn: Basic Neural Network.\n "
                                   "\t\t* cnn: Convolutional Neural Network.\n\n"
 

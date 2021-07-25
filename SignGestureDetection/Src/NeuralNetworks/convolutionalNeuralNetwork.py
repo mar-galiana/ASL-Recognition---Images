@@ -14,10 +14,11 @@ from NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 
 class ConvolutionalNeuralNetwork(INeuralNetwork):
 
-    def __init__(self, logger, model, nn_util):
+    def __init__(self, logger, model, nn_util, model_util):
         self.model = model
         self.logger = logger
         self.nn_util = nn_util
+        self.model_util = model_util
 
     def resize_data(self, environment, shape):
         x_data = self.model.get_x(environment).reshape(shape[0], shape[1], shape[2], 1)
@@ -38,7 +39,7 @@ class ConvolutionalNeuralNetwork(INeuralNetwork):
         self.model.set_x(Environment.TRAIN, x_train)
         self.model.set_x(Environment.TEST, x_test)
 
-        n_classes = self.nn_util.convert_to_one_hot_data()
+        n_classes = self.model_util.convert_to_one_hot_data()
 
         return n_classes
 

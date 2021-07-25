@@ -4,7 +4,7 @@ from Src.Logger.logger import Logger
 from unittest.mock import Mock, patch
 from Src.Exception.inputOutputException import InputException
 from Src.NeuralNetworks.enumerations import NeuralNetworkEnum
-from Src.StrategyFactory.trainNeuralNetwork import TrainNeuralNetwork
+from Src.StrategyFactory.trainNeuralNetworkStrategy import TrainNeuralNetworkStrategy
 from Src.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 
 
@@ -23,7 +23,7 @@ class TestTrainNeuralNetwork(TestCase):
         raised_exception = False
         arguments = ["nothing"]
         try:
-            self.trainNeuralNetwork = TrainNeuralNetwork(self.logger, self.model, self.nn_util, arguments)
+            self.trainNeuralNetwork = TrainNeuralNetworkStrategy(self.logger, self.model, self.nn_util, arguments)
             self.trainNeuralNetwork.execute()
         except InputException:
             raised_exception = True
@@ -37,7 +37,7 @@ class TestTrainNeuralNetwork(TestCase):
         arguments = [NeuralNetworkEnum.NN.value]
 
         try:
-            self.trainNeuralNetwork = TrainNeuralNetwork(self.logger, self.model, self.nn_util, arguments)
+            self.trainNeuralNetwork = TrainNeuralNetworkStrategy(self.logger, self.model, self.nn_util, arguments)
             self.trainNeuralNetwork.execute()
         except InputException:
             raised_exception = True
@@ -52,7 +52,7 @@ class TestTrainNeuralNetwork(TestCase):
         arguments = [NeuralNetworkEnum.CNN.value]
 
         try:
-            self.saveDatabaseStrategy = TrainNeuralNetwork(self.logger, self.model, self.nn_util, arguments)
+            self.saveDatabaseStrategy = TrainNeuralNetworkStrategy(self.logger, self.model, self.nn_util, arguments)
             self.saveDatabaseStrategy.execute()
         except InputException:
             raised_exception = True

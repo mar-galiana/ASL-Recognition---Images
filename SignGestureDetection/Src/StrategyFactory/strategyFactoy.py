@@ -1,11 +1,13 @@
 from enum import Enum
 from Model.model import Model
+from Model.modelUtil import ModelUtil
 from StrategyFactory.helpStrategy import HelpStrategy
 from Exception.inputOutputException import InputException
 from NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
-from StrategyFactory.trainNeuralNetwork import TrainNeuralNetwork
+from StrategyFactory.decisionTreeStrategy import DecisionTreeStrategy
 from StrategyFactory.saveDatabaseStrategy import SaveDatabaseStrategy
-from StrategyFactory.accuracyNeuralNetwork import AccuracyNeuralNetwork
+from StrategyFactory.trainNeuralNetworkStrategy import TrainNeuralNetworkStrategy
+from StrategyFactory.accuracyNeuralNetworkStrategy import AccuracyNeuralNetworkStrategy
 
 
 class ExecutionFactory:
@@ -16,12 +18,14 @@ class ExecutionFactory:
         self.arguments = arguments
         self.model = Model()
         self.nn_util = NeuralNetworkUtil(self.model)
+        self.model_util = ModelUtil(self.model)
 
         self.strategy_switcher = {
             Strategies.HELP.value: lambda: self.help(),
             Strategies.SAVE_DATABASE.value: lambda: self.save_database(),
             Strategies.TRAIN_NEURAL_NETWORK.value: lambda: self.train_neural_network(),
-            Strategies.ACCURACY_NEURAL_NETWORK.value: lambda: self.get_accuracy_neural_network()
+            Strategies.ACCURACY_NEURAL_NETWORK.value: lambda: self.get_accuracy_neural_network(),
+            Strategies.DECISION_TREE.value: lambda: self.decision_tree()
         }
 
     def get_execution_strategy(self):
@@ -45,7 +49,7 @@ class ExecutionFactory:
 
         self.logger.write_info("Arguments entered: " + ", ".join(self.arguments))
         self.model.set_pickel_name(self.arguments[0])
-        return TrainNeuralNetwork(self.logger, self.model, self.nn_util, self.arguments)
+        return TrainNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.model_util, self.arguments)
 
     def get_accuracy_neural_network(self):
         if len(self.arguments) != 2:
@@ -53,7 +57,15 @@ class ExecutionFactory:
 
         self.logger.write_info("Arguments entered: " + ", ".join(self.arguments))
         self.model.set_pickel_name(self.arguments[0])
-        return AccuracyNeuralNetwork(self.logger, self.model, self.nn_util, self.arguments)
+        return AccuracyNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.model_util, self.arguments)
+
+    def decision_tree(self):
+        if len(self.arguments) != 1:
+            raise InputException("This strategy requires arguments to be executed")
+
+        self.logger.write_info("Arguments entered: " + ", ".join(self.arguments))
+        self.model.set_pickel_name(self.arguments[0])
+        return DecisionTreeStrategy(self.logger, self.model, self.model_util)
 
     def help(self):
         return HelpStrategy(self.logger)
@@ -64,3 +76,4 @@ class Strategies(Enum):
     SAVE_DATABASE = "--saveDatabase"
     TRAIN_NEURAL_NETWORK = "--trainNeuralNetwork"
     ACCURACY_NEURAL_NETWORK = "--accuracyNeuralNetwork"
+    DECISION_TREE = "--decisionTree"

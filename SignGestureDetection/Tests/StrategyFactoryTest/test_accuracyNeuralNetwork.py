@@ -5,7 +5,7 @@ from Src.Logger.logger import Logger
 from unittest.mock import Mock, patch
 from Src.Exception.inputOutputException import InputException
 from Src.NeuralNetworks.enumerations import NeuralNetworkEnum
-from Src.StrategyFactory.accuracyNeuralNetwork import AccuracyNeuralNetwork
+from Src.StrategyFactory.accuracyNeuralNetworkStrategy import AccuracyNeuralNetwork
 
 
 class TestAccuracyNeuralNetwork(TestCase):
