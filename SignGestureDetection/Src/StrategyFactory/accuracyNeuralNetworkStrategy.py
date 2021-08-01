@@ -2,7 +2,7 @@ import os
 import numpy as np
 from skimage import io
 from skimage.transform import resize
-from keras.preprocessing import image
+from tensorflow.python.keras.preprocessing import image
 from sklearn.metrics import accuracy_score
 from Model.enumerations import Environment
 from StrategyFactory.iStrategy import IStrategy

@@ -1,6 +1,6 @@
 import numpy as np
 from tensorflow import keras
-from keras.utils import np_utils
+from tensorflow.python.keras.utils import np_utils
 from Model.enumerations import Environment
 from sklearn.preprocessing import LabelEncoder
 from Exception.modelException import EnvironmentException

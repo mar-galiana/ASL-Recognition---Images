@@ -4,11 +4,11 @@ of working with image data in 2D.
 """
 
 import numpy as np
-from keras.models import Sequential
+from tensorflow.python.keras.models import Sequential
 from Model.enumerations import Environment
 from NeuralNetworks.iNeuralNetwork import INeuralNetwork
 from NeuralNetworks.enumerations import NeuralNetworkEnum
-from keras.layers import Dense, Conv2D, MaxPool2D, Flatten
+from tensorflow.python.keras.layers import Dense, Conv2D, MaxPool2D, Flatten
 from NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 
 

@@ -1,7 +1,7 @@
 import os
 import numpy as np
 from tensorflow import keras
-from keras.utils import np_utils
+from tensorflow.python.keras.utils import np_utils
 from Model.enumerations import Environment
 from NeuralNetworks.enumerations import NeuralNetworkEnum
 from Exception.modelException import EnvironmentException
