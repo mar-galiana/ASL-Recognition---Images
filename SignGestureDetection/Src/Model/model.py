@@ -18,7 +18,7 @@ class Model:
         self.input_model.set_pickel_name(name)
 
     def get_pickel_name(self):
-        return self.input_model.pickel_name
+        return self.input_model.get_pickel_name()
 
     def get_x(self, environment):
         data = self.input_model.get_data(environment)

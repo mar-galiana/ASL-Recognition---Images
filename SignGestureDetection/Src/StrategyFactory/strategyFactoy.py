@@ -3,6 +3,7 @@ from Model.model import Model
 from Model.modelUtil import ModelUtil
 from StrategyFactory.helpStrategy import HelpStrategy
 from Exception.inputOutputException import InputException
+from DecisionTree.decisionTreeUtil import DecisionTreeUtil
 from NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 from StrategyFactory.decisionTreeStrategy import DecisionTreeStrategy
 from StrategyFactory.saveDatabaseStrategy import SaveDatabaseStrategy
@@ -19,6 +20,7 @@ class ExecutionFactory:
         self.model = Model()
         self.nn_util = NeuralNetworkUtil(self.model)
         self.model_util = ModelUtil(self.model)
+        self.decision_tree_util = DecisionTreeUtil(self.model)
 
         self.strategy_switcher = {
             Strategies.HELP.value: lambda: self.help(),
@@ -65,7 +67,7 @@ class ExecutionFactory:
 
         self.logger.write_info("Arguments entered: " + ", ".join(self.arguments))
         self.model.set_pickel_name(self.arguments[0])
-        return DecisionTreeStrategy(self.logger, self.model, self.model_util)
+        return DecisionTreeStrategy(self.logger, self.model, self.decision_tree_util, self.model_util)
 
     def help(self):
         return HelpStrategy(self.logger)

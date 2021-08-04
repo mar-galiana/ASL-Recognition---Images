@@ -3,22 +3,20 @@ import joblib
 import numpy as np
 from skimage import io
 from skimage.transform import resize
+from path import IMAGES_PATH, PICKELS_PATH
 from sklearn.model_selection import train_test_split
 from Exception.modelException import DatasetException
 from Model.enumerations import Environment, Image, Dataset
 
 
 class OutputModel:
-    BASE_PATH = f"{os.getcwd()}/../Assets/Dataset/"
-    IMAGES_SRC = BASE_PATH + "Images/"
-    PICKELS_SRC = BASE_PATH + "Pickels/"
 
     def __init__(self, width=150, height=None):
         self.width = width
         self.height = (height, width)[height is None]
 
     def create_pickle(self, pickel_name, dataset, environments_separated, as_gray):
-        base_pickle_src = f"{self.PICKELS_SRC}{pickel_name}/"
+        base_pickle_src = f"{PICKELS_PATH}{pickel_name}/"
         data = self.__get_data(dataset, environments_separated, as_gray)
 
         if not os.path.isdir(base_pickle_src):
@@ -44,7 +42,7 @@ class OutputModel:
             'description': f"resized ({int(self.width)}x{int(self.height)}) sign images from {dataset.value} dataset."
         }
 
-        image_path = f"{self.IMAGES_SRC}{dataset.value}/"
+        image_path = f"{IMAGES_PATH}{dataset.value}/"
         if environments_separated:
             data[Environment.TEST] = self.__read_images(image_path + "test/", as_gray)
             data[Environment.TRAIN] = self.__read_images(image_path + "train/", as_gray)

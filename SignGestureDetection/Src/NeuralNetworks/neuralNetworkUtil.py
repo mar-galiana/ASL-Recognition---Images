@@ -1,8 +1,9 @@
 import os
 import numpy as np
 from tensorflow import keras
-from tensorflow.python.keras.utils import np_utils
 from Model.enumerations import Environment
+from path import NEURAL_NETWORK_MODEL_PATH
+from tensorflow.python.keras.utils import np_utils
 from NeuralNetworks.enumerations import NeuralNetworkEnum
 from Exception.modelException import EnvironmentException
 
@@ -10,15 +11,15 @@ from Exception.modelException import EnvironmentException
 class NeuralNetworkUtil:
 
     def __init__(self, model):
-        self.KERAS_MODEL_BASE_PATH = f"{os.getcwd()}/../Assets/NeuralNetworkModel/"
         self.model = model
 
     def train_model(self, sequential_model):
         # looking at the model summary
-        sequential_model.summary()
+        # sequential_model.summary()
 
         # compiling the sequential model
         sequential_model.compile(loss='categorical_crossentropy', metrics=['accuracy'], optimizer='adam')
+        print("compile done")
 
         # training the model for 10 epochs
         sequential_model.fit(self.model.get_x(Environment.TRAIN),
@@ -26,7 +27,7 @@ class NeuralNetworkUtil:
                              batch_size=128,
                              epochs=10,
                              validation_data=(self.model.get_x(Environment.TEST), self.model.get_y(Environment.TEST)))
-
+        print("fit done")
         return sequential_model
 
     def save_keras_model(self, sequential_model, neural_network_type):
@@ -40,8 +41,8 @@ class NeuralNetworkUtil:
             raise EnvironmentException("Environment used is not a valid one")
 
         if NeuralNetworkEnum.CNN == neural_network_type:
-            file_name = f"cnn_{self.model.get_pickel_name()}_model"
+            file_name = "cnn_" + self.model.get_pickel_name() + "_model"
         else:
-            file_name = f"nn_{self.model.get_pickel_name()}_model"
+            file_name = "nn_" + self.model.get_pickel_name() + "_model"
 
-        return self.KERAS_MODEL_BASE_PATH + file_name + ".h5"
+        return NEURAL_NETWORK_MODEL_PATH + file_name + ".h5"

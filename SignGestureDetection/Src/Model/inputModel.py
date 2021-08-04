@@ -1,29 +1,29 @@
 import os
 import joblib
 import numpy as np
+from path import PICKELS_PATH
 from Model.enumerations import Environment, Image
 from Exception.modelException import EnvironmentException
 from Exception.inputOutputException import PathDoesNotExistException
 
 
 class InputModel:
-    BASE_PATH = f"{os.getcwd()}/../Assets/Dataset/"
-    PICKELS_SRC = BASE_PATH + "Pickels/"
 
     def __init__(self):
         self.__train_data = None
         self.__test_data = None
         self.pickel_name = "sign_gesture"
-        self.base_pickle_src = f"{self.PICKELS_SRC}sign_gesture/sign_gesture_%s.pkl"
+        self.base_pickle_src = f"{PICKELS_PATH}{self.pickel_name}/{self.pickel_name}_%s.pkl"
 
     def __read_data(self, environment):
 
         pickle_src = self.base_pickle_src % environment.value
+        print(pickle_src)
 
         if os.path.exists(pickle_src):
             data = joblib.load(pickle_src)
         else:
-            raise PathDoesNotExistException("The pickle needs to exists before using it")
+            raise PathDoesNotExistException("The pickle needs to exists before using it hh")
 
         return data
 
@@ -63,4 +63,7 @@ class InputModel:
 
     def set_pickel_name(self, pickel_name):
         self.pickel_name = pickel_name
-        self.base_pickle_src = f"{self.PICKELS_SRC}{self.pickel_name}/{self.pickel_name}_%s.pkl"
+        self.base_pickle_src = f"{PICKELS_PATH}{pickel_name}/{pickel_name}_%s.pkl"
+
+    def get_pickel_name(self):
+        return self.pickel_name

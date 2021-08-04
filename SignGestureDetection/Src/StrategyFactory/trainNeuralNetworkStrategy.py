@@ -8,7 +8,7 @@ from NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 
 class TrainNeuralNetworkStrategy(IStrategy):
 
-    def __init__(self, logger, model, nn_util, arguments, model_util):
+    def __init__(self, logger, model, nn_util, model_util, arguments):
         self.logger = logger
         self.model = model
         self.nn_util = nn_util
