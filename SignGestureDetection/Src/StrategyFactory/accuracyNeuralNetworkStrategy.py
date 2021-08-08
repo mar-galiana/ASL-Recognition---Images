@@ -18,7 +18,19 @@ class AccuracyNeuralNetworkStrategy(IStrategy):
         self.logger = logger
         self.model = model
         self.nn_util = nn_util
-        self.arguments = arguments
+        self.__show_arguments_entered(arguments)
+
+        if arguments[0] not in NeuralNetworkEnum:
+            raise InputException(self.arguments[0] + " is not a valid neural network")
+
+        self.type_nn = NeuralNetworkEnum[arguments[0]]
+        self.name_nn_model = arguments[1]
+
+    def __show_arguments_entered(self, arguments):
+        info_arguments = "Arguments entered:\n" \
+                         "\t* Neural Network type: " + arguments[0] + "\n" \
+                         "\t* Neural Network model file: " + arguments[1]
+        self.logger.write_info(info_arguments)
 
     def execute(self):
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -28,15 +40,12 @@ class AccuracyNeuralNetworkStrategy(IStrategy):
         self.logger.write_info("Strategy executed successfully")
 
     def __get_neural_network_model(self):
-        if self.arguments[1] == NeuralNetworkEnum.CNN.value:
+        if self.type_nn == NeuralNetworkEnum.CNN:
             nn = ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util)
-            nn_model = self.nn_util.load_keras_model(NeuralNetworkEnum.CNN)
-        elif self.arguments[1] == NeuralNetworkEnum.NN.value:
-            nn = NeuralNetwork(self.logger, self.model, self.nn_util)
-            nn_model = self.nn_util.load_keras_model(NeuralNetworkEnum.NN)
         else:
-            raise InputException(self.arguments[1] + " is not a valid neural network")
+            nn = NeuralNetwork(self.logger, self.model, self.nn_util)
 
+        nn_model = self.nn_util.load_keras_model(self.name_nn_model)
         return nn, nn_model
 
     @staticmethod

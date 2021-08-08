@@ -12,18 +12,34 @@ class InputModel:
     def __init__(self):
         self.__train_data = None
         self.__test_data = None
-        self.pickel_name = "sign_gesture"
-        self.base_pickle_src = f"{PICKELS_PATH}{self.pickel_name}/{self.pickel_name}_%s.pkl"
+        self.pickels_name = []
+        self.base_pickle_src = f"{PICKELS_PATH}%s/%s_%s.pkl"
 
     def __read_data(self, environment):
+        data = {
+            Image.DESCRIPTION.value: "",
+            Image.DATA.value: list(),
+            Image.LABEL.value: list()
+        }
 
-        pickle_src = self.base_pickle_src % environment.value
-        print(pickle_src)
+        for pickel_name in self.pickels_name:
 
-        if os.path.exists(pickle_src):
-            data = joblib.load(pickle_src)
-        else:
-            raise PathDoesNotExistException("The pickle needs to exists before using it hh")
+            pickle_src = self.base_pickle_src % (pickel_name, pickel_name, environment.value)
+
+            if not os.path.exists(pickle_src):
+                raise PathDoesNotExistException("The pickle needs to exists before using it hh")
+
+            actual_pickel_data = joblib.load(pickle_src)
+
+            if len(data[Image.DATA.value]) == 0:
+                data[Image.DATA.value] = actual_pickel_data[Image.DATA.value]
+                data[Image.LABEL.value] = actual_pickel_data[Image.LABEL.value]
+                data[Image.DESCRIPTION.value] = actual_pickel_data[Image.DESCRIPTION.value]
+
+            else:
+                data[Image.DATA.value] += actual_pickel_data[Image.DATA.value]
+                data[Image.LABEL.value] += actual_pickel_data[Image.LABEL.value]
+                data[Image.DESCRIPTION.value] += "; " + actual_pickel_data[Image.DESCRIPTION.value]
 
         return data
 
@@ -61,9 +77,8 @@ class InputModel:
         else:
             self.__test_data[Image.LABEL.value] = label
 
-    def set_pickel_name(self, pickel_name):
-        self.pickel_name = pickel_name
-        self.base_pickle_src = f"{PICKELS_PATH}{pickel_name}/{pickel_name}_%s.pkl"
+    def set_pickels_name(self, pickels_name):
+        self.pickels_name = pickels_name
 
-    def get_pickel_name(self):
-        return self.pickel_name
+    def get_pickels_name(self):
+        return "-".join(self.pickels_name)

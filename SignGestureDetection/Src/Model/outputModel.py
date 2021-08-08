@@ -39,7 +39,8 @@ class OutputModel:
             raise DatasetException("Dataset selected is not a valid one")
 
         data = {
-            'description': f"resized ({int(self.width)}x{int(self.height)}) sign images from {dataset.value} dataset."
+            Image.DESCRIPTION.value: f"resized ({int(self.width)}x{int(self.height)}) sign images from {dataset.value} "
+                                     f"dataset. "
         }
 
         image_path = f"{IMAGES_PATH}{dataset.value}/"
@@ -87,7 +88,7 @@ class OutputModel:
 
     def __write_data_into_pickle(self, x, y, environment, base_pickle_src):
         environment_data = {
-            'description': f"resized ({int(self.width)}x{int(self.height)}) {environment}ing sign images in rgb ",
+            Image.DESCRIPTION.value: f"resized ({int(self.width)}x{int(self.height)}) {environment}ing sign images.",
             Image.LABEL.value: y,
             Image.DATA.value: x
         }

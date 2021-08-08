@@ -12,7 +12,13 @@ class AccuracyDecisionTreeStrategy(IStrategy):
         self.logger = logger
         self.model = model
         self.dt_util = dt_util
-        self.arguments = arguments
+        self.__show_arguments_entered(arguments)
+        self.name_dt_model = arguments[0]
+
+    def __show_arguments_entered(self, arguments):
+        info_arguments = "Arguments entered:\n" \
+                         "\t* Decision Tree model file: " + arguments[0]
+        self.logger.write_info(info_arguments)
 
     def execute(self):
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
@@ -24,7 +30,7 @@ class AccuracyDecisionTreeStrategy(IStrategy):
     def __get_decision_tree_model(self):
 
         decision_tree = DecisionTree(self.logger, self.model, self.dt_util)
-        xgboost_model = self.dt_util.read_decision_tree_model()
+        xgboost_model = self.dt_util.read_decision_tree_model(self.name_dt_model)
         return decision_tree, xgboost_model
 
     @staticmethod

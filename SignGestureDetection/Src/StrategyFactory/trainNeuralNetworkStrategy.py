@@ -13,7 +13,10 @@ class TrainNeuralNetworkStrategy(IStrategy):
         self.model = model
         self.nn_util = nn_util
         self.model_util = model_util
-        self.arguments = arguments
+        self.__show_arguments_entered(arguments)
+
+        self.nn_type = arguments[0]
+        self.pickels = arguments[1:]
 
         self.algorithm_switcher = {
             NeuralNetworkEnum.CNN.value: ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util,
@@ -21,13 +24,21 @@ class TrainNeuralNetworkStrategy(IStrategy):
             NeuralNetworkEnum.NN.value: NeuralNetwork(self.logger, self.model, self.nn_util, self.model_util),
         }
 
+    def __show_arguments_entered(self, arguments):
+        info_arguments = "Arguments entered:\n" \
+                         "\t* Neural Network type: " + arguments[0] + "\n" \
+                         "\t* Pickels selected: " + ", ".join(arguments[1:])
+        self.logger.write_info(info_arguments)
+
     def execute(self):
-        if self.arguments[1] not in self.algorithm_switcher:
-            raise InputException(self.arguments[1] + " is not a valid strategy")
+        if self.nn_type not in self.algorithm_switcher:
+            raise InputException(self.nn_type + " is not a valid strategy")
 
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-        algorithm_execution = self.algorithm_switcher.get(self.arguments[1])
+        self.model.set_pickels_name(self.pickels)
+
+        algorithm_execution = self.algorithm_switcher.get(self.nn_type)
         algorithm_execution.execute()
 
         self.logger.write_info("Strategy executed successfully")

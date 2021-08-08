@@ -20,6 +20,7 @@ class DecisionTree:
         return x_data
 
     def train_model(self):
+        self.logger.write_info("Start training model")
         labels_dict = self.dt_util.get_labels_dictionary()
 
         x_train = self.resize_data(Environment.TRAIN, self.model.get_x(Environment.TRAIN).shape)

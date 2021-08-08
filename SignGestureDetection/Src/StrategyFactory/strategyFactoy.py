@@ -19,9 +19,9 @@ class ExecutionFactory:
         self.execution_strategy = strategy
         self.arguments = arguments
         self.model = Model()
-        self.nn_util = NeuralNetworkUtil(self.model)
         self.model_util = ModelUtil(self.model)
-        self.decision_tree_util = DecisionTreeUtil(self.model)
+        self.nn_util = NeuralNetworkUtil(self.logger, self.model)
+        self.decision_tree_util = DecisionTreeUtil(self.logger, self.model)
 
         self.strategy_switcher = {
             Strategies.HELP.value: lambda: self.help(),
@@ -42,41 +42,34 @@ class ExecutionFactory:
 
     def save_database(self):
         if len(self.arguments) != 4:
-            raise InputException("This strategy requires arguments to be executed")
+            raise InputException("This strategy requires four arguments to be executed")
 
-        self.logger.write_info("Arguments entered: " + ", ".join(self.arguments))
         return SaveDatabaseStrategy(self.logger, self.model, self.arguments)
 
     def train_neural_network(self):
-        if len(self.arguments) != 2:
-            raise InputException("This strategy requires arguments to be executed")
+        if len(self.arguments) < 2:
+            raise InputException("This strategy requires two or more arguments to be executed")
 
-        self.logger.write_info("Arguments entered: " + ", ".join(self.arguments))
-        self.model.set_pickel_name(self.arguments[0])
         return TrainNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.model_util, self.arguments)
 
     def get_accuracy_neural_network(self):
         if len(self.arguments) != 2:
-            raise InputException("This strategy requires arguments to be executed")
+            raise InputException("This strategy requires two arguments to be executed")
 
-        self.logger.write_info("Arguments entered: " + ", ".join(self.arguments))
-        self.model.set_pickel_name(self.arguments[0])
         return AccuracyNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.model_util, self.arguments)
 
     def decision_tree(self):
-        if len(self.arguments) != 1:
-            raise InputException("This strategy requires arguments to be executed")
+        if len(self.arguments) < 1:
+            raise InputException("This strategy requires one or more arguments to be executed")
 
-        self.logger.write_info("Arguments entered: " + ", ".join(self.arguments))
-        self.model.set_pickel_name(self.arguments[0])
-        return DecisionTreeStrategy(self.logger, self.model, self.decision_tree_util, self.model_util)
+        return DecisionTreeStrategy(self.logger, self.model, self.decision_tree_util, self.model_util, self.arguments)
 
     def get_accuracy_decision_tree(self):
         if len(self.arguments) != 1:
-            raise InputException("This strategy requires arguments to be executed")
+            raise InputException("This strategy requires one argument to be executed")
 
         self.logger.write_info("Arguments entered: " + ", ".join(self.arguments))
-        self.model.set_pickel_name(self.arguments[0])
+        self.model.set_pickels_name(self.arguments[0])
         return AccuracyDecisionTreeStrategy(self.logger, self.model, self.decision_tree_util, self.arguments)
 
     def help(self):

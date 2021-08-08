@@ -14,11 +14,11 @@ class Model:
     def create_pickle(self, pickel_name, dataset, environments_separated, as_gray):
         self.output_model.create_pickle(pickel_name, dataset, environments_separated, as_gray)
 
-    def set_pickel_name(self, name):
-        self.input_model.set_pickel_name(name)
+    def set_pickels_name(self, names):
+        self.input_model.set_pickels_name(names)
 
     def get_pickel_name(self):
-        return self.input_model.get_pickel_name()
+        return self.input_model.get_pickels_name()
 
     def get_x(self, environment):
         data = self.input_model.get_data(environment)

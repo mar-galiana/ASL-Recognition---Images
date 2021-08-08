@@ -6,7 +6,8 @@ from Model.enumerations import Environment
 
 class DecisionTreeUtil:
 
-    def __init__(self, model):
+    def __init__(self, logger, model):
+        self.logger = logger
         self.model = model
 
     def get_labels_dictionary(self):
@@ -25,14 +26,18 @@ class DecisionTreeUtil:
         return labels
 
     def save_decision_tree_model(self, xgboost_model):
-        file_name = self.__get_keras_model_path()
-        pickle.dump(xgboost_model, open(file_name, "wb"))
+        model_name = self.__get_keras_model_path()
+        pickle.dump(xgboost_model, open(model_name, "wb"))
+        self.logger.write_info("A new decision tree model has been created with the name of: " + model_name + ".\nThis "
+                               "is the name that will be needed in the other strategies if you want to work with this "
+                               "model.")
 
-    def read_decision_tree_model(self):
-        file_name = self.__get_keras_model_path()
+    @staticmethod
+    def read_decision_tree_model(name_dt_model):
+        file_name = DECISION_TREE_MODEL_PATH + name_dt_model
         xgboost_model = pickle.load(open(file_name, "rb"))
         return xgboost_model
 
     def __get_keras_model_path(self):
-        file_name = self.model.get_pickel_name() + "_model"
+        file_name = self.model.get_pickels_name() + "_model"
         return DECISION_TREE_MODEL_PATH + file_name + ".pickle.dat"

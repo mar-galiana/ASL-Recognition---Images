@@ -9,8 +9,10 @@ class Environment(Enum):
 class Image(Enum):
     LABEL = "label"
     DATA = "data"
+    DESCRIPTION = "description"
 
 
 class Dataset(Enum):
-    ORIGINAL = "GestureImageData"
-    OPTIMIZED = "GestureImagePreProcessedData"
+    GESTURE_IMAGE_DATA = "GestureImageData"
+    GESTURE_IMAGE_PRE_PROCESSED_DATA = "GestureImagePreProcessedData"
+    ASL_ALPHABET = "AslAlphabet"
