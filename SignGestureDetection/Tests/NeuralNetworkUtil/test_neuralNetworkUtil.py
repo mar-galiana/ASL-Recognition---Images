@@ -3,11 +3,10 @@ from unittest import TestCase
 from unittest.mock import Mock
 from Src.Model.model import Model
 from keras.models import Sequential
-from Src.Logger.logger import Logger
 from Src.Model.enumerations import Environment
 from Src.Exception.modelException import EnvironmentException
-from Src.NeuralNetworks.enumerations import NeuralNetworkEnum
-from Src.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
+from Src.Structures.NeuralNetworks.enumerations import NeuralNetworkEnum
+from Src.Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 
 
 class TestNeuralNetworkUtil(TestCase):

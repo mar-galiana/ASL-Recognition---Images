@@ -4,8 +4,8 @@ from Model.model import Model
 from Logger.logger import Logger
 from unittest.mock import Mock, patch
 from Model.enumerations import Environment
-from NeuralNetworks.neuralNetwork import NeuralNetwork
-from NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
+from Structures.NeuralNetworks.neuralNetwork import NeuralNetwork
+from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 
 
 class TestNeuralNetwork(TestCase):

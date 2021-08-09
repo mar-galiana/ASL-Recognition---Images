@@ -6,10 +6,10 @@ from tensorflow.python.keras.preprocessing import image
 from sklearn.metrics import accuracy_score
 from Model.enumerations import Environment
 from StrategyFactory.iStrategy import IStrategy
-from NeuralNetworks.neuralNetwork import NeuralNetwork
+from Structures.NeuralNetworks.neuralNetwork import NeuralNetwork
 from Exception.inputOutputException import InputException
-from NeuralNetworks.enumerations import NeuralNetworkEnum
-from NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
+from Structures.NeuralNetworks.enumerations import NeuralNetworkEnum
+from Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 
 
 class AccuracyNeuralNetworkStrategy(IStrategy):

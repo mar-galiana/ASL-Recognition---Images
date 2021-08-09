@@ -3,8 +3,8 @@ from Model.model import Model
 from Model.modelUtil import ModelUtil
 from StrategyFactory.helpStrategy import HelpStrategy
 from Exception.inputOutputException import InputException
-from DecisionTree.decisionTreeUtil import DecisionTreeUtil
-from NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
+from Structures.DecisionTree.decisionTreeUtil import DecisionTreeUtil
+from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 from StrategyFactory.decisionTreeStrategy import DecisionTreeStrategy
 from StrategyFactory.saveDatabaseStrategy import SaveDatabaseStrategy
 from StrategyFactory.trainNeuralNetworkStrategy import TrainNeuralNetworkStrategy

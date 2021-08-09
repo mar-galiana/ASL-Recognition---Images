@@ -1,6 +1,6 @@
 import numpy as np
 from StrategyFactory.iStrategy import IStrategy
-from DecisionTree.decisionTree import DecisionTree
+from Structures.DecisionTree.decisionTree import DecisionTree
 
 
 class DecisionTreeStrategy(IStrategy):

@@ -9,7 +9,8 @@ class InputException(Exception):
         if len(message) > 0:
             message = message[0].lower() + message[1:]
 
-        self.message = "Error in the input arguments, " + message + "."
+        self.message = "Error in the input arguments, " + message + ".\n" \
+                       "To more information execute the help strategy: --help."
         super().__init__(self.message)
 
 

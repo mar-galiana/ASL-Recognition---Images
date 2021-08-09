@@ -1,9 +1,9 @@
 import os
 from StrategyFactory.iStrategy import IStrategy
-from NeuralNetworks.neuralNetwork import NeuralNetwork
+from Structures.NeuralNetworks.neuralNetwork import NeuralNetwork
 from Exception.inputOutputException import InputException
-from NeuralNetworks.enumerations import NeuralNetworkEnum
-from NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
+from Structures.NeuralNetworks.enumerations import NeuralNetworkEnum
+from Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 
 
 class TrainNeuralNetworkStrategy(IStrategy):
@@ -39,6 +39,6 @@ class TrainNeuralNetworkStrategy(IStrategy):
         self.model.set_pickels_name(self.pickels)
 
         algorithm_execution = self.algorithm_switcher.get(self.nn_type)
-        algorithm_execution.execute()
+        algorithm_execution.train_neural_network()
 
         self.logger.write_info("Strategy executed successfully")

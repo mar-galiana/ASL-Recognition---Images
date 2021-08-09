@@ -3,7 +3,7 @@ import numpy as np
 from sklearn.metrics import accuracy_score
 from Model.enumerations import Environment
 from StrategyFactory.iStrategy import IStrategy
-from DecisionTree.decisionTree import DecisionTree
+from Structures.DecisionTree.decisionTree import DecisionTree
 
 
 class AccuracyDecisionTreeStrategy(IStrategy):
@@ -24,7 +24,7 @@ class AccuracyDecisionTreeStrategy(IStrategy):
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
         decision_tree, xgboost_model = self.__get_decision_tree_model()
         self.__perform_test_data(decision_tree, xgboost_model)
-        decision_tree.show_decision_tree(xgboost_model)
+        self.dt_util.show_decision_tree(xgboost_model)
         self.logger.write_info("Strategy executed successfully")
 
     def __get_decision_tree_model(self):

@@ -32,11 +32,3 @@ class DecisionTree:
         xgboost_model.fit(x_train, y_train, verbose=True, eval_set=[(x_test, y_test)])
 
         return xgboost_model
-
-    @staticmethod
-    def show_decision_tree(xgboost_model):
-        plot_tree(xgboost_model)
-        fig = plt.gcf()
-        fig.set_size_inches(30, 15)
-        fig.savefig('tree.png')
-        plt.show()

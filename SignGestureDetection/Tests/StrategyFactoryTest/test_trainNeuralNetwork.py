@@ -3,9 +3,9 @@ from Src.Model.model import Model
 from Src.Logger.logger import Logger
 from unittest.mock import Mock, patch
 from Src.Exception.inputOutputException import InputException
-from Src.NeuralNetworks.enumerations import NeuralNetworkEnum
+from Src.Structures.NeuralNetworks.enumerations import NeuralNetworkEnum
 from Src.StrategyFactory.trainNeuralNetworkStrategy import TrainNeuralNetworkStrategy
-from Src.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
+from Src.Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 
 
 class TestTrainNeuralNetwork(TestCase):

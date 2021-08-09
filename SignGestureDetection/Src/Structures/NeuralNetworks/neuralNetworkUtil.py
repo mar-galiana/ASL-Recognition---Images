@@ -4,12 +4,13 @@ from tensorflow import keras
 from Model.enumerations import Environment
 from path import NEURAL_NETWORK_MODEL_PATH
 from tensorflow.python.keras.utils import np_utils
-from NeuralNetworks.enumerations import NeuralNetworkEnum
 from Exception.modelException import EnvironmentException
+from Structures.iUtilStructure import IUtilStructure, Structure
+from Structures.NeuralNetworks.enumerations import NeuralNetworkEnum
 from Exception.inputOutputException import PathDoesNotExistException
 
 
-class NeuralNetworkUtil:
+class NeuralNetworkUtil(IUtilStructure):
 
     def __init__(self, logger, model):
         self.logger = logger
@@ -17,11 +18,10 @@ class NeuralNetworkUtil:
 
     def train_model(self, sequential_model):
         # looking at the model summary
-        # sequential_model.summary()
+        sequential_model.summary()
 
         # compiling the sequential model
         sequential_model.compile(loss='categorical_crossentropy', metrics=['accuracy'], optimizer='adam')
-        print("compile done")
 
         # training the model for 10 epochs
         sequential_model.fit(self.model.get_x(Environment.TRAIN),
@@ -29,23 +29,32 @@ class NeuralNetworkUtil:
                              batch_size=128,
                              epochs=10,
                              validation_data=(self.model.get_x(Environment.TEST), self.model.get_y(Environment.TEST)))
-        print("fit done")
+
         return sequential_model
 
     def load_keras_model(self, name_nn_model):
         nn_model_path = NEURAL_NETWORK_MODEL_PATH + name_nn_model
 
         if not os.path.exists(nn_model_path):
-            raise PathDoesNotExistException("The pickle needs to exists before using it hh")
+            raise PathDoesNotExistException("The model needs to exists to be able to use it")
+
+        pickels = super(NeuralNetworkUtil, self).get_pickels_used(Structure.DecisionTree, name_nn_model)
+        self.model.set_pickels_name(pickels)
 
         return keras.models.load_model(nn_model_path)
 
     def save_keras_model(self, sequential_model, neural_network_type):
-        model_name = self.__get_keras_model_path(neural_network_type)
-        sequential_model.save(model_name)
-        self.logger.write_info("A new decision tree model has been created with the name of: " + model_name + ".\nThis "
-                               "is the name that will be needed in the other strategies if you want to work with this "
-                               "model.")
+        model_path, model_name = self.__get_keras_model_path(neural_network_type)
+
+        sequential_model.save(model_path + model_name)
+
+        super(NeuralNetworkUtil, self).save_pickels_used(Structure.NeuralNetwork, self.model.get_pickels_name(),
+                                                         model_name)
+
+        self.logger.write_info("A new decision tree model has been created with the name of: " + model_name + "\n"
+                               "In the path: " + model_path + "\n"
+                               "This is the name that will be needed in the other strategies if you want to work with "
+                               "this model.")
 
     def __get_keras_model_path(self, neural_network_type):
         if not isinstance(neural_network_type, NeuralNetworkEnum):
@@ -56,4 +65,4 @@ class NeuralNetworkUtil:
         else:
             file_name = "nn_" + self.model.get_pickels_name() + "_model"
 
-        return NEURAL_NETWORK_MODEL_PATH + file_name + ".h5"
+        return NEURAL_NETWORK_MODEL_PATH, file_name + ".h5"

@@ -2,10 +2,10 @@ import numpy as np
 from unittest import TestCase
 from Src.Model.model import Model
 from Src.Logger.logger import Logger
-from unittest.mock import Mock, patch
+from unittest.mock import Mock
 from Src.Model.enumerations import Environment
-from Src.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
-from Src.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
+from Src.Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
+from Src.Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 
 
 class TestConvolutionalNeuralNetwork(TestCase):

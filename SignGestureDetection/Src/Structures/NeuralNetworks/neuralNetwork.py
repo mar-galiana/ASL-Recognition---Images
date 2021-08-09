@@ -2,9 +2,9 @@ import numpy as np
 from tensorflow.python.keras.layers import Dense
 from tensorflow.python.keras.models import Sequential
 from Model.enumerations import Environment
-from NeuralNetworks.iNeuralNetwork import INeuralNetwork
-from NeuralNetworks.enumerations import NeuralNetworkEnum
-from NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
+from Structures.NeuralNetworks.iNeuralNetwork import INeuralNetwork
+from Structures.NeuralNetworks.enumerations import NeuralNetworkEnum
+from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 
 
 class NeuralNetwork(INeuralNetwork):
@@ -22,7 +22,7 @@ class NeuralNetwork(INeuralNetwork):
             x_data = self.model.get_x(environment).reshape(shape[0], shape[1]*shape[2])
         return x_data
 
-    def execute(self):
+    def train_neural_network(self):
         shape_train = self.model.get_x(Environment.TRAIN).shape
         shape_test = self.model.get_x(Environment.TEST).shape
         n_classes = self.__prepare_images(shape_test, shape_train)
@@ -44,7 +44,7 @@ class NeuralNetwork(INeuralNetwork):
         # building a linear stack of layers with the sequential model
         sequential_model = Sequential()
         # hidden layer
-        if len(shape) > 3:
+        if len(shape_train) > 3:
             sequential_model.add(Dense(100, input_shape=(shape_train[1]*shape_train[2], shape_train[3]),
                                        activation='relu'))
         else:

@@ -1,11 +1,9 @@
 from unittest import TestCase
-from Src.Model.model import Model
 from Src.Logger.logger import Logger
-from unittest.mock import Mock, patch
+from unittest.mock import Mock
 from Src.Exception.inputOutputException import InputException
 from Src.StrategyFactory.helpStrategy import HelpStrategy
 from Src.StrategyFactory.strategyFactoy import ExecutionFactory
-from Src.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 from Src.StrategyFactory.trainNeuralNetworkStrategy import TrainNeuralNetworkStrategy
 from Src.StrategyFactory.saveDatabaseStrategy import SaveDatabaseStrategy
 from Src.StrategyFactory.accuracyNeuralNetworkStrategy import AccuracyNeuralNetwork

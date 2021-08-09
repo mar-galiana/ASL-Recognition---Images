@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 class INeuralNetwork(ABC):
 
     @abstractmethod
-    def execute(self):
+    def train_neural_network(self):
         pass
 
     @abstractmethod

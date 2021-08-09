@@ -6,10 +6,10 @@ of working with image data in 2D.
 import numpy as np
 from tensorflow.python.keras.models import Sequential
 from Model.enumerations import Environment
-from NeuralNetworks.iNeuralNetwork import INeuralNetwork
-from NeuralNetworks.enumerations import NeuralNetworkEnum
+from Structures.NeuralNetworks.iNeuralNetwork import INeuralNetwork
+from Structures.NeuralNetworks.enumerations import NeuralNetworkEnum
 from tensorflow.python.keras.layers import Dense, Conv2D, MaxPool2D, Flatten
-from NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
+from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 
 
 class ConvolutionalNeuralNetwork(INeuralNetwork):
@@ -24,7 +24,7 @@ class ConvolutionalNeuralNetwork(INeuralNetwork):
         x_data = self.model.get_x(environment).reshape(shape[0], shape[1], shape[2], 1)
         return x_data
 
-    def execute(self):
+    def train_neural_network(self):
         shape_train = self.model.get_x(Environment.TRAIN).shape
         shape_test = self.model.get_x(Environment.TEST).shape
         n_classes = self.__prepare_images(shape_train, shape_test)
