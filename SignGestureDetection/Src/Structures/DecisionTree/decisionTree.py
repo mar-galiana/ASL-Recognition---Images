@@ -1,6 +1,4 @@
 import numpy as np
-from xgboost import plot_tree
-import matplotlib.pyplot as plt
 from xgboost import XGBClassifier
 from Model.enumerations import Environment
 

@@ -27,7 +27,7 @@ class InputModel:
             pickle_src = self.base_pickle_src % (pickel_name, pickel_name, environment.value)
 
             if not os.path.exists(pickle_src):
-                raise PathDoesNotExistException("The pickle needs to exists before using it hh")
+                raise PathDoesNotExistException("The pickle needs to exists before using it")
 
             actual_pickel_data = joblib.load(pickle_src)
 
@@ -37,8 +37,8 @@ class InputModel:
                 data[Image.DESCRIPTION.value] = actual_pickel_data[Image.DESCRIPTION.value]
 
             else:
-                data[Image.DATA.value] += actual_pickel_data[Image.DATA.value]
-                data[Image.LABEL.value] += actual_pickel_data[Image.LABEL.value]
+                data[Image.DATA.value] = np.concatenate((data[Image.DATA.value], actual_pickel_data[Image.DATA.value]))
+                data[Image.LABEL.value] = np.concatenate((data[Image.LABEL.value], actual_pickel_data[Image.LABEL.value]))
                 data[Image.DESCRIPTION.value] += "; " + actual_pickel_data[Image.DESCRIPTION.value]
 
         return data

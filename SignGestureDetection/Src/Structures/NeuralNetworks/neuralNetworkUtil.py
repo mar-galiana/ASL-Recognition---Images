@@ -38,7 +38,7 @@ class NeuralNetworkUtil(IUtilStructure):
         if not os.path.exists(nn_model_path):
             raise PathDoesNotExistException("The model needs to exists to be able to use it")
 
-        pickels = super(NeuralNetworkUtil, self).get_pickels_used(Structure.DecisionTree, name_nn_model)
+        pickels = super(NeuralNetworkUtil, self).get_pickels_used(Structure.NeuralNetwork, name_nn_model)
         self.model.set_pickels_name(pickels)
 
         return keras.models.load_model(nn_model_path)

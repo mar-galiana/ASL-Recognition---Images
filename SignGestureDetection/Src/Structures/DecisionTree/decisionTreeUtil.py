@@ -1,6 +1,8 @@
 import os
 import pickle
 import numpy as np
+from xgboost import plot_tree
+import matplotlib.pyplot as plt
 from Model.enumerations import Environment
 from Structures.iUtilStructure import IUtilStructure, Structure
 from path import DECISION_TREE_MODEL_PATH, DECISION_TREE_PLOT_PATH
@@ -61,8 +63,7 @@ class DecisionTreeUtil(IUtilStructure):
         file_name = self.__get_keras_model_name_path()
         return DECISION_TREE_MODEL_PATH, file_name + ".pickle.dat"
 
-    @staticmethod
-    def show_decision_tree(xgboost_model):
+    def show_decision_tree(self, xgboost_model):
         file_name = self.__get_keras_model_name_path()
 
         plot_tree(xgboost_model)

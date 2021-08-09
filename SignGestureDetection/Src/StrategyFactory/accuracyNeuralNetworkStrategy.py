@@ -14,14 +14,16 @@ from Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNe
 
 class AccuracyNeuralNetworkStrategy(IStrategy):
 
-    def __init__(self, logger, model, nn_util, arguments):
+    def __init__(self, logger, model, nn_util, model_util, arguments):
         self.logger = logger
         self.model = model
         self.nn_util = nn_util
+        self.model_util = model_util
         self.__show_arguments_entered(arguments)
+        arguments[0] = arguments[0].upper()
 
-        if arguments[0] not in NeuralNetworkEnum:
-            raise InputException(self.arguments[0] + " is not a valid neural network")
+        if arguments[0] not in NeuralNetworkEnum._member_names_:
+            raise InputException(arguments[0] + " is not a valid neural network")
 
         self.type_nn = NeuralNetworkEnum[arguments[0]]
         self.name_nn_model = arguments[1]
@@ -41,9 +43,9 @@ class AccuracyNeuralNetworkStrategy(IStrategy):
 
     def __get_neural_network_model(self):
         if self.type_nn == NeuralNetworkEnum.CNN:
-            nn = ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util)
+            nn = ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util, self.model_util)
         else:
-            nn = NeuralNetwork(self.logger, self.model, self.nn_util)
+            nn = NeuralNetwork(self.logger, self.model, self.nn_util, self.model_util)
 
         nn_model = self.nn_util.load_keras_model(self.name_nn_model)
         return nn, nn_model
@@ -69,7 +71,7 @@ class AccuracyNeuralNetworkStrategy(IStrategy):
         shape = self.model.get_x(Environment.TEST).shape
 
         x_test = nn.resize_data(Environment.TEST, shape)
-        y_test = self.nn_util.get_categorical_vectors(Environment.TEST, n_classes)
+        y_test = self.model_util.get_categorical_vectors(Environment.TEST, n_classes)
         y_pred = nn_model.predict(x_test)
 
         accuracy = self.__get_accuracy(y_pred, y_test)

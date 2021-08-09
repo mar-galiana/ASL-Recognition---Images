@@ -1,6 +1,7 @@
 import os
 
-ASSETS_PATH = os.getcwd() + "/../Assets/"
+# ASSETS_PATH = os.getcwd() + "/../Assets/"
+ASSETS_PATH = os.getcwd() + "/Assets/"
 DATASET_PATH = ASSETS_PATH + "Dataset/"
 PICKELS_PATH = DATASET_PATH + "Pickels/"
 IMAGES_PATH = DATASET_PATH + "Images/"

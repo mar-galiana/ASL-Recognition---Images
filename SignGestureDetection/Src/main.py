@@ -9,7 +9,7 @@ if __name__ == '__main__':
 
     logger = Logger()
 
-    # try:
+    #try:
     if len(sys.argv) <= 1:
         raise InputException("A strategy needs to be defined in order to execute it")
 
@@ -25,7 +25,5 @@ if __name__ == '__main__':
     logger.write_info("The duration of the execution has been " + time.strftime("%H:%M:%S", time.gmtime(duration))
                       + " [hh:mm:ss]")
 
-    # except Exception as e:
-        # logger.write_error(str(e))
-
-
+    #except Exception as e:
+       # logger.write_error(str(e))
