@@ -20,9 +20,7 @@ class IUtilStructure(object):
                 data = json.load(file)
                 file.close()
 
-        data[structure.value] = {
-            model_name: pickels_name
-        }
+        data[structure.value][model_name] = pickels_name
 
         with open(MODEL_PICKELS_FILE, 'w') as file:
             json.dump(data, file)
