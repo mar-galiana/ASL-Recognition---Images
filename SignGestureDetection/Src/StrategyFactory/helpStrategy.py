@@ -14,7 +14,7 @@ class HelpStrategy(IStrategy):
                       self.__get_information_save_database_strategy() + \
                       self.__get_information_train_nn_strategy() + \
                       self.__get_information_accuracy_nn_strategy() + \
-                      self.__get_information_decision_tree_strategy() + \
+                      self.__get_information_train_decision_tree_strategy() + \
                       self.__get_information_accuracy_dt_strategy() + \
                       self.__get_information_help_strategy()
 
@@ -60,11 +60,11 @@ class HelpStrategy(IStrategy):
                self.__get_information_to_select_model("second", NEURAL_NETWORK_MODEL_PATH, example_model_name,
                                                       example_execution)
 
-    def __get_information_decision_tree_strategy(self):
-        return "* Decision Tree:\n" \
+    def __get_information_train_decision_tree_strategy(self):
+        return "* Train Decision Tree:\n" \
                "\tThis strategy will train a decision tree based on the models stored in the Dataset/Pickels. To " \
                "execute it you need the following arguments:\n" \
-               "\t\t--decisionTree <string> ...\n" + \
+               "\t\t--trainDecisionTree <string> ...\n" + \
                self.__get_information_to_select_pickel("", "--decisionTree")
 
     def __get_information_accuracy_dt_strategy(self):

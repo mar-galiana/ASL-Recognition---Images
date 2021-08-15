@@ -4,9 +4,9 @@ from Model.modelUtil import ModelUtil
 from StrategyFactory.helpStrategy import HelpStrategy
 from Exception.inputOutputException import InputException
 from Structures.DecisionTree.decisionTreeUtil import DecisionTreeUtil
-from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
-from StrategyFactory.decisionTreeStrategy import DecisionTreeStrategy
 from StrategyFactory.saveDatabaseStrategy import SaveDatabaseStrategy
+from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
+from StrategyFactory.trainDecisionTreeStrategy import TrainDecisionTreeStrategy
 from StrategyFactory.trainNeuralNetworkStrategy import TrainNeuralNetworkStrategy
 from StrategyFactory.accuracyDecisionTreeStrategy import AccuracyDecisionTreeStrategy
 from StrategyFactory.accuracyNeuralNetworkStrategy import AccuracyNeuralNetworkStrategy
@@ -28,7 +28,7 @@ class ExecutionFactory:
             Strategies.SAVE_DATABASE.value: lambda: self.save_database(),
             Strategies.TRAIN_NEURAL_NETWORK.value: lambda: self.train_neural_network(),
             Strategies.ACCURACY_NEURAL_NETWORK.value: lambda: self.get_accuracy_neural_network(),
-            Strategies.DECISION_TREE.value: lambda: self.decision_tree(),
+            Strategies.DECISION_TREE.value: lambda: self.train_decision_tree(),
             Strategies.ACCURACY_DECISION_TREE.value: lambda: self.get_accuracy_decision_tree()
         }
 
@@ -58,11 +58,11 @@ class ExecutionFactory:
 
         return AccuracyNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.model_util, self.arguments)
 
-    def decision_tree(self):
+    def train_decision_tree(self):
         if len(self.arguments) < 1:
             raise InputException("This strategy requires one or more arguments to be executed")
 
-        return DecisionTreeStrategy(self.logger, self.model, self.decision_tree_util, self.model_util, self.arguments)
+        return TrainDecisionTreeStrategy(self.logger, self.model, self.decision_tree_util, self.model_util, self.arguments)
 
     def get_accuracy_decision_tree(self):
         if len(self.arguments) != 1:
@@ -80,5 +80,5 @@ class Strategies(Enum):
     SAVE_DATABASE = "--saveDatabase"
     TRAIN_NEURAL_NETWORK = "--trainNeuralNetwork"
     ACCURACY_NEURAL_NETWORK = "--accuracyNeuralNetwork"
-    DECISION_TREE = "--decisionTree"
+    DECISION_TREE = "--trainDecisionTree"
     ACCURACY_DECISION_TREE = "--accuracyDecisionTree"
