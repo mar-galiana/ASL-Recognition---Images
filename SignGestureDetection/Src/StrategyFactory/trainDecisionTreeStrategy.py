@@ -5,11 +5,10 @@ from Structures.DecisionTree.decisionTree import DecisionTree
 
 class TrainDecisionTreeStrategy(IStrategy):
 
-    def __init__(self, logger, model, dt_util, model_util, arguments):
+    def __init__(self, logger, model, dt_util, arguments):
         self.logger = logger
         self.model = model
         self.dt_util = dt_util
-        self.model_util = model_util
         self.__show_arguments_entered(arguments)
 
         self.pickels = arguments
@@ -24,5 +23,5 @@ class TrainDecisionTreeStrategy(IStrategy):
         self.model.set_pickels_name(self.pickels)
         xgboost_model = self.decisionTree.train_model()
         self.logger.write_info("Finished training the decision tree")
-        self.dt_util.save_decision_tree_model(xgboost_model)
+        self.dt_util.save_model(xgboost_model)
         self.logger.write_info("Strategy executed successfully")

@@ -1,13 +1,23 @@
 import numpy as np
-from tensorflow.python.keras.layers import Dense
 from tensorflow.python.keras.models import Sequential
 from Model.enumerations import Environment
 from Structures.NeuralNetworks.iNeuralNetwork import INeuralNetwork
 from Structures.NeuralNetworks.enumerations import NeuralNetworkEnum
+from tensorflow.python.keras.layers import Dense, Conv2D, MaxPool2D, Flatten
 from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 
 
-class NeuralNetwork(INeuralNetwork):
+def create_model(optimizer='adam'):
+    # create model
+    model = Sequential()
+    model.add(Dense(12, input_dim=8, activation='relu'))
+    model.add(Dense(1, activation='sigmoid'))
+    # Compile model
+    model.compile(loss='binary_crossentropy', optimizer=optimizer, metrics=['accuracy'])
+    return model
+
+
+class ImprovedConvolutionalNeuralNetwork(INeuralNetwork):
 
     def __init__(self, logger, model, nn_util):
         self.model = model
@@ -15,20 +25,17 @@ class NeuralNetwork(INeuralNetwork):
         self.nn_util = nn_util
 
     def resize_data(self, environment, shape):
-        if len(shape) > 3:
-            x_data = self.model.get_x(environment).reshape(shape[0], shape[1]*shape[2], shape[3])
-        else:
-            x_data = self.model.get_x(environment).reshape(shape[0], shape[1]*shape[2])
+        x_data = self.model.get_x(environment).reshape(shape[0], shape[1], shape[2], 1)
         return x_data
 
     def train_neural_network(self):
         shape_train = self.model.get_x(Environment.TRAIN).shape
         shape_test = self.model.get_x(Environment.TEST).shape
-        n_classes = self.__prepare_images(shape_test, shape_train)
+        n_classes = self.prepare_images(shape_train, shape_test)
         sequential_model = self.__build_sequential_model(n_classes, shape_train)
-        self.nn_util.save_keras_model(sequential_model, NeuralNetworkEnum.NN)
+        self.nn_util.save_keras_model(sequential_model, NeuralNetworkEnum.CNN)
 
-    def __prepare_images(self, shape_test, shape_train):
+    def prepare_images(self, shape_train, shape_test):
         # Flattening the images from the 150x150 pixels to 1D 787 pixels
         x_train = self.resize_data(Environment.TRAIN, shape_train)
         x_test = self.resize_data(Environment.TEST, shape_test)
@@ -37,19 +44,31 @@ class NeuralNetwork(INeuralNetwork):
         self.model.set_x(Environment.TEST, x_test)
 
         n_classes = self.model.convert_to_one_hot_data()
+
         return n_classes
 
-    def __build_sequential_model(self, n_classes, shape_train):
+    def __build_sequential_model(self, n_classes, shape):
+
         # building a linear stack of layers with the sequential model
         sequential_model = Sequential()
-        # hidden layer
-        if len(shape_train) > 3:
-            sequential_model.add(Dense(100, input_shape=(shape_train[1]*shape_train[2], shape_train[3]),
-                                       activation='relu'))
-        else:
-            sequential_model.add(Dense(100, input_shape=(shape_train[1]*shape_train[2],), activation='relu'))
 
-        # output layer
+        # convolutional layer
+        sequential_model.add(Conv2D(25, kernel_size=(3, 3), strides=(1, 1), padding='valid', activation='relu',
+                                    input_shape=(shape[1], shape[2], 1)))
+
+        # pooling Layers: Prevent overfitting
+        sequential_model.add(MaxPool2D(pool_size=(1, 1)))
+
+        # flatten output of conv
+        sequential_model.add(Flatten())
+
+        # hidden layer
+        sequential_model.add(Dense(100, activation='relu'))
+
+        # output layer ->   the softmax activation function selects the neuron with the highest probability as its
+        #                   output, voting that the image belongs to that class
         sequential_model.add(Dense(n_classes, activation='softmax'))
+
         sequential_model = self.nn_util.train_model(sequential_model)
+
         return sequential_model

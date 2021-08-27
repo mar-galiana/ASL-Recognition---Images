@@ -15,25 +15,10 @@ class DecisionTreeUtil(IUtilStructure):
         self.logger = logger
         self.model = model
 
-    def get_labels_dictionary(self):
-        labels_dict = {}
-        aux = 0
-        for string_y in np.unique(self.model.get_y(Environment.TRAIN)):
-            labels_dict[string_y] = aux
-            aux += 1
-        return labels_dict
-
-    @staticmethod
-    def convert_labels_to_numbers(labels_dict, labels):
-        for aux in range(len(labels)):
-            labels[aux] = labels_dict.get(labels[aux])
-
-        return labels
-
-    def save_decision_tree_model(self, xgboost_model):
+    def save_model(self, model):
         model_path, model_name = self.__get_keras_model_path()
 
-        pickle.dump(xgboost_model, open(model_path + model_name, "wb"))
+        pickle.dump(model, open(model_path + model_name, "wb"))
 
         super(DecisionTreeUtil, self).save_pickels_used(Structure.DecisionTree, self.model.get_pickels_name(),
                                                         model_name)
@@ -43,18 +28,22 @@ class DecisionTreeUtil(IUtilStructure):
                                "This is the name that will be needed in the other strategies if you want to work with "
                                "this model.")
 
-    def read_decision_tree_model(self, name_dt_model):
-        dt_model_path = DECISION_TREE_MODEL_PATH + name_dt_model
+    def load_model(self, name_model):
+        dt_model_path = DECISION_TREE_MODEL_PATH + name_model
 
         if not os.path.exists(dt_model_path):
             raise PathDoesNotExistException("The model needs to exists to be able to use it")
 
-        pickels = super(DecisionTreeUtil, self).get_pickels_used(Structure.DecisionTree, name_dt_model)
+        pickels = super(DecisionTreeUtil, self).get_pickels_used(Structure.DecisionTree, name_model)
         self.model.set_pickels_name(pickels)
 
         xgboost_model = pickle.load(open(dt_model_path, "rb"))
 
         return xgboost_model
+
+    def resize_single_image(self, image):
+        resized_image = image.reshape(1, image.shape[0]*image.shape[1])
+        return resized_image
 
     def __get_keras_model_name_path(self):
         return self.model.get_pickels_name() + "_model"

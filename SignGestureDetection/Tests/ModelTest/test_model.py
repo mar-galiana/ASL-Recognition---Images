@@ -1,10 +1,10 @@
 from unittest import TestCase
-from Src.Logger.logger import Logger
+from Structures.DecisionTreeLogger.logger import Logger
 from unittest.mock import Mock, patch
-from Src.Model.model import Model, Image
-from Src.Model.enumerations import Environment
-from Src.Exception.modelException import EnvironmentException
-from Src.Exception.inputOutputException import PathDoesNotExistException
+from Model.model import Model, Image
+from Model.enumerations import Environment
+from ModelmodelException import EnvironmentException
+from Exception.inputOutputException import PathDoesNotExistException
 
 
 class TestModel(TestCase):

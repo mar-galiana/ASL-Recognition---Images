@@ -7,6 +7,7 @@ from path import IMAGES_PATH, PICKELS_PATH
 from sklearn.model_selection import train_test_split
 from Exception.modelException import DatasetException
 from Model.enumerations import Environment, Image, Dataset
+from Exception.inputOutputException import PathDoesNotExistException
 
 
 class OutputModel:
@@ -66,8 +67,8 @@ class OutputModel:
 
     def __read_images(self, path, as_gray):
         images_data = {
-            Image.LABEL.value: [],
-            Image.DATA.value: []
+            Image.LABEL.value: np.array([]),
+            Image.DATA.value: np.array([])
         }
 
         # read all images in PATH, resize and write to DESTINATION_PATH
@@ -79,8 +80,7 @@ class OutputModel:
 
             for file in os.listdir(current_path):
                 src = os.path.join(current_path, file)
-                image = io.imread(src, as_gray=as_gray)
-                image = resize(image, (self.width, self.height))
+                image = self.load_image(src, as_gray)
                 images_data[Image.LABEL.value].append(subdir)
                 images_data[Image.DATA.value].append(image)
 
@@ -94,3 +94,11 @@ class OutputModel:
         }
 
         joblib.dump(environment_data, base_pickle_src % environment)
+
+    def load_image(self, src, as_gray=True):
+        if not os.path.exists(src):
+            raise PathDoesNotExistException("Image " + src + " does not exist.")
+
+        image = io.imread(src, as_gray=as_gray)
+        image = resize(image, (self.width, self.height))
+        return image

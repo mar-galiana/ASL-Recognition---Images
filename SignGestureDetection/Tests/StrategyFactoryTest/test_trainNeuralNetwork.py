@@ -1,11 +1,11 @@
 from unittest import TestCase
-from Src.Model.model import Model
-from Src.Logger.logger import Logger
+from Model.model import Model
+from Logger.logger import Logger
 from unittest.mock import Mock, patch
-from Src.Exception.inputOutputException import InputException
-from Src.Structures.NeuralNetworks.enumerations import NeuralNetworkEnum
-from Src.StrategyFactory.trainNeuralNetworkStrategy import TrainNeuralNetworkStrategy
-from Src.Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
+from Exception.inputOutputException import InputException
+from Structures.NeuralNetworks.enumerations import NeuralNetworkEnum
+from StrategyFactory.trainNeuralNetworkStrategy import TrainNeuralNetworkStrategy
+from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 
 
 class TestTrainNeuralNetwork(TestCase):
@@ -31,7 +31,7 @@ class TestTrainNeuralNetwork(TestCase):
         self.assertEqual(self.logger.write_info.call_count, 0)
         self.assertTrue(raised_exception, "Exception hasn't been raised when incorrect argument has been entered")
 
-    @patch('Src.StrategyFactory.trainNeuralNetwork.NeuralNetwork')
+    @patch('StrategyFactory.trainNeuralNetwork.NeuralNetwork')
     def test_WhenTrainingBasicNN_WhileStrategyClassWorksAsExpected_ThenWriteInfoIsCalledOnce(self, mock_nn):
         raised_exception = False
         arguments = [NeuralNetworkEnum.NN.value]
@@ -46,7 +46,7 @@ class TestTrainNeuralNetwork(TestCase):
         self.assertEqual(self.logger.write_info.call_count, 1)
         self.assertFalse(raised_exception, "Exception has been raised when correct argument has been entered")
 
-    @patch('Src.StrategyFactory.trainNeuralNetwork.ConvolutionalNeuralNetwork')
+    @patch('StrategyFactory.trainNeuralNetwork.ConvolutionalNeuralNetwork')
     def test_WhenTrainingCNN_WhileStrategyClassWorksAsExpected_ThenWriteInfoIsCalledOnce(self, mock_cnn):
         raised_exception = False
         arguments = [NeuralNetworkEnum.CNN.value]

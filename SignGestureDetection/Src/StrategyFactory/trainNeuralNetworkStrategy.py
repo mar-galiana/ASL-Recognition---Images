@@ -1,27 +1,28 @@
 import os
 from StrategyFactory.iStrategy import IStrategy
-from Structures.NeuralNetworks.neuralNetwork import NeuralNetwork
 from Exception.inputOutputException import InputException
+from Structures.NeuralNetworks.neuralNetwork import NeuralNetwork
 from Structures.NeuralNetworks.enumerations import NeuralNetworkEnum
 from Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
+from Structures.NeuralNetworks.improvedConvolutionalNeuralNetwork import ImprovedConvolutionalNeuralNetwork
 
 
 class TrainNeuralNetworkStrategy(IStrategy):
 
-    def __init__(self, logger, model, nn_util, model_util, arguments):
+    def __init__(self, logger, model, nn_util, arguments):
         self.logger = logger
         self.model = model
         self.nn_util = nn_util
-        self.model_util = model_util
         self.__show_arguments_entered(arguments)
 
         self.nn_type = arguments[0]
         self.pickels = arguments[1:]
 
         self.algorithm_switcher = {
-            NeuralNetworkEnum.CNN.value: ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util,
-                                                                    self.model_util),
-            NeuralNetworkEnum.NN.value: NeuralNetwork(self.logger, self.model, self.nn_util, self.model_util),
+            NeuralNetworkEnum.NN.value: NeuralNetwork(self.logger, self.model, self.nn_util),
+            NeuralNetworkEnum.CNN.value: ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util),
+            NeuralNetworkEnum.IMPROVED_CNN.value: ImprovedConvolutionalNeuralNetwork(self.logger, self.model,
+                                                                                     self.nn_util)
         }
 
     def __show_arguments_entered(self, arguments):

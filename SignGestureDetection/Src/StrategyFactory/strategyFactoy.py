@@ -1,8 +1,8 @@
 from enum import Enum
 from Model.model import Model
-from Model.modelUtil import ModelUtil
 from StrategyFactory.helpStrategy import HelpStrategy
 from Exception.inputOutputException import InputException
+from StrategyFactory.predictStrategy import PredictStrategy
 from Structures.DecisionTree.decisionTreeUtil import DecisionTreeUtil
 from StrategyFactory.saveDatabaseStrategy import SaveDatabaseStrategy
 from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
@@ -10,6 +10,7 @@ from StrategyFactory.trainDecisionTreeStrategy import TrainDecisionTreeStrategy
 from StrategyFactory.trainNeuralNetworkStrategy import TrainNeuralNetworkStrategy
 from StrategyFactory.accuracyDecisionTreeStrategy import AccuracyDecisionTreeStrategy
 from StrategyFactory.accuracyNeuralNetworkStrategy import AccuracyNeuralNetworkStrategy
+from StrategyFactory.hyperparameterOptimizationStrategy import HyperparameterOptimizationStrategy
 
 
 class ExecutionFactory:
@@ -19,7 +20,6 @@ class ExecutionFactory:
         self.execution_strategy = strategy
         self.arguments = arguments
         self.model = Model()
-        self.model_util = ModelUtil(self.model)
         self.nn_util = NeuralNetworkUtil(self.logger, self.model)
         self.decision_tree_util = DecisionTreeUtil(self.logger, self.model)
 
@@ -29,7 +29,9 @@ class ExecutionFactory:
             Strategies.TRAIN_NEURAL_NETWORK.value: lambda: self.train_neural_network(),
             Strategies.ACCURACY_NEURAL_NETWORK.value: lambda: self.get_accuracy_neural_network(),
             Strategies.DECISION_TREE.value: lambda: self.train_decision_tree(),
-            Strategies.ACCURACY_DECISION_TREE.value: lambda: self.get_accuracy_decision_tree()
+            Strategies.ACCURACY_DECISION_TREE.value: lambda: self.get_accuracy_decision_tree(),
+            Strategies.HYPERPARAMETER_OPTIMIZATION.value: lambda: self.show_optimized_hyperparameter(),
+            Strategies.PREDICT_IMAGE.value: lambda: self.predict_image(),
         }
 
     def get_execution_strategy(self):
@@ -50,19 +52,19 @@ class ExecutionFactory:
         if len(self.arguments) < 2:
             raise InputException("This strategy requires two or more arguments to be executed")
 
-        return TrainNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.model_util, self.arguments)
+        return TrainNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.arguments)
 
     def get_accuracy_neural_network(self):
-        if len(self.arguments) != 2:
-            raise InputException("This strategy requires two arguments to be executed")
+        if len(self.arguments) != 1:
+            raise InputException("This strategy requires one argument to be executed")
 
-        return AccuracyNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.model_util, self.arguments)
+        return AccuracyNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.arguments)
 
     def train_decision_tree(self):
         if len(self.arguments) < 1:
             raise InputException("This strategy requires one or more arguments to be executed")
 
-        return TrainDecisionTreeStrategy(self.logger, self.model, self.decision_tree_util, self.model_util, self.arguments)
+        return TrainDecisionTreeStrategy(self.logger, self.model, self.decision_tree_util, self.arguments)
 
     def get_accuracy_decision_tree(self):
         if len(self.arguments) != 1:
@@ -70,6 +72,18 @@ class ExecutionFactory:
 
         self.model.set_pickels_name(self.arguments[0])
         return AccuracyDecisionTreeStrategy(self.logger, self.model, self.decision_tree_util, self.arguments)
+
+    def show_optimized_hyperparameter(self):
+        if len(self.arguments) < 1:
+            raise InputException("This strategy requires one or more arguments to be executed")
+
+        return HyperparameterOptimizationStrategy(self.logger, self.model, self.nn_util, self.arguments)
+
+    def predict_image(self):
+        if len(self.arguments) < 1:
+            raise InputException("This strategy requires one or more arguments to be executed")
+
+        return PredictStrategy(self.logger, self.model, self.nn_util, self.decision_tree_util, self.arguments)
 
     def help(self):
         return HelpStrategy(self.logger)
@@ -82,3 +96,5 @@ class Strategies(Enum):
     ACCURACY_NEURAL_NETWORK = "--accuracyNeuralNetwork"
     DECISION_TREE = "--trainDecisionTree"
     ACCURACY_DECISION_TREE = "--accuracyDecisionTree"
+    HYPERPARAMETER_OPTIMIZATION = "--showOptimizedHyperparameter"
+    PREDICT_IMAGE = "--predict"

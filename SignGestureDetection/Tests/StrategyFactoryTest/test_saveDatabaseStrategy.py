@@ -1,9 +1,9 @@
 from unittest import TestCase
 from unittest.mock import Mock
-from Src.Model.model import Model
-from Src.Logger.logger import Logger
-from Src.Exception.inputOutputException import InputException
-from Src.StrategyFactory.saveDatabaseStrategy import SaveDatabaseStrategy
+from Model.model import Model
+from Logger.logger import Logger
+from Exception.inputOutputException import InputException
+from StrategyFactory.saveDatabaseStrategy import SaveDatabaseStrategy
 
 
 class TestSaveDatabaseStrategy(TestCase):

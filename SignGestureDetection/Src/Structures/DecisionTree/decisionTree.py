@@ -19,12 +19,11 @@ class DecisionTree:
 
     def train_model(self):
         self.logger.write_info("Start training model")
-        labels_dict = self.dt_util.get_labels_dictionary()
 
         x_train = self.resize_data(Environment.TRAIN, self.model.get_x(Environment.TRAIN).shape)
         x_test = self.resize_data(Environment.TEST, self.model.get_x(Environment.TEST).shape)
-        y_train = self.dt_util.convert_labels_to_numbers(labels_dict, self.model.get_y(Environment.TRAIN))
-        y_test = self.dt_util.convert_labels_to_numbers(labels_dict, self.model.get_y(Environment.TEST))
+        y_train = self.model.get_sign_values(self.model.get_y(Environment.TRAIN))
+        y_test = self.model.get_sign_values(self.model.get_y(Environment.TEST))
 
         xgboost_model = XGBClassifier()
         xgboost_model.fit(x_train, y_train, verbose=True, eval_set=[(x_test, y_test)])

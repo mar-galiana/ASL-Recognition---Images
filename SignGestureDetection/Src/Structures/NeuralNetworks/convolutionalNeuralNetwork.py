@@ -14,11 +14,10 @@ from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 
 class ConvolutionalNeuralNetwork(INeuralNetwork):
 
-    def __init__(self, logger, model, nn_util, model_util):
+    def __init__(self, logger, model, nn_util):
         self.model = model
         self.logger = logger
         self.nn_util = nn_util
-        self.model_util = model_util
 
     def resize_data(self, environment, shape):
         x_data = self.model.get_x(environment).reshape(shape[0], shape[1], shape[2], 1)
@@ -27,11 +26,11 @@ class ConvolutionalNeuralNetwork(INeuralNetwork):
     def train_neural_network(self):
         shape_train = self.model.get_x(Environment.TRAIN).shape
         shape_test = self.model.get_x(Environment.TEST).shape
-        n_classes = self.__prepare_images(shape_train, shape_test)
+        n_classes = self.prepare_images(shape_train, shape_test)
         sequential_model = self.__build_sequential_model(n_classes, shape_train)
         self.nn_util.save_keras_model(sequential_model, NeuralNetworkEnum.CNN)
 
-    def __prepare_images(self, shape_train, shape_test):
+    def prepare_images(self, shape_train, shape_test):
         # Flattening the images from the 150x150 pixels to 1D 787 pixels
         x_train = self.resize_data(Environment.TRAIN, shape_train)
         x_test = self.resize_data(Environment.TEST, shape_test)
@@ -39,7 +38,7 @@ class ConvolutionalNeuralNetwork(INeuralNetwork):
         self.model.set_x(Environment.TRAIN, x_train)
         self.model.set_x(Environment.TEST, x_test)
 
-        n_classes = self.model_util.convert_to_one_hot_data()
+        n_classes = self.model.convert_to_one_hot_data()
 
         return n_classes
 
@@ -51,6 +50,8 @@ class ConvolutionalNeuralNetwork(INeuralNetwork):
         # convolutional layer
         sequential_model.add(Conv2D(25, kernel_size=(3, 3), strides=(1, 1), padding='valid', activation='relu',
                                     input_shape=(shape[1], shape[2], 1)))
+
+        # pooling Layers: Prevent overfitting
         sequential_model.add(MaxPool2D(pool_size=(1, 1)))
 
         # flatten output of conv
@@ -59,7 +60,8 @@ class ConvolutionalNeuralNetwork(INeuralNetwork):
         # hidden layer
         sequential_model.add(Dense(100, activation='relu'))
 
-        # output layer
+        # output layer ->   the softmax activation function selects the neuron with the highest probability as its
+        #                   output, voting that the image belongs to that class
         sequential_model.add(Dense(n_classes, activation='softmax'))
 
         sequential_model = self.nn_util.train_model(sequential_model)

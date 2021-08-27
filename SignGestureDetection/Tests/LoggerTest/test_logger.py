@@ -1,5 +1,5 @@
 from unittest import TestCase
-from Src.Logger.logger import Logger
+from from Structures.DecisionTreeLogger.logger import Logger
 from unittest.mock import patch
 
 

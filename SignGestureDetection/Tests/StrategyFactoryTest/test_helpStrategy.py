@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import Mock
-from Src.Logger.logger import Logger
-from Src.StrategyFactory.helpStrategy import HelpStrategy
+from Logger.logger import Logger
+from StrategyFactory.helpStrategy import HelpStrategy
 
 
 class TestHelpStrategy(TestCase):

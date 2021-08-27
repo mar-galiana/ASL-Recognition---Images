@@ -52,13 +52,8 @@ class HelpStrategy(IStrategy):
                "\tThis strategy will show the accuracy of the Neural Network selected. In order to be able to do it, " \
                "it will need to execute the Train Neural Network before, so a model is stored in the " \
                "Assets/NeuralNetworkModel directory. To execute it you need the following arguments:\n "\
-               "\t\t--accuracyNeuralNetwork <string> <string>\n"\
-               "\t· The first string specifies the type of Neural Network to train, "\
-               "the possibilities are:\n"\
-               "\t\t* nn: Basic Neural Network.\n "\
-               "\t\t* cnn: Convolutional Neural Network.\n" + \
-               self.__get_information_to_select_model("second", NEURAL_NETWORK_MODEL_PATH, example_model_name,
-                                                      example_execution)
+               "\t\t--accuracyNeuralNetwork <string>\n" + \
+               self.__get_information_to_select_model(NEURAL_NETWORK_MODEL_PATH, example_model_name, example_execution)
 
     def __get_information_train_decision_tree_strategy(self):
         return "* Train Decision Tree:\n" \
@@ -76,8 +71,12 @@ class HelpStrategy(IStrategy):
                "it will need to execute the Decision Tree Strategy before, so a model is stored in the " \
                "Assets/DecisionTreeModel directory. To execute it you need the following arguments:\n " \
                "\t\t--accuracyDecisionTree <string>\n" + \
-               self.__get_information_to_select_model("", DECISION_TREE_MODEL_PATH, example_model_name,
-                                                      example_execution)
+               self.__get_information_to_select_model(DECISION_TREE_MODEL_PATH, example_model_name, example_execution)
+
+    @staticmethod
+    def __get_information_predict_strategy():
+        return "--predict neural_network cnn_asl_alphabet_gray_150x150px-sign_gesture_gray_150x150px_model.h5 " \
+               "AslAlphabet/3/3_test.jpg "
 
     @staticmethod
     def __get_information_help_strategy():
@@ -100,8 +99,8 @@ class HelpStrategy(IStrategy):
                "sign_gesture_optimizer_150x150px\n\n "
 
     @staticmethod
-    def __get_information_to_select_model(argument_position, model_directory_path, model_name, example_execution):
-        return "\t· The " + argument_position + "string will contain the name of the file storing the neural network " \
+    def __get_information_to_select_model(model_directory_path, model_name, example_execution):
+        return "\t· The string will contain the name of the file storing the neural network " \
                "model. This model will be in the " + model_directory_path + "path. Once the train strategy has been " \
                "executed, the name of the new model will be displayed in the console, this will be the " + \
                argument_position + " string required.\n" \

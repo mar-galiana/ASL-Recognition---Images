@@ -14,19 +14,17 @@ from Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNe
 
 class AccuracyNeuralNetworkStrategy(IStrategy):
 
-    def __init__(self, logger, model, nn_util, model_util, arguments):
+    def __init__(self, logger, model, nn_util, arguments):
         self.logger = logger
         self.model = model
         self.nn_util = nn_util
-        self.model_util = model_util
         self.__show_arguments_entered(arguments)
         arguments[0] = arguments[0].upper()
 
         if arguments[0] not in NeuralNetworkEnum._member_names_:
             raise InputException(arguments[0] + " is not a valid neural network")
 
-        self.type_nn = NeuralNetworkEnum[arguments[0]]
-        self.name_nn_model = arguments[1]
+        self.name_nn_model = arguments[0]
 
     def __show_arguments_entered(self, arguments):
         info_arguments = "Arguments entered:\n" \
@@ -42,12 +40,13 @@ class AccuracyNeuralNetworkStrategy(IStrategy):
         self.logger.write_info("Strategy executed successfully")
 
     def __get_neural_network_model(self):
-        if self.type_nn == NeuralNetworkEnum.CNN:
-            nn = ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util, self.model_util)
-        else:
-            nn = NeuralNetwork(self.logger, self.model, self.nn_util, self.model_util)
+        nn_model, nn_type = self.nn_util.load_keras_model(self.name_nn_model)
 
-        nn_model = self.nn_util.load_keras_model(self.name_nn_model)
+        if nn_type == NeuralNetworkEnum.CNN:
+            nn = ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util)
+        else:
+            nn = NeuralNetwork(self.logger, self.model, self.nn_util)
+
         return nn, nn_model
 
     @staticmethod
@@ -71,7 +70,7 @@ class AccuracyNeuralNetworkStrategy(IStrategy):
         shape = self.model.get_x(Environment.TEST).shape
 
         x_test = nn.resize_data(Environment.TEST, shape)
-        y_test = self.model_util.get_categorical_vectors(Environment.TEST, n_classes)
+        y_test = self.model.get_categorical_vectors(Environment.TEST, n_classes)
         y_pred = nn_model.predict(x_test)
 
         accuracy = self.__get_accuracy(y_pred, y_test)

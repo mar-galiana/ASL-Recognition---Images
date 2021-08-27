@@ -32,21 +32,23 @@ class NeuralNetworkUtil(IUtilStructure):
 
         return sequential_model
 
-    def load_keras_model(self, name_nn_model):
-        nn_model_path = NEURAL_NETWORK_MODEL_PATH + name_nn_model
+    def load_model(self, name_model):
+        nn_model_path = NEURAL_NETWORK_MODEL_PATH + name_model
 
         if not os.path.exists(nn_model_path):
             raise PathDoesNotExistException("The model needs to exists to be able to use it")
 
-        pickels = super(NeuralNetworkUtil, self).get_pickels_used(Structure.NeuralNetwork, name_nn_model)
+        pickels, nn_type = super(NeuralNetworkUtil, self).get_pickels_used(Structure.NeuralNetwork, name_model)
         self.model.set_pickels_name(pickels)
 
-        return keras.models.load_model(nn_model_path)
+        keras_model = keras.models.load_model(nn_model_path)
 
-    def save_keras_model(self, sequential_model, neural_network_type):
+        return keras_model, nn_type
+
+    def save_model(self, model, neural_network_type):
         model_path, model_name = self.__get_keras_model_path(neural_network_type)
 
-        sequential_model.save(model_path + model_name)
+        model.save(model_path + model_name)
 
         super(NeuralNetworkUtil, self).save_pickels_used(Structure.NeuralNetwork, self.model.get_pickels_name(),
                                                          model_name)
@@ -55,6 +57,15 @@ class NeuralNetworkUtil(IUtilStructure):
                                "In the path: " + model_path + "\n"
                                "This is the name that will be needed in the other strategies if you want to work with "
                                "this model.")
+
+    @staticmethod
+    def resize_single_image(image, nn_type):
+        if nn_type == NeuralNetworkEnum.NN.value:
+            resized_image = image.reshape(1, image.shape[0]*image.shape[1])
+        else:
+            resized_image = image.reshape(1, image.shape[0], image.shape[1], 1)
+
+        return resized_image
 
     def __get_keras_model_path(self, neural_network_type):
         if not isinstance(neural_network_type, NeuralNetworkEnum):

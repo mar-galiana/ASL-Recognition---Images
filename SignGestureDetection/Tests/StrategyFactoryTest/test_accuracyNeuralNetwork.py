@@ -1,9 +1,9 @@
 from unittest import TestCase
-from Src.Model.model import Model
+from Model.model import Model
 from unittest.mock import Mock, patch
-from Src.Exception.inputOutputException import InputException
-from Src.Structures.NeuralNetworks.enumerations import NeuralNetworkEnum
-from Src.StrategyFactory.accuracyNeuralNetworkStrategy import AccuracyNeuralNetwork
+from Exception.inputOutputException import InputException
+from Structures.NeuralNetworks.enumerations import NeuralNetworkEnum
+from StrategyFactory.accuracyNeuralNetworkStrategy import AccuracyNeuralNetwork
 
 
 class TestAccuracyNeuralNetwork(TestCase):
@@ -37,7 +37,7 @@ class TestAccuracyNeuralNetwork(TestCase):
         self.assertEqual(self.logger.write_info.call_count, 0)
         self.assertTrue(raised_exception, "Exception hasn't been raised when incorrect argument has been entered")
 
-    @patch('Src.NeuralNetworks.neuralNetwork.NeuralNetwork.resize_data', return_value=[])
+    @patch('NeuralNetworks.neuralNetwork.NeuralNetwork.resize_data', return_value=[])
     def test_WhenNNArgumentIsEntered_WhileStrategyClassWorksAsExpected_ThenNNIsCalledOnceAndWriteInfoTwice(self,
                                                                                                            mock_nn):
         raised_exception = False
@@ -53,7 +53,7 @@ class TestAccuracyNeuralNetwork(TestCase):
         self.assertEqual(mock_nn.call_count, 1)
         self.assertFalse(raised_exception, "Exception has been raised when correct argument has been entered")
 
-    @patch('Src.NeuralNetworks.convolutionalNeuralNetwork.ConvolutionalNeuralNetwork.resize_data', return_value=[])
+    @patch('NeuralNetworks.convolutionalNeuralNetwork.ConvolutionalNeuralNetwork.resize_data', return_value=[])
     def test_WhenCNNArgumentIsEntered_WhileStrategyClassWorksAsExpected_ThenCNNIsCalledOnceAndWriteInfoTwice(self,
                                                                                                              mock_cnn):
         raised_exception = False
