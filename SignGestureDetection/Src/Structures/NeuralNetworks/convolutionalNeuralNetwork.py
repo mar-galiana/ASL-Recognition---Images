@@ -2,22 +2,23 @@
 One major advantage of using CNNs over NNs is that you do not need to flatten the input images to 1D as they are capable
 of working with image data in 2D.
 """
-
 import numpy as np
-from tensorflow.python.keras.models import Sequential
+from Assets.hyperparameters import *
 from Model.enumerations import Environment
+from tensorflow.python.keras.models import Sequential
 from Structures.NeuralNetworks.iNeuralNetwork import INeuralNetwork
 from Structures.NeuralNetworks.enumerations import NeuralNetworkEnum
-from tensorflow.python.keras.layers import Dense, Conv2D, MaxPool2D, Flatten
 from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
+from tensorflow.python.keras.layers import Dense, Conv2D, MaxPool2D, Flatten
 
 
 class ConvolutionalNeuralNetwork(INeuralNetwork):
 
-    def __init__(self, logger, model, nn_util):
+    def __init__(self, logger, model, nn_util, improved_nn):
         self.model = model
         self.logger = logger
         self.nn_util = nn_util
+        self.improved_nn = improved_nn
 
     def resize_data(self, environment, shape):
         x_data = self.model.get_x(environment).reshape(shape[0], shape[1], shape[2], 1)
@@ -44,6 +45,32 @@ class ConvolutionalNeuralNetwork(INeuralNetwork):
 
     def __build_sequential_model(self, n_classes, shape):
 
+        if self.improved_nn:
+            seq_model = self.__get_improved_sequential_model(n_classes, shape)
+        else:
+            seq_model = self.__get_not_improved_sequential_model(n_classes, shape)
+
+        seq_model = self.nn_util.train_model(seq_model)
+
+        return seq_model
+
+    @staticmethod
+    def __get_improved_sequential_model(n_classes, shape):
+        model = Sequential()
+        model.add(Conv2D(NEURONS_CONV_LAYER, kernel_size=(3, 3), strides=(1, 1), padding='valid', activation=ACTIVATION,
+                         input_shape=(shape[1], shape[2], 1), kernel_initializer=INIT_MODE,
+                         kernel_constraint=max_norm(WEIGHT_CONSTRAINT)))
+        model.add(Dropout(DROPOUT_RATE))
+        model.add(MaxPool2D(pool_size=(1, 1)))
+        model.add(Flatten())
+        model.add(Dense(NEURONS_DENSE_LAYER, kernel_initializer='uniform', activation=ACTIVATION))
+        model.add(Dropout(DROPOUT_RATE))
+        model.add(Dense(n_classes, activation='softmax'))
+
+        return model
+
+    @staticmethod
+    def __get_not_improved_sequential_model(n_classes, shape):
         # building a linear stack of layers with the sequential model
         sequential_model = Sequential()
 
@@ -64,6 +91,4 @@ class ConvolutionalNeuralNetwork(INeuralNetwork):
         #                   output, voting that the image belongs to that class
         sequential_model.add(Dense(n_classes, activation='softmax'))
 
-        sequential_model = self.nn_util.train_model(sequential_model)
-
-        return sequential_model
+        return model

@@ -41,7 +41,8 @@ class DecisionTreeUtil(IUtilStructure):
 
         return xgboost_model
 
-    def resize_single_image(self, image):
+    @staticmethod
+    def resize_single_image(image):
         resized_image = image.reshape(1, image.shape[0]*image.shape[1])
         return resized_image
 

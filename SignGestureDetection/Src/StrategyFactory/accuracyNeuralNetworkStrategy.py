@@ -2,45 +2,42 @@ import os
 import numpy as np
 from skimage import io
 from skimage.transform import resize
-from tensorflow.python.keras.preprocessing import image
-from sklearn.metrics import accuracy_score
 from Model.enumerations import Environment
 from StrategyFactory.iStrategy import IStrategy
-from Structures.NeuralNetworks.neuralNetwork import NeuralNetwork
+from tensorflow.python.keras.preprocessing import image
 from Exception.inputOutputException import InputException
+from Structures.NeuralNetworks.neuralNetwork import NeuralNetwork
 from Structures.NeuralNetworks.enumerations import NeuralNetworkEnum
 from Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
+from Src.StrategyFactory.accuracyUtil import AccuracyUtil
 
 
 class AccuracyNeuralNetworkStrategy(IStrategy):
 
-    def __init__(self, logger, model, nn_util, arguments):
+    def __init__(self, logger, model, nn_util, accuracy_util, arguments):
         self.logger = logger
         self.model = model
         self.nn_util = nn_util
-        self.__show_arguments_entered(arguments)
-        arguments[0] = arguments[0].upper()
+        self.accuracy_util = accuracy_util
 
-        if arguments[0] not in NeuralNetworkEnum._member_names_:
-            raise InputException(arguments[0] + " is not a valid neural network")
+        self.__show_arguments_entered(arguments)
 
         self.name_nn_model = arguments[0]
 
     def __show_arguments_entered(self, arguments):
         info_arguments = "Arguments entered:\n" \
-                         "\t* Neural Network type: " + arguments[0] + "\n" \
-                         "\t* Neural Network model file: " + arguments[1]
+                         "\t* Neural Network model file: " + arguments[0]
         self.logger.write_info(info_arguments)
 
     def execute(self):
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
         nn, nn_model = self.__get_neural_network_model()
-        self.__perform_test_data(nn, nn_model)
+        self.accuracy_util.perform_test_data(nn, nn_model)
         self.logger.write_info("Strategy executed successfully")
 
     def __get_neural_network_model(self):
-        nn_model, nn_type = self.nn_util.load_keras_model(self.name_nn_model)
+        nn_model, nn_type = self.nn_util.load_model(self.name_nn_model)
 
         if nn_type == NeuralNetworkEnum.CNN:
             nn = ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util)
@@ -48,30 +45,3 @@ class AccuracyNeuralNetworkStrategy(IStrategy):
             nn = NeuralNetwork(self.logger, self.model, self.nn_util)
 
         return nn, nn_model
-
-    @staticmethod
-    def __get_accuracy(y_pred, y_values):
-        # Converting predictions to label
-        prediction = list()
-        for i in range(len(y_pred)):
-            prediction.append(np.argmax(y_pred[i]))
-
-        # Converting one hot encoded test label to label
-        values = list()
-        for i in range(len(y_values)):
-            values.append(np.argmax(y_values[i]))
-
-        accuracy = accuracy_score(prediction, values)
-        return accuracy*100
-
-    def __perform_test_data(self, nn, nn_model):
-
-        n_classes = np.unique(self.model.get_y(Environment.TEST)).shape[0] + 1
-        shape = self.model.get_x(Environment.TEST).shape
-
-        x_test = nn.resize_data(Environment.TEST, shape)
-        y_test = self.model.get_categorical_vectors(Environment.TEST, n_classes)
-        y_pred = nn_model.predict(x_test)
-
-        accuracy = self.__get_accuracy(y_pred, y_test)
-        self.logger.write_info("Accuracy is: " + "{:.2f}".format(accuracy) + "%")

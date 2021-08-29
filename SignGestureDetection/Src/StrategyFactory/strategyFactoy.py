@@ -1,5 +1,6 @@
 from enum import Enum
 from Model.model import Model
+from StrategyFactory.accuracyUtil import AccuracyUtil
 from StrategyFactory.helpStrategy import HelpStrategy
 from Exception.inputOutputException import InputException
 from StrategyFactory.predictStrategy import PredictStrategy
@@ -22,6 +23,7 @@ class ExecutionFactory:
         self.model = Model()
         self.nn_util = NeuralNetworkUtil(self.logger, self.model)
         self.decision_tree_util = DecisionTreeUtil(self.logger, self.model)
+        self.accuracy_util = AccuracyUtil(self.model, self.logger)
 
         self.strategy_switcher = {
             Strategies.HELP.value: lambda: self.help(),
@@ -58,7 +60,7 @@ class ExecutionFactory:
         if len(self.arguments) != 1:
             raise InputException("This strategy requires one argument to be executed")
 
-        return AccuracyNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.arguments)
+        return AccuracyNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.accuracy_util, self.arguments)
 
     def train_decision_tree(self):
         if len(self.arguments) < 1:
@@ -71,7 +73,8 @@ class ExecutionFactory:
             raise InputException("This strategy requires one argument to be executed")
 
         self.model.set_pickels_name(self.arguments[0])
-        return AccuracyDecisionTreeStrategy(self.logger, self.model, self.decision_tree_util, self.arguments)
+        return AccuracyDecisionTreeStrategy(self.logger, self.model, self.decision_tree_util, self.accuracy_util,
+                                            self.arguments)
 
     def show_optimized_hyperparameter(self):
         if len(self.arguments) < 1:

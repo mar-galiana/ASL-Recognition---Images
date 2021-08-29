@@ -4,7 +4,6 @@ from Exception.inputOutputException import InputException
 from Structures.NeuralNetworks.neuralNetwork import NeuralNetwork
 from Structures.NeuralNetworks.enumerations import NeuralNetworkEnum
 from Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
-from Structures.NeuralNetworks.improvedConvolutionalNeuralNetwork import ImprovedConvolutionalNeuralNetwork
 
 
 class TrainNeuralNetworkStrategy(IStrategy):
@@ -20,9 +19,8 @@ class TrainNeuralNetworkStrategy(IStrategy):
 
         self.algorithm_switcher = {
             NeuralNetworkEnum.NN.value: NeuralNetwork(self.logger, self.model, self.nn_util),
-            NeuralNetworkEnum.CNN.value: ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util),
-            NeuralNetworkEnum.IMPROVED_CNN.value: ImprovedConvolutionalNeuralNetwork(self.logger, self.model,
-                                                                                     self.nn_util)
+            NeuralNetworkEnum.CNN.value: ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util, False),
+            NeuralNetworkEnum.IMPROVED_CNN: ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util, True)
         }
 
     def __show_arguments_entered(self, arguments):

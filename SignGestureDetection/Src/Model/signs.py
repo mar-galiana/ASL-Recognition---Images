@@ -6,27 +6,30 @@ from Exception.modelException import SignIsNotInJsonFileException
 class Signs:
 
     def __init__(self):
-        self.__signs_dict = {}
+        self.signs_dict = {}
         self.read_sign_json()
 
     def read_sign_json(self):
         with open(SIGNS_FILE) as f:
-            self.__signs_dict = json.load(f)
+            file_content = json.load(f)
+            self.signs_dict = file_content.get("signs")
 
     def get_sign_value(self, sign):
-        if sign not in self.__signs_dict:
+        if sign not in self.signs_dict:
             raise SignIsNotInJsonFileException("The sign '" + sign + "' is not in the json file")
 
-        return self.__signs_dict[sign]
+        return self.signs_dict[sign]
 
     def transform_labels_to_sign_values(self, labels):
+        values = []
         for aux in range(len(labels)):
-            labels[aux] = self.__signs_dict.get(labels[aux])
+            values.append(self.signs_dict.get(labels[aux]))
+            pass
 
-        return labels
+        return values
 
     def get_sign_based_on_value(self, sign_value):
-        signs_list = list(self.__signs_dict.values())
+        signs_list = list(self.signs_dict.values())
 
         if not isinstance(signs_list, int):
             raise SignIsNotInJsonFileException("In the signs json file the values are all numbers, the character '" +

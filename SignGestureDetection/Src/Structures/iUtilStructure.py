@@ -20,8 +20,8 @@ class IUtilStructure(object):
 
         if structure is Structure.NeuralNetwork:
             data[structure.value][model_name] = {
-                NeuralNetworkInformation.Pickel: pickels_name,
-                NeuralNetworkInformation.Type: pickels_name.split("_")[0]
+                NeuralNetworkInformation.Pickel.value: pickels_name,
+                NeuralNetworkInformation.Type.value: model_name.split("_")[0]
             }
 
         elif structure is Structure.DecisionTree:
@@ -53,7 +53,7 @@ class IUtilStructure(object):
             nn_type = neural_network[NeuralNetworkInformation.Type.value]
             values = pickels, nn_type
 
-        elif structure is Structure.NeuralNetwork:
+        elif structure is Structure.DecisionTree:
             pickels = data[structure.value][model_name].split("-")
             values = pickels
 

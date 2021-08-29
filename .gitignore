@@ -1,7 +1,8 @@
 # Internal Files
 /SignGestureDetection/venv/
 /SignGestureDetection/.idea/
-/SignGestureDetection/Assets/
+/SignGestureDetection/Assets/Dataset/
+/SignGestureDetection/Assets/ModelStructures/
 /tensorflow_macos/
 
 # Byte-compiled / optimized / DLL files

@@ -26,7 +26,7 @@ class NeuralNetwork(INeuralNetwork):
         shape_test = self.model.get_x(Environment.TEST).shape
         n_classes = self.__prepare_images(shape_test, shape_train)
         sequential_model = self.__build_sequential_model(n_classes, shape_train)
-        self.nn_util.save_keras_model(sequential_model, NeuralNetworkEnum.NN)
+        self.nn_util.save_model(sequential_model, NeuralNetworkEnum.NN)
 
     def __prepare_images(self, shape_test, shape_train):
         # Flattening the images from the 150x150 pixels to 1D 787 pixels

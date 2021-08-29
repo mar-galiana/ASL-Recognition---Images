@@ -25,7 +25,7 @@ class Model:
         self.input_model.set_pickels_name(names)
 
     def get_pickels_name(self):
-        return self.input_model.combine_pickels_reducing_size()
+        return self.input_model.get_pickels_name()
 
     def save_reduced_pickels(self):
         self.input_model.combine_pickels_reducing_size(Environment.TRAIN)
@@ -57,8 +57,8 @@ class Model:
 
         label_encoder = LabelEncoder()
 
-        labels = self.get_sign_values(self.get_y(environment))
-        vectors = label_encoder.fit_transform(labels)
+        vectors = self.get_sign_values(self.get_y(environment))
+        # vectors = label_encoder.fit_transform(labels)
         y_data = np_utils.to_categorical(vectors, num_classes=n_classes)
         return y_data
 

@@ -71,9 +71,6 @@ class NeuralNetworkUtil(IUtilStructure):
         if not isinstance(neural_network_type, NeuralNetworkEnum):
             raise EnvironmentException("Environment used is not a valid one")
 
-        if NeuralNetworkEnum.CNN == neural_network_type:
-            file_name = "cnn_" + self.model.get_pickels_name() + "_model"
-        else:
-            file_name = "nn_" + self.model.get_pickels_name() + "_model"
+        file_name = neural_network_type.value + "_" + self.model.get_pickels_name() + "_model"
 
         return NEURAL_NETWORK_MODEL_PATH, file_name + ".h5"
