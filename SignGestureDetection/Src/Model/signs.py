@@ -1,5 +1,5 @@
 import json
-from path import SIGNS_FILE
+from Constraints.path import SIGNS_FILE
 from Exception.modelException import SignIsNotInJsonFileException
 
 

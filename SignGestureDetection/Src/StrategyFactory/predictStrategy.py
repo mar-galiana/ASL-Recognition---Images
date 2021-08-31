@@ -1,5 +1,5 @@
 import os
-from path import IMAGES_PATH
+from Constraints.path import IMAGES_PATH
 from StrategyFactory.iStrategy import IStrategy
 from Structures.iUtilStructure import Structure
 from Exception.inputOutputException import InputException

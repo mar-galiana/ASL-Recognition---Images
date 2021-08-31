@@ -2,7 +2,7 @@ import os
 import json
 from enum import Enum
 from abc import abstractmethod
-from path import MODEL_PICKELS_FILE
+from Constraints.path import MODEL_PICKELS_FILE
 from Exception.structureException import StructureException, StructureFileElementDoesNotExists
 from Exception.inputOutputException import PathDoesNotExistException
 

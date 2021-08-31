@@ -2,7 +2,7 @@ import os
 import numpy as np
 from tensorflow import keras
 from Model.enumerations import Environment
-from path import NEURAL_NETWORK_MODEL_PATH
+from Constraints.path import NEURAL_NETWORK_MODEL_PATH
 from tensorflow.python.keras.utils import np_utils
 from Exception.modelException import EnvironmentException
 from Structures.iUtilStructure import IUtilStructure, Structure

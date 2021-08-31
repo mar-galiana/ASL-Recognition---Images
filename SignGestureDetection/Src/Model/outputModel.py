@@ -3,7 +3,7 @@ import joblib
 import numpy as np
 from skimage import io
 from skimage.transform import resize
-from path import IMAGES_PATH, PICKELS_PATH
+from Constraints.path import IMAGES_PATH, PICKELS_PATH
 from sklearn.model_selection import train_test_split
 from Exception.modelException import DatasetException
 from Model.enumerations import Environment, Image, Dataset

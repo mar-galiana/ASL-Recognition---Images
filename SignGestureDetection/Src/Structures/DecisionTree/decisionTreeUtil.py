@@ -5,7 +5,7 @@ from xgboost import plot_tree
 import matplotlib.pyplot as plt
 from Model.enumerations import Environment
 from Structures.iUtilStructure import IUtilStructure, Structure
-from path import DECISION_TREE_MODEL_PATH, DECISION_TREE_PLOT_PATH
+from Constraints.path import DECISION_TREE_MODEL_PATH, DECISION_TREE_PLOT_PATH
 from Exception.inputOutputException import PathDoesNotExistException
 
 

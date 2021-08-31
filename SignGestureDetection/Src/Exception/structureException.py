@@ -26,18 +26,3 @@ class StructureFileElementDoesNotExists(Exception):
 
         self.message = "Error in structure file, " + message + "."
         super().__init__(self.message)
-
-
-class IncorrectVariableType(Exception):
-    """Exception raised for errors in the model.
-
-        Attributes:
-            message -- explanation of the error
-        """
-
-    def __init__(self, message="incorrect variable type"):
-        if len(message) > 0:
-            message = message[0].lower() + message[1:]
-
-        self.message = "Error in variable type, " + message + "."
-        super().__init__(self.message)

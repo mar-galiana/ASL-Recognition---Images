@@ -9,7 +9,6 @@ from Exception.inputOutputException import InputException
 from Structures.NeuralNetworks.neuralNetwork import NeuralNetwork
 from Structures.NeuralNetworks.enumerations import NeuralNetworkEnum
 from Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
-from Src.StrategyFactory.accuracyUtil import AccuracyUtil
 
 
 class AccuracyNeuralNetworkStrategy(IStrategy):
@@ -39,9 +38,9 @@ class AccuracyNeuralNetworkStrategy(IStrategy):
     def __get_neural_network_model(self):
         nn_model, nn_type = self.nn_util.load_model(self.name_nn_model)
 
-        if nn_type == NeuralNetworkEnum.CNN:
-            nn = ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util)
-        else:
+        if nn_type == NeuralNetworkEnum.NN:
             nn = NeuralNetwork(self.logger, self.model, self.nn_util)
+        else:
+            nn = ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util)
 
         return nn, nn_model

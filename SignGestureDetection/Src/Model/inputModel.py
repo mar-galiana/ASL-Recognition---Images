@@ -1,7 +1,7 @@
 import os
 import joblib
 import numpy as np
-from path import PICKELS_PATH
+from Constraints.path import PICKELS_PATH
 from Model.enumerations import Environment, Image
 from Exception.modelException import EnvironmentException
 from Exception.inputOutputException import PathDoesNotExistException

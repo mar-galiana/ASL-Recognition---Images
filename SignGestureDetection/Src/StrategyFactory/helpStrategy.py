@@ -1,6 +1,6 @@
 from Model.enumerations import Dataset
 from StrategyFactory.iStrategy import IStrategy
-from path import NEURAL_NETWORK_MODEL_PATH, DECISION_TREE_MODEL_PATH
+from Constraints.path import NEURAL_NETWORK_MODEL_PATH, DECISION_TREE_MODEL_PATH
 
 
 class HelpStrategy(IStrategy):
@@ -102,7 +102,6 @@ class HelpStrategy(IStrategy):
     def __get_information_to_select_model(model_directory_path, model_name, example_execution):
         return "\t· The string will contain the name of the file storing the neural network " \
                "model. This model will be in the " + model_directory_path + "path. Once the train strategy has been " \
-               "executed, the name of the new model will be displayed in the console, this will be the " + \
-               argument_position + " string required.\n" \
-               "\tFor example, if the model is in the following path: " + model_directory_path + model_name + ", the " \
-               "arguments needed in this strategy will be:\n\t\t" + example_execution + "\n\n"
+               "executed, the name of the new model will be displayed in the console, this will be the string " \
+               "required.\n \tFor example, if the model is in the following path: " + model_directory_path + model_name\
+               + ", the arguments needed in this strategy will be:\n\t\t" + example_execution + "\n\n"

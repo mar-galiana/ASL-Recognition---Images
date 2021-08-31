@@ -5,13 +5,13 @@ By default, the grid search will only use one thread. By setting the n_jobs argu
 The best_score_ member provides access to the best score observed during the optimization procedure and the best_params_
 describes the combination of parameters that achieved the best results.
 """
-from Assets.hyperparameters import *
+from Constraints.hyperparameters import *
 from Model.enumerations import Environment
 from tensorflow.keras.optimizers import SGD
 from sklearn.model_selection import GridSearchCV
 from tensorflow.keras.constraints import max_norm
 from tensorflow.python.keras.models import Sequential
-from Exception.structureException import IncorrectVariableType
+from Exception.parametersException import IncorrectVariableType
 from Structures.NeuralNetworks.enumerations import AttributeToTune
 from tensorflow.python.keras.wrappers.scikit_learn import KerasClassifier
 from tensorflow.python.keras.layers import Dense, Conv2D, MaxPool2D, Flatten, Dropout
@@ -64,7 +64,7 @@ def create_model_network_weight_init(init_mode='uniform', num_classes=39, image_
                      input_shape=(image_size[0], image_size[1], 1), kernel_initializer=init_mode))
     model.add(MaxPool2D(pool_size=(1, 1)))
     model.add(Flatten())
-    model.add(Dense(100, activation='relu'))
+    model.add(Dense(100, kernel_initializer=init_mode, activation='relu'))
     model.add(Dense(num_classes, activation='softmax'))
 
     # Compile model
@@ -95,11 +95,11 @@ def create_model_dropout_regularization(dropout_rate=0.0, weight_constraint=0, n
     model.add(Conv2D(25, kernel_size=(3, 3), strides=(1, 1), padding='valid', activation=ACTIVATION,
                      input_shape=(image_size[0], image_size[1], 1), kernel_initializer=INIT_MODE,
                      kernel_constraint=max_norm(weight_constraint)))
-    model.add(Dropout(dropout_rate))
+    # model.add(Dropout(dropout_rate))
     model.add(MaxPool2D(pool_size=(1, 1)))
     model.add(Flatten())
     model.add(Dense(100, kernel_initializer='uniform', activation=ACTIVATION))
-    model.add(Dropout(dropout_rate))
+    # model.add(Dropout(dropout_rate))
     model.add(Dense(num_classes, activation='softmax'))
 
     # Compile model

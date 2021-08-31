@@ -1,7 +1,14 @@
 # Internal Files
 /SignGestureDetection/venv/
 /SignGestureDetection/.idea/
-/SignGestureDetection/Assets/Dataset/
+
+/SignGestureDetection/Assets/Dataset/Images/.git/
+/SignGestureDetection/Assets/Dataset/Images/AslAlphabet/
+/SignGestureDetection/Assets/Dataset/Images/GestureImageData/
+/SignGestureDetection/Assets/Dataset/Images/GestureImagePreProcessedData/
+
+/SignGestureDetection/Assets/Dataset/Pickels/
+
 /SignGestureDetection/Assets/ModelStructures/
 /tensorflow_macos/
 
