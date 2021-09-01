@@ -1,10 +1,10 @@
 import os
 from enum import Enum
 from Model.model import Model
-from Model.enumerations import Environment
+from Model.modelEnum import Environment
 from StrategyFactory.iStrategy import IStrategy
 from Exception.inputOutputException import InputException
-from Structures.NeuralNetworks.enumerations import AttributeToTune
+from Structures.NeuralNetworks.neuralNetworkEnum import AttributeToTuneEnum
 from Structures.NeuralNetworks.hyperparameterOptimization import HyperparameterOptimization
 
 
@@ -16,10 +16,10 @@ class HyperparameterOptimizationStrategy(IStrategy):
 
         self.__show_arguments_entered(arguments)
 
-        if arguments[0] not in AttributeToTune._value2member_map_:
+        if arguments[0] not in AttributeToTuneEnum._value2member_map_:
             raise InputException(arguments[0] + "is not a possible parameter optimization.")
 
-        self.attribute_tune = AttributeToTune(arguments[0])
+        self.attribute_tune = AttributeToTuneEnum(arguments[0])
         self.pickels = arguments[1:]
         self.hyperparameterOptimization = HyperparameterOptimization(logger, model, nn_util)
 

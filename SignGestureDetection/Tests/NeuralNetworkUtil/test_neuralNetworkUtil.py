@@ -3,9 +3,9 @@ from unittest import TestCase
 from unittest.mock import Mock
 from Model.model import Model
 from keras.models import Sequential
-from Model.enumerations import Environment
+from Model.modelEnum import Environment
 from Exception.modelException import EnvironmentException
-from Structures.NeuralNetworks.enumerations import NeuralNetworkEnum
+from Structures.NeuralNetworks.neuralNetworkEnum import NeuralNetworkTypeEnum
 from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 
 
@@ -43,7 +43,7 @@ class TestNeuralNetworkUtil(TestCase):
 
     def test_WhenSaveKerasModelIsCalled_WhileClassWorksAsExpected_ThenMethodsHaveToBeCalledAsManyTimesAsExpected(self):
         mock_sequential = Mock(Sequential)
-        self.nn_util.save_keras_model(mock_sequential, NeuralNetworkEnum.NN)
+        self.nn_util.save_keras_model(mock_sequential, NeuralNetworkTypeEnumNN)
 
         self.assertEqual(mock_sequential.save.call_count, 1)
 

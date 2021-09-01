@@ -59,8 +59,8 @@ class IUtilStructure(object):
             values = pickels, nn_type
 
         elif structure is Structure.DecisionTree or structure is Structure.BinaryNeuralNetwork:
-            pickels = data[structure.value][model_name].split("-")
-            values = pickels
+            pickels = data[structure.value][model_name]
+            values = pickels.split("-")
 
         else:
             raise StructureException("Structure selected is not a valid one")

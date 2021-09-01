@@ -1,15 +1,15 @@
 import os
 import numpy as np
-from Src.Model.model import Model
-from Src.Storage.storageEnum import FileEnum
-from Model.enumerations import Environment
-from Src.StrategyFactory.iStrategy import IStrategy
+from Model.model import Model
+from Storage.storageEnum import FileEnum
+from Model.modelEnum import Environment
+from StrategyFactory.iStrategy import IStrategy
 from tensorflow.python.keras.models import Sequential
 from sklearn.preprocessing import MultiLabelBinarizer
-from Src.Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
-from Src.Constraints.path import BINARY_CNN_MODEL_PATH, TMP_BINARY_CNN_MODEL_PATH
+from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
+from Constraints.path import BINARY_NEURAL_NETWORK_MODEL_PATH, TMP_BINARY_NEURAL_NETWORK_MODEL_PATH
 from tensorflow.python.keras.layers import Dense, Conv2D, MaxPool2D, Flatten, Dropout
-from Src.Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
+from Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 
 
 class TrainBinaryNeuralNetworkStrategy(IStrategy):
@@ -34,7 +34,6 @@ class TrainBinaryNeuralNetworkStrategy(IStrategy):
         self.model.set_pickels_name(self.pickels)
 
         self.__remove_not_wanted_labels(Environment.TRAIN)
-        self.__remove_not_wanted_labels(Environment.TEST)
         self.__prepare_images()
         self.__train_binary_cnn()
 
@@ -63,7 +62,7 @@ class TrainBinaryNeuralNetworkStrategy(IStrategy):
             self.logger.write_info("Start training the " + sign + " binary classifier")
 
             cnn, nn_util = self._init_new_convolution_neural_network_object(sign)
-            classifier = cnn.build_sequential_model(1, self.model.get_x(Environment.TRAIN).shape, is_categorical=True)
+            classifier = cnn.build_sequential_model(1, self.model.get_x(Environment.TRAIN).shape, is_categorical=False)
 
             file_name = self.__get_sign_model_path(sign)
 
@@ -76,7 +75,7 @@ class TrainBinaryNeuralNetworkStrategy(IStrategy):
 
         file_path, file_name = self.__get_compressed_file_path()
         self.storage_controller.compress_files(files, file_path + file_name)
-        self.storage_controller.remove_files_from_folder(files)
+        self.storage_controller.remove_files_from_list(files)
         self.nn_util.record_binary_model(file_name, file_path)
 
     def _init_new_convolution_neural_network_object(self, sign):
@@ -88,7 +87,7 @@ class TrainBinaryNeuralNetworkStrategy(IStrategy):
         model.set_pickels_name(self.pickels)
 
         nn_util = NeuralNetworkUtil(self.logger, model)
-        cnn = ConvolutionalNeuralNetwork(self.logger, model, nn_util, True)
+        cnn = ConvolutionalNeuralNetwork(self.logger, model, nn_util, improved_nn=True)
 
         return cnn, nn_util
 
@@ -112,9 +111,9 @@ class TrainBinaryNeuralNetworkStrategy(IStrategy):
 
     @staticmethod
     def __save_model(classifier, file_name):
-        classifier.save(TMP_BINARY_CNN_MODEL_PATH + file_name)
+        classifier.save(TMP_BINARY_NEURAL_NETWORK_MODEL_PATH + file_name)
 
-        return TMP_BINARY_CNN_MODEL_PATH
+        return TMP_BINARY_NEURAL_NETWORK_MODEL_PATH
 
     @staticmethod
     def __get_sign_model_path(sign):
@@ -122,4 +121,4 @@ class TrainBinaryNeuralNetworkStrategy(IStrategy):
 
     def __get_compressed_file_path(self):
         file_name = self.model.get_pickels_name() + "_models.zip"
-        return BINARY_CNN_MODEL_PATH, file_name
+        return BINARY_NEURAL_NETWORK_MODEL_PATH, file_name

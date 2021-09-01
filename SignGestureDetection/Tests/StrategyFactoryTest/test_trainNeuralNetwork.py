@@ -3,7 +3,7 @@ from Model.model import Model
 from Logger.logger import Logger
 from unittest.mock import Mock, patch
 from Exception.inputOutputException import InputException
-from Structures.NeuralNetworks.enumerations import NeuralNetworkEnum
+from Structures.NeuralNetworks.neuralNetworkEnum import NeuralNetworkTypeEnum
 from StrategyFactory.trainNeuralNetworkStrategy import TrainNeuralNetworkStrategy
 from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 
@@ -34,7 +34,7 @@ class TestTrainNeuralNetwork(TestCase):
     @patch('StrategyFactory.trainNeuralNetwork.NeuralNetwork')
     def test_WhenTrainingBasicNN_WhileStrategyClassWorksAsExpected_ThenWriteInfoIsCalledOnce(self, mock_nn):
         raised_exception = False
-        arguments = [NeuralNetworkEnum.NN.value]
+        arguments = [NeuralNetworkTypeEnumNN.value]
 
         try:
             self.trainNeuralNetwork = TrainNeuralNetworkStrategy(self.logger, self.model, self.nn_util, arguments)
@@ -49,7 +49,7 @@ class TestTrainNeuralNetwork(TestCase):
     @patch('StrategyFactory.trainNeuralNetwork.ConvolutionalNeuralNetwork')
     def test_WhenTrainingCNN_WhileStrategyClassWorksAsExpected_ThenWriteInfoIsCalledOnce(self, mock_cnn):
         raised_exception = False
-        arguments = [NeuralNetworkEnum.CNN.value]
+        arguments = [NeuralNetworkTypeEnumCNN.value]
 
         try:
             self.saveDatabaseStrategy = TrainNeuralNetworkStrategy(self.logger, self.model, self.nn_util, arguments)

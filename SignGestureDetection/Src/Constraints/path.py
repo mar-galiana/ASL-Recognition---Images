@@ -1,7 +1,7 @@
 import os
 
-ASSETS_PATH = os.getcwd() + "/../Assets/"
-# ASSETS_PATH = os.getcwd() + "/Assets/"
+# ASSETS_PATH = os.getcwd() + "/../Assets/"
+ASSETS_PATH = os.getcwd() + "/Assets/"
 
 # Dataset
 DATASET_PATH = ASSETS_PATH + "Dataset/"
@@ -13,12 +13,12 @@ SIGNS_FILE = IMAGES_PATH + "signs.json"
 MODEL_STRUCTURES_PATH = ASSETS_PATH + "ModelStructures/"
 MODEL_PICKELS_FILE = MODEL_STRUCTURES_PATH + "model_pickels.json"
 
-# Model Structures --> Neural Network
-NEURAL_NETWORK_MODEL_PATH = MODEL_STRUCTURES_PATH + "NeuralNetworkModel/"
+# Model Structures --> Categorical Neural Network
+CATEGORICAL_NEURAL_NETWORK_MODEL_PATH = MODEL_STRUCTURES_PATH + "CategoricalNeuralNetworkModel/"
 
-# Model Structures --> Binary CNN
-BINARY_CNN_MODEL_PATH = MODEL_STRUCTURES_PATH + "BinaryCNNModel/"
-TMP_BINARY_CNN_MODEL_PATH = BINARY_CNN_MODEL_PATH + "Tmp/"
+# Model Structures --> Binary Neural Network
+BINARY_NEURAL_NETWORK_MODEL_PATH = MODEL_STRUCTURES_PATH + "BinaryNeuralNetworkModel/"
+TMP_BINARY_NEURAL_NETWORK_MODEL_PATH = BINARY_NEURAL_NETWORK_MODEL_PATH + "Tmp/"
 
 # Model Structures --> Decision Tree
 DECISION_TREE_PATH = MODEL_STRUCTURES_PATH + "DecisionTreeModel/"

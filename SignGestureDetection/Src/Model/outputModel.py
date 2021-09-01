@@ -6,7 +6,7 @@ from skimage.transform import resize
 from Constraints.path import IMAGES_PATH, PICKELS_PATH
 from sklearn.model_selection import train_test_split
 from Exception.modelException import DatasetException
-from Model.enumerations import Environment, Image, Dataset
+from Model.modelEnum import Environment, Image, Dataset
 from Exception.inputOutputException import PathDoesNotExistException
 
 

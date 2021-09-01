@@ -1,6 +1,6 @@
-from Model.enumerations import Dataset
+from Model.modelEnum import Dataset
 from StrategyFactory.iStrategy import IStrategy
-from Constraints.path import NEURAL_NETWORK_MODEL_PATH, DECISION_TREE_MODEL_PATH
+from Constraints.path import CATEGORICAL_NEURAL_NETWORK_MODEL_PATH, DECISION_TREE_MODEL_PATH
 
 
 class HelpStrategy(IStrategy):
@@ -13,7 +13,7 @@ class HelpStrategy(IStrategy):
         information = "This project contains three different strategies:\n" + \
                       self.__get_information_save_database_strategy() + \
                       self.__get_information_train_categorical_nn_strategy() + \
-                      self.__get_information_accuracy_nn_strategy() + \
+                      self.__get_information_accuracy_categorical_nn_strategy() + \
                       self.__get_information_train_decision_tree_strategy() + \
                       self.__get_information_accuracy_dt_strategy() + \
                       self.__get_information_help_strategy()
@@ -46,7 +46,7 @@ class HelpStrategy(IStrategy):
                "\t\t* improved_cnn: Improved Convolutional Neural Network.\n" + \
                self.__get_information_to_select_pickel("other", "--trainNeuralNetwork nn")
 
-    def __get_information_accuracy_nn_strategy(self):
+    def __get_information_accuracy_categorical_nn_strategy(self):
         example_model_name = "cnn_sign_gesture_optimizer_150x150px_model.h5"
         example_execution = "--accuracyNeuralNetwork cnn " + example_model_name
 
@@ -55,7 +55,7 @@ class HelpStrategy(IStrategy):
                "it will need to execute the Train Neural Network before, so a model is stored in the " \
                "Assets/NeuralNetworkModel directory. To execute it you need the following arguments:\n "\
                "\t\t--accuracyNeuralNetwork <string>\n" + \
-               self.__get_information_to_select_model(NEURAL_NETWORK_MODEL_PATH, example_model_name, example_execution)
+               self.__get_information_to_select_model(CATEGORICAL_NEURAL_NETWORK_MODEL_PATH, example_model_name, example_execution)
 
     def __get_information_train_decision_tree_strategy(self):
         return "* Train Decision Tree:\n" \

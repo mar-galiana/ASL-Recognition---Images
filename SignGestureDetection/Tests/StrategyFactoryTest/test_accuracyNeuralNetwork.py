@@ -2,7 +2,7 @@ from unittest import TestCase
 from Model.model import Model
 from unittest.mock import Mock, patch
 from Exception.inputOutputException import InputException
-from Structures.NeuralNetworks.enumerations import NeuralNetworkEnum
+from Structures.NeuralNetworks.neuralNetworkEnum import NeuralNetworkTypeEnum
 from StrategyFactory.accuracyNeuralNetworkStrategy import AccuracyNeuralNetwork
 
 
@@ -41,7 +41,7 @@ class TestAccuracyNeuralNetwork(TestCase):
     def test_WhenNNArgumentIsEntered_WhileStrategyClassWorksAsExpected_ThenNNIsCalledOnceAndWriteInfoTwice(self,
                                                                                                            mock_nn):
         raised_exception = False
-        arguments = [NeuralNetworkEnum.NN.value]
+        arguments = [NeuralNetworkTypeEnumNN.value]
 
         try:
             accuracy_neural_network = AccuracyNeuralNetwork(self.logger, self.model, self.mock_nn_util, arguments)
@@ -57,7 +57,7 @@ class TestAccuracyNeuralNetwork(TestCase):
     def test_WhenCNNArgumentIsEntered_WhileStrategyClassWorksAsExpected_ThenCNNIsCalledOnceAndWriteInfoTwice(self,
                                                                                                              mock_cnn):
         raised_exception = False
-        arguments = [NeuralNetworkEnum.CNN.value]
+        arguments = [NeuralNetworkTypeEnumCNN.value]
 
         try:
             accuracy_neural_network = AccuracyNeuralNetwork(self.logger, self.model, self.mock_nn_util, arguments)

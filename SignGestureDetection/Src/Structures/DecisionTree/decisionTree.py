@@ -1,6 +1,6 @@
 import numpy as np
 from xgboost import XGBClassifier
-from Model.enumerations import Environment
+from Model.modelEnum import Environment
 
 
 class DecisionTree:

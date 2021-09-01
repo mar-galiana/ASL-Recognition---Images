@@ -5,7 +5,7 @@ from Structures.iUtilStructure import Structure
 from Exception.inputOutputException import InputException
 from Structures.DecisionTree.decisionTree import DecisionTree
 from Structures.NeuralNetworks.neuralNetwork import NeuralNetwork
-from Structures.NeuralNetworks.enumerations import NeuralNetworkEnum
+from Structures.NeuralNetworks.neuralNetworkEnum import NeuralNetworkTypeEnum
 from Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 
 

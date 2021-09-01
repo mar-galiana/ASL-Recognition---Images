@@ -1,6 +1,6 @@
 import numpy as np
 from sklearn.metrics import accuracy_score
-from Model.enumerations import Environment
+from Model.modelEnum import Environment
 
 
 class AccuracyUtil:

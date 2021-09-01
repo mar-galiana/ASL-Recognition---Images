@@ -5,15 +5,16 @@ from StrategyFactory.helpStrategy import HelpStrategy
 from Storage.storageController import StorageController
 from Exception.inputOutputException import InputException
 from StrategyFactory.predictStrategy import PredictStrategy
-from Structures.DecisionTree.decisionTreeUtil import DecisionTreeUtil
 from StrategyFactory.saveDatabaseStrategy import SaveDatabaseStrategy
+from Structures.DecisionTree.decisionTreeUtil import DecisionTreeUtil
 from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 from StrategyFactory.trainDecisionTreeStrategy import TrainDecisionTreeStrategy
 from StrategyFactory.accuracyDecisionTreeStrategy import AccuracyDecisionTreeStrategy
-from StrategyFactory.accuracyNeuralNetworkStrategy import AccuracyNeuralNetworkStrategy
+from StrategyFactory.trainBinaryNeuralNetworkStrategy import TrainBinaryNeuralNetworkStrategy
 from StrategyFactory.hyperparameterOptimizationStrategy import HyperparameterOptimizationStrategy
-from Src.StrategyFactory.trainBinaryNeuralNetworkStrategy import TrainBinaryNeuralNetworkStrategy
+from StrategyFactory.accuracyBinaryNeuralNetworkStrategy import AccuracyBinaryNeuralNetworkStrategy
 from StrategyFactory.trainCategoricalNeuralNetworkStrategy import TrainCategoricalNeuralNetworkStrategy
+from StrategyFactory.accuracyCategoricalNeuralNetworkStrategy import AccuracyCategoricalNeuralNetworkStrategy
 
 
 class ExecutionFactory:
@@ -28,17 +29,7 @@ class ExecutionFactory:
         self.accuracy_util = AccuracyUtil(self.model, self.logger)
         self.storage_controller = StorageController()
 
-        self.strategy_switcher = {
-            Strategies.HELP.value: lambda: self.help(),
-            Strategies.SAVE_DATABASE.value: lambda: self.save_database(),
-            Strategies.TRAIN_CATEGORICAL_NEURAL_NETWORK.value: lambda: self.train_categorical_neural_network(),
-            Strategies.ACCURACY_NEURAL_NETWORK.value: lambda: self.get_accuracy_neural_network(),
-            Strategies.DECISION_TREE.value: lambda: self.train_decision_tree(),
-            Strategies.ACCURACY_DECISION_TREE.value: lambda: self.get_accuracy_decision_tree(),
-            Strategies.HYPERPARAMETER_OPTIMIZATION.value: lambda: self.show_optimized_hyperparameter(),
-            Strategies.PREDICT_IMAGE.value: lambda: self.predict_image(),
-            Strategies.TRAIN_BINARY_NEURAL_NETWORK.value: lambda: self.train_binary_neural_network(),
-        }
+        self.strategy_switcher = self.__get_strategy_switcher()
 
     def get_execution_strategy(self):
         if self.execution_strategy not in self.strategy_switcher:
@@ -60,11 +51,12 @@ class ExecutionFactory:
 
         return TrainCategoricalNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.arguments)
 
-    def get_accuracy_neural_network(self):
+    def get_accuracy_categorical_neural_network(self):
         if len(self.arguments) != 1:
             raise InputException("This strategy requires one argument to be executed")
 
-        return AccuracyNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.accuracy_util, self.arguments)
+        return AccuracyCategoricalNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.accuracy_util,
+                                                        self.arguments)
 
     def train_decision_tree(self):
         if len(self.arguments) < 1:
@@ -93,6 +85,13 @@ class ExecutionFactory:
         return TrainBinaryNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.storage_controller,
                                                 self.arguments)
 
+    def get_accuracy_binary_neural_network(self):
+        if len(self.arguments) != 1:
+            raise InputException("This strategy requires one argument to be executed")
+
+        return AccuracyBinaryNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.accuracy_util,
+                                                   self.storage_controller, self.arguments)
+
     def predict_image(self):
         if len(self.arguments) < 1:
             raise InputException("This strategy requires one or more arguments to be executed")
@@ -102,14 +101,29 @@ class ExecutionFactory:
     def help(self):
         return HelpStrategy(self.logger)
 
+    def __get_strategy_switcher(self):
+        return {
+            Strategies.HELP.value: lambda: self.help(),
+            Strategies.SAVE_DATABASE.value: lambda: self.save_database(),
+            Strategies.TRAIN_CATEGORICAL_NEURAL_NETWORK.value: lambda: self.train_categorical_neural_network(),
+            Strategies.ACCURACY_CATEGORICAL_NEURAL_NETWORK.value: lambda: self.get_accuracy_categorical_neural_network(),
+            Strategies.DECISION_TREE.value: lambda: self.train_decision_tree(),
+            Strategies.ACCURACY_DECISION_TREE.value: lambda: self.get_accuracy_decision_tree(),
+            Strategies.HYPERPARAMETER_OPTIMIZATION.value: lambda: self.show_optimized_hyperparameter(),
+            Strategies.PREDICT_IMAGE.value: lambda: self.predict_image(),
+            Strategies.TRAIN_BINARY_NEURAL_NETWORK.value: lambda: self.train_binary_neural_network(),
+            Strategies.ACCURACY_BINARY_NEURAL_NETWORK.value: lambda: self.get_accuracy_binary_neural_network()
+        }
+
 
 class Strategies(Enum):
     HELP = "--help"
+    PREDICT_IMAGE = "--predict"
     SAVE_DATABASE = "--saveDatabase"
     TRAIN_CATEGORICAL_NEURAL_NETWORK = "--trainCategoricalNeuralNetwork"
-    ACCURACY_NEURAL_NETWORK = "--accuracyNeuralNetwork"
+    ACCURACY_CATEGORICAL_NEURAL_NETWORK = "--accuracyCategoricalNeuralNetwork"
     DECISION_TREE = "--trainDecisionTree"
     ACCURACY_DECISION_TREE = "--accuracyDecisionTree"
     HYPERPARAMETER_OPTIMIZATION = "--showOptimizedHyperparameter"
-    PREDICT_IMAGE = "--predict"
     TRAIN_BINARY_NEURAL_NETWORK = "--trainBinaryNeuralNetwork"
+    ACCURACY_BINARY_NEURAL_NETWORK = "--accuracyBinaryNeuralNetwork"

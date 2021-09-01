@@ -3,7 +3,7 @@ from unittest import TestCase
 from Model.model import Model
 from Logger.logger import Logger
 from unittest.mock import Mock
-from Model.enumerations import Environment
+from Model.modelEnum import Environment
 from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 from Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 

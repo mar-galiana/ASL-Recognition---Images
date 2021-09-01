@@ -2,7 +2,7 @@ from unittest import TestCase
 from Structures.DecisionTreeLogger.logger import Logger
 from unittest.mock import Mock, patch
 from Model.model import Model, Image
-from Model.enumerations import Environment
+from Model.modelEnum import Environment
 from ModelmodelException import EnvironmentException
 from Exception.inputOutputException import PathDoesNotExistException
 

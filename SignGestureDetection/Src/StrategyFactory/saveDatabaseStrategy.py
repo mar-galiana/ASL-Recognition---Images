@@ -1,4 +1,4 @@
-from Model.enumerations import Dataset
+from Model.modelEnum import Dataset
 from StrategyFactory.iStrategy import IStrategy
 from Exception.inputOutputException import InputException
 

@@ -2,7 +2,7 @@ import os
 from StrategyFactory.iStrategy import IStrategy
 from Exception.inputOutputException import InputException
 from Structures.NeuralNetworks.neuralNetwork import NeuralNetwork
-from Structures.NeuralNetworks.enumerations import NeuralNetworkEnum
+from Structures.NeuralNetworks.neuralNetworkEnum import NeuralNetworkTypeEnum
 from Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 
 
@@ -18,10 +18,10 @@ class TrainCategoricalNeuralNetworkStrategy(IStrategy):
         self.pickels = arguments[1:]
 
         self.algorithm_switcher = {
-            NeuralNetworkEnum.NN.value: NeuralNetwork(self.logger, self.model, self.nn_util),
-            NeuralNetworkEnum.CNN.value: ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util, False),
-            NeuralNetworkEnum.IMPROVED_CNN.value: ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util,
-                                                                             True)
+            NeuralNetworkTypeEnumNN.value: NeuralNetwork(self.logger, self.model, self.nn_util),
+            NeuralNetworkTypeEnumCNN.value: ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util),
+            NeuralNetworkTypeEnumIMPROVED_CNN.value: ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util,
+                                                                             improved_nn=True)
         }
 
     def __show_arguments_entered(self, arguments):

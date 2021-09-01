@@ -6,13 +6,13 @@ The best_score_ member provides access to the best score observed during the opt
 describes the combination of parameters that achieved the best results.
 """
 from Constraints.hyperparameters import *
-from Model.enumerations import Environment
+from Model.modelEnum import Environment
 from tensorflow.keras.optimizers import SGD
 from sklearn.model_selection import GridSearchCV
 from tensorflow.keras.constraints import max_norm
 from tensorflow.python.keras.models import Sequential
 from Exception.parametersException import IncorrectVariableType
-from Structures.NeuralNetworks.enumerations import AttributeToTune
+from Structures.NeuralNetworks.neuralNetworkEnum import AttributeToTuneEnum
 from tensorflow.python.keras.wrappers.scikit_learn import KerasClassifier
 from tensorflow.python.keras.layers import Dense, Conv2D, MaxPool2D, Flatten, Dropout
 from Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
@@ -141,8 +141,8 @@ class HyperparameterOptimization:
 
     def calculate_best_hyperparameter_optimization(self, attribute_tune):
 
-        if not isinstance(attribute_tune, AttributeToTune):
-            raise IncorrectVariableType("Expecting AttributeToTune enumeration")
+        if not isinstance(attribute_tune, AttributeToTuneEnum):
+            raise IncorrectVariableType("Expecting AttributeToTuneEnum enumeration")
 
         n_classes, image_size = self.__prepare_data()
         grid = self.__get_grid_search_classifier(attribute_tune, n_classes, image_size)
@@ -254,18 +254,18 @@ class HyperparameterOptimization:
 
     def __get_parameter_switcher(self):
         return {
-            AttributeToTune.BATCH_SIZE_AND_EPOCHS:
+            AttributeToTuneEnum.BATCH_SIZE_AND_EPOCHS:
                 lambda n, size: self.__get_parameters_for_batch_epochs(n, size),
-            AttributeToTune.OPTIMIZATION_ALGORITHMS:
+            AttributeToTuneEnum.OPTIMIZATION_ALGORITHMS:
                 lambda n, size: self.__get_parameters_for_optimization_algorithm(n, size),
-            AttributeToTune.LEARN_RATE_AND_MOMENTUM:
+            AttributeToTuneEnum.LEARN_RATE_AND_MOMENTUM:
                 lambda n, size: self.__get_parameters_for_learn_rate_and_momentum(n, size),
-            AttributeToTune.NETWORK_WEIGHT_INITIALIZATION:
+            AttributeToTuneEnum.NETWORK_WEIGHT_INITIALIZATION:
                 lambda n, size: self.__get_parameters_network_weight_init(n, size),
-            AttributeToTune.NEURON_ACTIVATION_FUNCTION:
+            AttributeToTuneEnum.NEURON_ACTIVATION_FUNCTION:
                 lambda n, size: self.__get_parameters_neuron_activation_function(n, size),
-            AttributeToTune.DROPOUT_REGULARIZATION:
+            AttributeToTuneEnum.DROPOUT_REGULARIZATION:
                 lambda n, size: self.__get_parameters_dropout_regularization(n, size),
-            AttributeToTune.NUMBER_NEURONS:
+            AttributeToTuneEnum.NUMBER_NEURONS:
                 lambda n, size: self.__get_parameters_number_neurons(n, size)
         }
