@@ -19,7 +19,7 @@ class PredictStrategy(IStrategy):
         if arguments[0] not in Structure._value2member_map_:
             raise InputException(arguments[0] + " is not a valid structure")
 
-        self.structure_util = (nn_util, dt_util)[arguments[0] is Structure.NeuralNetwork]
+        self.structure_util = (nn_util, dt_util)[arguments[0] is Structure.CategoricalNeuralNetwork]
         self.type_structure = Structure(arguments[0])
         self.name_model = arguments[1]
         self.image_name = arguments[2]
@@ -41,7 +41,7 @@ class PredictStrategy(IStrategy):
         self.logger.write_info("Strategy executed successfully")
 
     def get_model(self, image):
-        if self.type_structure is Structure.NeuralNetwork:
+        if self.type_structure is Structure.CategoricalNeuralNetwork:
             structure_model, nn_type = self.structure_util.load_model(self.name_model)
             resized_image = self.structure_util.resize_single_image(image, nn_type)
         else:

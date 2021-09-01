@@ -12,7 +12,7 @@ class HelpStrategy(IStrategy):
     def execute(self):
         information = "This project contains three different strategies:\n" + \
                       self.__get_information_save_database_strategy() + \
-                      self.__get_information_train_nn_strategy() + \
+                      self.__get_information_train_categorical_nn_strategy() + \
                       self.__get_information_accuracy_nn_strategy() + \
                       self.__get_information_train_decision_tree_strategy() + \
                       self.__get_information_accuracy_dt_strategy() + \
@@ -35,13 +35,15 @@ class HelpStrategy(IStrategy):
                "\t· The second boolean will be true if the dataset has to be saved in gray " \
                "colors.\n\n"
 
-    def __get_information_train_nn_strategy(self):
+    def __get_information_train_categorical_nn_strategy(self):
         return "* Train Neural Network:\n"\
                "\tThis strategy will train an specific neural network based on the models stored "\
                "in the Dataset/Pickels. To execute it you need the following arguments:\n "\
-               "\t\t--trainNeuralNetwork <string> <string> ...\n"\
+               "\t\t--trainCategoricalNeuralNetwork <string> <string> ...\n"\
                "\t· The first string specifies the type of Neural Network to train, the possibilities are:\n"\
+               "\t\t* nn: Basic Neural Network.\n" + \
                "\t\t* cnn: Convolutional Neural Network.\n" + \
+               "\t\t* improved_cnn: Improved Convolutional Neural Network.\n" + \
                self.__get_information_to_select_pickel("other", "--trainNeuralNetwork nn")
 
     def __get_information_accuracy_nn_strategy(self):

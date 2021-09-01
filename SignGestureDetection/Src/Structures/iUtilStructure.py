@@ -18,13 +18,18 @@ class IUtilStructure(object):
                 data = json.load(file)
                 file.close()
 
-        if structure is Structure.NeuralNetwork:
+        if structure is Structure.CategoricalNeuralNetwork:
+            if structure.value not in data:
+                data[structure.value] = {}
+
             data[structure.value][model_name] = {
                 NeuralNetworkInformation.Pickel.value: pickels_name,
                 NeuralNetworkInformation.Type.value: model_name.split("_")[0]
             }
 
-        elif structure is Structure.DecisionTree:
+        elif structure is Structure.DecisionTree or structure is Structure.BinaryNeuralNetwork:
+            if structure.value not in data:
+                data[structure.value] = {}
             data[structure.value][model_name] = pickels_name
 
         else:
@@ -47,13 +52,13 @@ class IUtilStructure(object):
             raise StructureFileElementDoesNotExists("There is no " + structure.value + " with the " + model_name +
                                                     " model")
 
-        if structure is Structure.NeuralNetwork:
+        if structure is Structure.CategoricalNeuralNetwork:
             neural_network = data[structure.value][model_name]
             pickels = neural_network[NeuralNetworkInformation.Pickel.value].split("-")
             nn_type = neural_network[NeuralNetworkInformation.Type.value]
             values = pickels, nn_type
 
-        elif structure is Structure.DecisionTree:
+        elif structure is Structure.DecisionTree or structure is Structure.BinaryNeuralNetwork:
             pickels = data[structure.value][model_name].split("-")
             values = pickels
 
@@ -77,7 +82,8 @@ class IUtilStructure(object):
 
 class Structure(Enum):
     DecisionTree = "decision_tree"
-    NeuralNetwork = "neural_network"
+    CategoricalNeuralNetwork = "categorical_neural_network"
+    BinaryNeuralNetwork = "binary_neural_network"
 
 
 class NeuralNetworkInformation(Enum):

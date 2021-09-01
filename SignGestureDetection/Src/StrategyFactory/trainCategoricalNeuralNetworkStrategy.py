@@ -6,7 +6,7 @@ from Structures.NeuralNetworks.enumerations import NeuralNetworkEnum
 from Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 
 
-class TrainNeuralNetworkStrategy(IStrategy):
+class TrainCategoricalNeuralNetworkStrategy(IStrategy):
 
     def __init__(self, logger, model, nn_util, arguments):
         self.logger = logger

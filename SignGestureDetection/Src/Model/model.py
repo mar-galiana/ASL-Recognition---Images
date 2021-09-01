@@ -48,6 +48,9 @@ class Model:
     def set_y(self, environment, label):
         self.input_model.set_y(environment, label)
 
+    def get_signs_dictionary(self):
+        return self.signs.get_signs_dictionary()
+
     def get_sign_values(self, labels):
         return self.signs.transform_labels_to_sign_values(labels)
 

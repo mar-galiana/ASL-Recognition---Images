@@ -14,6 +14,9 @@ class Signs:
             file_content = json.load(f)
             self.signs_dict = file_content.get("signs")
 
+    def get_signs_dictionary(self):
+        return self.signs_dict
+
     def get_sign_value(self, sign):
         if sign not in self.signs_dict:
             raise SignIsNotInJsonFileException("The sign '" + sign + "' is not in the json file")

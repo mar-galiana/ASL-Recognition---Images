@@ -2,7 +2,7 @@
 /SignGestureDetection/venv/
 /SignGestureDetection/.idea/
 
-/SignGestureDetection/Assets/Dataset/Images/.git/
+/SignGestureDetection/Assets/Dataset/Images/.git
 /SignGestureDetection/Assets/Dataset/Images/AslAlphabet/
 /SignGestureDetection/Assets/Dataset/Images/GestureImageData/
 /SignGestureDetection/Assets/Dataset/Images/GestureImagePreProcessedData/

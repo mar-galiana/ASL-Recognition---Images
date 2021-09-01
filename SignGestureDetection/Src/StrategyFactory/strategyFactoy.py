@@ -2,16 +2,18 @@ from enum import Enum
 from Model.model import Model
 from StrategyFactory.accuracyUtil import AccuracyUtil
 from StrategyFactory.helpStrategy import HelpStrategy
+from Storage.storageController import StorageController
 from Exception.inputOutputException import InputException
 from StrategyFactory.predictStrategy import PredictStrategy
 from Structures.DecisionTree.decisionTreeUtil import DecisionTreeUtil
 from StrategyFactory.saveDatabaseStrategy import SaveDatabaseStrategy
 from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 from StrategyFactory.trainDecisionTreeStrategy import TrainDecisionTreeStrategy
-from StrategyFactory.trainNeuralNetworkStrategy import TrainNeuralNetworkStrategy
 from StrategyFactory.accuracyDecisionTreeStrategy import AccuracyDecisionTreeStrategy
 from StrategyFactory.accuracyNeuralNetworkStrategy import AccuracyNeuralNetworkStrategy
 from StrategyFactory.hyperparameterOptimizationStrategy import HyperparameterOptimizationStrategy
+from Src.StrategyFactory.trainBinaryNeuralNetworkStrategy import TrainBinaryNeuralNetworkStrategy
+from StrategyFactory.trainCategoricalNeuralNetworkStrategy import TrainCategoricalNeuralNetworkStrategy
 
 
 class ExecutionFactory:
@@ -24,16 +26,18 @@ class ExecutionFactory:
         self.nn_util = NeuralNetworkUtil(self.logger, self.model)
         self.decision_tree_util = DecisionTreeUtil(self.logger, self.model)
         self.accuracy_util = AccuracyUtil(self.model, self.logger)
+        self.storage_controller = StorageController()
 
         self.strategy_switcher = {
             Strategies.HELP.value: lambda: self.help(),
             Strategies.SAVE_DATABASE.value: lambda: self.save_database(),
-            Strategies.TRAIN_NEURAL_NETWORK.value: lambda: self.train_neural_network(),
+            Strategies.TRAIN_CATEGORICAL_NEURAL_NETWORK.value: lambda: self.train_categorical_neural_network(),
             Strategies.ACCURACY_NEURAL_NETWORK.value: lambda: self.get_accuracy_neural_network(),
             Strategies.DECISION_TREE.value: lambda: self.train_decision_tree(),
             Strategies.ACCURACY_DECISION_TREE.value: lambda: self.get_accuracy_decision_tree(),
             Strategies.HYPERPARAMETER_OPTIMIZATION.value: lambda: self.show_optimized_hyperparameter(),
             Strategies.PREDICT_IMAGE.value: lambda: self.predict_image(),
+            Strategies.TRAIN_BINARY_NEURAL_NETWORK.value: lambda: self.train_binary_neural_network(),
         }
 
     def get_execution_strategy(self):
@@ -50,11 +54,11 @@ class ExecutionFactory:
 
         return SaveDatabaseStrategy(self.logger, self.model, self.arguments)
 
-    def train_neural_network(self):
+    def train_categorical_neural_network(self):
         if len(self.arguments) < 2:
             raise InputException("This strategy requires two or more arguments to be executed")
 
-        return TrainNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.arguments)
+        return TrainCategoricalNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.arguments)
 
     def get_accuracy_neural_network(self):
         if len(self.arguments) != 1:
@@ -82,6 +86,13 @@ class ExecutionFactory:
 
         return HyperparameterOptimizationStrategy(self.logger, self.model, self.nn_util, self.arguments)
 
+    def train_binary_neural_network(self):
+        if len(self.arguments) < 1:
+            raise InputException("This strategy requires one or more arguments to be executed")
+
+        return TrainBinaryNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.storage_controller,
+                                                self.arguments)
+
     def predict_image(self):
         if len(self.arguments) < 1:
             raise InputException("This strategy requires one or more arguments to be executed")
@@ -95,9 +106,10 @@ class ExecutionFactory:
 class Strategies(Enum):
     HELP = "--help"
     SAVE_DATABASE = "--saveDatabase"
-    TRAIN_NEURAL_NETWORK = "--trainNeuralNetwork"
+    TRAIN_CATEGORICAL_NEURAL_NETWORK = "--trainCategoricalNeuralNetwork"
     ACCURACY_NEURAL_NETWORK = "--accuracyNeuralNetwork"
     DECISION_TREE = "--trainDecisionTree"
     ACCURACY_DECISION_TREE = "--accuracyDecisionTree"
     HYPERPARAMETER_OPTIMIZATION = "--showOptimizedHyperparameter"
     PREDICT_IMAGE = "--predict"
+    TRAIN_BINARY_NEURAL_NETWORK = "--trainBinaryNeuralNetwork"

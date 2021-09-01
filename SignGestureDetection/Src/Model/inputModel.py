@@ -128,22 +128,22 @@ class InputModel:
         return data
 
     def set_x(self, environment, data):
+        self.__set_value(environment, Image.DATA, data)
+
+    def set_y(self, environment, labels):
+        self.__set_value(environment, Image.LABEL, labels)
+
+    def __set_value(self, environment, data_type, values):
         if not isinstance(environment, Environment):
             raise EnvironmentException("Environment used is not a valid one")
 
-        if environment == Environment.TRAIN:
-            self.__train_data[Image.DATA.value] = data
-        else:
-            self.__test_data[Image.DATA.value] = data
-
-    def set_y(self, environment, label):
-        if not isinstance(environment, Environment):
-            raise EnvironmentException("Environment used is not a valid one")
+        if self.__train_data is None:
+            self.__train_data = {}
 
         if environment == Environment.TRAIN:
-            self.__train_data[Image.LABEL.value] = label
+            self.__train_data[data_type.value] = values
         else:
-            self.__test_data[Image.LABEL.value] = label
+            self.__test_data[data_type.value] = values
 
     def set_pickels_name(self, pickels_name):
         self.pickels_name = pickels_name

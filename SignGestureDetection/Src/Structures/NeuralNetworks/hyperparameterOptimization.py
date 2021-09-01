@@ -95,11 +95,11 @@ def create_model_dropout_regularization(dropout_rate=0.0, weight_constraint=0, n
     model.add(Conv2D(25, kernel_size=(3, 3), strides=(1, 1), padding='valid', activation=ACTIVATION,
                      input_shape=(image_size[0], image_size[1], 1), kernel_initializer=INIT_MODE,
                      kernel_constraint=max_norm(weight_constraint)))
-    # model.add(Dropout(dropout_rate))
+    model.add(Dropout(dropout_rate))
     model.add(MaxPool2D(pool_size=(1, 1)))
     model.add(Flatten())
     model.add(Dense(100, kernel_initializer='uniform', activation=ACTIVATION))
-    # model.add(Dropout(dropout_rate))
+    model.add(Dropout(dropout_rate))
     model.add(Dense(num_classes, activation='softmax'))
 
     # Compile model
