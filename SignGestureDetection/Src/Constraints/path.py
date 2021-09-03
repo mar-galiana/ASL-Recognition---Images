@@ -1,13 +1,13 @@
 import os
 
-# ASSETS_PATH = os.getcwd() + "/../Assets/"
-ASSETS_PATH = os.getcwd() + "/Assets/"
+ASSETS_PATH = os.getcwd() + "/../Assets/"
+# ASSETS_PATH = os.getcwd() + "/Assets/"
 
 # Dataset
 DATASET_PATH = ASSETS_PATH + "Dataset/"
 PICKELS_PATH = DATASET_PATH + "Pickels/"
 IMAGES_PATH = DATASET_PATH + "Images/"
-SIGNS_FILE = IMAGES_PATH + "signs.json"
+SIGNS_FILE = DATASET_PATH + "signs.json"
 
 # Model Structures
 MODEL_STRUCTURES_PATH = ASSETS_PATH + "ModelStructures/"

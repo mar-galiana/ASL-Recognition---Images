@@ -14,3 +14,7 @@ class ILogger(ABC):
     @abstractmethod
     def write_error(self, message):
         pass
+
+    @abstractmethod
+    def write_action_required(self, message):
+        pass

@@ -7,6 +7,7 @@ from StrategyFactory.predictStrategy import PredictStrategy
 from StrategyFactory.saveDatabaseStrategy import SaveDatabaseStrategy
 from Structures.DecisionTree.decisionTreeUtil import DecisionTreeUtil
 from StrategyFactory.accuracyStrategy.accuracyUtil import AccuracyUtil
+from StrategyFactory.setupProjectStrategy import SetupProjectStructure
 from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 from StrategyFactory.trainStrategy.trainDecisionTreeStrategy import TrainDecisionTreeStrategy
 from StrategyFactory.hyperparameterOptimizationStrategy import HyperparameterOptimizationStrategy
@@ -98,32 +99,37 @@ class ExecutionFactory:
 
         return PredictStrategy(self.logger, self.model, self.nn_util, self.decision_tree_util, self.arguments)
 
+    def setup(self):
+        return SetupProjectStructure(self.logger, self.storage_controller)
+
     def help(self):
         return HelpStrategy(self.logger)
 
     def __get_strategy_switcher(self):
         return {
             Strategies.HELP.value: lambda: self.help(),
+            Strategies.SETUP.value: lambda: self.setup(),
             Strategies.SAVE_DATABASE.value: lambda: self.save_database(),
-            Strategies.TRAIN_CATEGORICAL_NEURAL_NETWORK.value: lambda: self.train_categorical_neural_network(),
-            Strategies.ACCURACY_CATEGORICAL_NEURAL_NETWORK.value: lambda: self.get_accuracy_categorical_neural_network(),
+            Strategies.PREDICT_IMAGE.value: lambda: self.predict_image(),
             Strategies.DECISION_TREE.value: lambda: self.train_decision_tree(),
             Strategies.ACCURACY_DECISION_TREE.value: lambda: self.get_accuracy_decision_tree(),
-            Strategies.HYPERPARAMETER_OPTIMIZATION.value: lambda: self.show_optimized_hyperparameter(),
-            Strategies.PREDICT_IMAGE.value: lambda: self.predict_image(),
             Strategies.TRAIN_BINARY_NEURAL_NETWORK.value: lambda: self.train_binary_neural_network(),
-            Strategies.ACCURACY_BINARY_NEURAL_NETWORK.value: lambda: self.get_accuracy_binary_neural_network()
+            Strategies.HYPERPARAMETER_OPTIMIZATION.value: lambda: self.show_optimized_hyperparameter(),
+            Strategies.ACCURACY_BINARY_NEURAL_NETWORK.value: lambda: self.get_accuracy_binary_neural_network(),
+            Strategies.TRAIN_CATEGORICAL_NEURAL_NETWORK.value: lambda: self.train_categorical_neural_network(),
+            Strategies.ACCURACY_CATEGORICAL_NEURAL_NETWORK.value: lambda: self.get_accuracy_categorical_neural_network()
         }
 
 
 class Strategies(Enum):
     HELP = "--help"
+    SETUP = "--setup"
     PREDICT_IMAGE = "--predict"
     SAVE_DATABASE = "--saveDatabase"
-    TRAIN_CATEGORICAL_NEURAL_NETWORK = "--trainCategoricalNeuralNetwork"
-    ACCURACY_CATEGORICAL_NEURAL_NETWORK = "--accuracyCategoricalNeuralNetwork"
     DECISION_TREE = "--trainDecisionTree"
     ACCURACY_DECISION_TREE = "--accuracyDecisionTree"
-    HYPERPARAMETER_OPTIMIZATION = "--showOptimizedHyperparameter"
     TRAIN_BINARY_NEURAL_NETWORK = "--trainBinaryNeuralNetwork"
+    HYPERPARAMETER_OPTIMIZATION = "--showOptimizedHyperparameter"
     ACCURACY_BINARY_NEURAL_NETWORK = "--accuracyBinaryNeuralNetwork"
+    TRAIN_CATEGORICAL_NEURAL_NETWORK = "--trainCategoricalNeuralNetwork"
+    ACCURACY_CATEGORICAL_NEURAL_NETWORK = "--accuracyCategoricalNeuralNetwork"

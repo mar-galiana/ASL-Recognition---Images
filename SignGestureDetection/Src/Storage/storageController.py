@@ -1,4 +1,5 @@
 import os
+import json
 import zipfile
 from Storage.storageEnum import FileEnum
 
@@ -49,3 +50,14 @@ class StorageController:
             os.remove(os.path.join(directory_path, file))
 
         os.rmdir(directory_path)
+
+    @staticmethod
+    def create_directory(path):
+        if not os.path.exists(path):
+            os.mkdir(path)
+
+    @staticmethod
+    def create_json_file(path, content):
+        if not os.path.exists(path):
+            with open(path, 'w') as f:
+                json.dump(content, f)

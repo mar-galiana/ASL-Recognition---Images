@@ -14,3 +14,7 @@ class Logger(ILogger):
     @staticmethod
     def write_error(message):
         print("[ERROR]: " + message)
+
+    @staticmethod
+    def write_action_required(message):
+        print("[ACTION REQUIRED]: " + message)
