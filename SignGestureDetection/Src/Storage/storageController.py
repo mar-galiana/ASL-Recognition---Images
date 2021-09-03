@@ -11,7 +11,6 @@ class StorageController:
     @staticmethod
     def compress_files(files, compressed_file_path):
 
-        # create a ZipFile object
         zip_obj = zipfile.ZipFile(compressed_file_path, 'w')
 
         for file in files:
@@ -19,7 +18,6 @@ class StorageController:
             file_name = file[FileEnum.FILE_NAME.value]
             zip_obj.write(file_path + file_name, file_name, compress_type=zipfile.ZIP_DEFLATED)
 
-        # close the Zip File
         zip_obj.close()
 
     @staticmethod

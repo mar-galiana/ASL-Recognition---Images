@@ -1,13 +1,16 @@
 import json
 from Constraints.path import SIGNS_FILE
-from Exception.modelException import SignIsNotInJsonFileException
+from Exception.modelException import SignIsNotInJsonFileException, SignsFileHasNotBeenReadException
 
 
 class Signs:
 
     def __init__(self):
-        self.signs_dict = {}
-        self.read_sign_json()
+        self.signs_dict = None
+
+    def __check_sign_is_not_null(self):
+        if self.signs_dict is None:
+            self.read_sign_json()
 
     def read_sign_json(self):
         with open(SIGNS_FILE) as f:
@@ -15,15 +18,21 @@ class Signs:
             self.signs_dict = file_content.get("signs")
 
     def get_signs_dictionary(self):
+        self.__check_sign_is_not_null()
+
         return self.signs_dict
 
     def get_sign_value(self, sign):
+        self.__check_sign_is_not_null()
+
         if sign not in self.signs_dict:
             raise SignIsNotInJsonFileException("The sign '" + sign + "' is not in the json file")
 
         return self.signs_dict[sign]
 
     def transform_labels_to_sign_values(self, labels):
+        self.__check_sign_is_not_null()
+
         values = []
         for aux in range(len(labels)):
             values.append(self.signs_dict.get(labels[aux]))
@@ -32,6 +41,8 @@ class Signs:
         return values
 
     def get_sign_based_on_value(self, sign_value):
+        self.__check_sign_is_not_null()
+
         signs_list = list(self.signs_dict.values())
 
         if not isinstance(signs_list, int):

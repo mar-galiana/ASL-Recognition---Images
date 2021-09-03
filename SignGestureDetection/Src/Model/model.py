@@ -1,14 +1,12 @@
 import os
 import numpy as np
-from tensorflow import keras
 from Model.signs import Signs
 from Model.modelEnum import Image
-from Model.inputModel import InputModel
-from Model.outputModel import OutputModel
 from Model.modelEnum import Environment
-from sklearn.preprocessing import LabelEncoder
 from tensorflow.python.keras.utils import np_utils
 from Exception.modelException import EnvironmentException
+from Model.DatasetController.inputModel import InputModel
+from Model.DatasetController.outputModel import OutputModel
 
 
 class Model:

@@ -58,24 +58,21 @@ class NeuralNetworkUtil(IUtilStructure):
                                                          model_name)
 
         self.logger.write_info("A new categorical neural network model has been created with the name of: " + model_name
-                               + "\n"
-                               "In the path: " + model_path + "\n"
-                               "This is the name that will be needed in the other strategies if you want to work with "
-                               "this model.")
+                               + "\nIn the path: " + model_path + "\nThis is the name that will be needed in the "
+                               "other strategies if you want to work with this model.")
 
     def get_pickels_used_in_binary_zip(self, name_model):
         pickels = super(NeuralNetworkUtil, self).get_pickels_used(Structure.BinaryNeuralNetwork, name_model)
         return pickels
 
-    def record_binary_model(self, file_name, file_path):
+    def record_binary_model(self, file_name, file_path, restriction):
 
         super(NeuralNetworkUtil, self).save_pickels_used(Structure.BinaryNeuralNetwork, self.model.get_pickels_name(),
-                                                         file_name)
+                                                         file_name, restriction=restriction)
 
         self.logger.write_info("A new set of binary neural network models have been created with the name of: " +
                                file_name + "\nIn the path: " + file_path + "\nThis is the name that will be needed in "
-                                                                           "the other strategies if you want to work "
-                                                                           "with these models.")
+                               "the other strategies if you want to work with these models.")
 
         return TMP_BINARY_NEURAL_NETWORK_MODEL_PATH
 

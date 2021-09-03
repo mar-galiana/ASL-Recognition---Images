@@ -20,3 +20,9 @@ class AttributeToTuneEnum(Enum):
 class ClassifierEnum(Enum):
     CLASSIFIER = 'classifier'
     SIGN = 'sign'
+
+
+class LabelsRequirement(Enum):
+    NUMERIC = "numeric"
+    ALPHA = "alpha"
+    ALL = "all"

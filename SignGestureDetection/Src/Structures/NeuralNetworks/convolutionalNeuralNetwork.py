@@ -74,11 +74,9 @@ class ConvolutionalNeuralNetwork(INeuralNetwork):
         sequential_model.add(Conv2D(NEURONS_CONV_LAYER, kernel_size=(3, 3), strides=(1, 1), padding='valid',
                                     activation=ACTIVATION, input_shape=(shape[1], shape[2], 1),
                                     kernel_initializer=INIT_MODE, kernel_constraint=max_norm(WEIGHT_CONSTRAINT)))
-        sequential_model.add(Dropout(DROPOUT_RATE))
         sequential_model.add(MaxPool2D(pool_size=(1, 1)))
         sequential_model.add(Flatten())
         sequential_model.add(Dense(NEURONS_DENSE_LAYER, kernel_initializer=INIT_MODE, activation=ACTIVATION))
-        sequential_model.add(Dropout(DROPOUT_RATE))
         sequential_model.add(Dense(n_classes, activation=activation))
 
         return sequential_model

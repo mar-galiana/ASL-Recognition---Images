@@ -1,20 +1,20 @@
 from enum import Enum
 from Model.model import Model
-from StrategyFactory.accuracyUtil import AccuracyUtil
 from StrategyFactory.helpStrategy import HelpStrategy
 from Storage.storageController import StorageController
 from Exception.inputOutputException import InputException
 from StrategyFactory.predictStrategy import PredictStrategy
 from StrategyFactory.saveDatabaseStrategy import SaveDatabaseStrategy
 from Structures.DecisionTree.decisionTreeUtil import DecisionTreeUtil
+from StrategyFactory.accuracyStrategy.accuracyUtil import AccuracyUtil
 from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
-from StrategyFactory.trainDecisionTreeStrategy import TrainDecisionTreeStrategy
-from StrategyFactory.accuracyDecisionTreeStrategy import AccuracyDecisionTreeStrategy
-from StrategyFactory.trainBinaryNeuralNetworkStrategy import TrainBinaryNeuralNetworkStrategy
+from StrategyFactory.trainStrategy.trainDecisionTreeStrategy import TrainDecisionTreeStrategy
 from StrategyFactory.hyperparameterOptimizationStrategy import HyperparameterOptimizationStrategy
-from StrategyFactory.accuracyBinaryNeuralNetworkStrategy import AccuracyBinaryNeuralNetworkStrategy
-from StrategyFactory.trainCategoricalNeuralNetworkStrategy import TrainCategoricalNeuralNetworkStrategy
-from StrategyFactory.accuracyCategoricalNeuralNetworkStrategy import AccuracyCategoricalNeuralNetworkStrategy
+from StrategyFactory.accuracyStrategy.accuracyDecisionTreeStrategy import AccuracyDecisionTreeStrategy
+from StrategyFactory.trainStrategy.trainBinaryNeuralNetworkStrategy import TrainBinaryNeuralNetworkStrategy
+from StrategyFactory.accuracyStrategy.accuracyBinaryNeuralNetworkStrategy import AccuracyBinaryNeuralNetworkStrategy
+from StrategyFactory.trainStrategy.trainCategoricalNeuralNetworkStrategy import TrainCategoricalNeuralNetworkStrategy
+from StrategyFactory.accuracyStrategy.accuracyCategoricalNeuralNetworkStrategy import AccuracyCategoricalNeuralNetworkStrategy
 
 
 class ExecutionFactory:
@@ -79,15 +79,15 @@ class ExecutionFactory:
         return HyperparameterOptimizationStrategy(self.logger, self.model, self.nn_util, self.arguments)
 
     def train_binary_neural_network(self):
-        if len(self.arguments) < 1:
-            raise InputException("This strategy requires one or more arguments to be executed")
+        if len(self.arguments) < 2:
+            raise InputException("This strategy requires two or more arguments to be executed")
 
         return TrainBinaryNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.storage_controller,
                                                 self.arguments)
 
     def get_accuracy_binary_neural_network(self):
-        if len(self.arguments) != 1:
-            raise InputException("This strategy requires one argument to be executed")
+        if len(self.arguments) < 1:
+            raise InputException("This strategy requires one or more arguments to be executed")
 
         return AccuracyBinaryNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.accuracy_util,
                                                    self.storage_controller, self.arguments)
