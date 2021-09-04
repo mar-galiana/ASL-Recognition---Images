@@ -1,5 +1,5 @@
+from Constraints.path import *
 from StrategyFactory.iStrategy import IStrategy
-from Src.Constraints.path import *
 
 
 class SetupProjectStructure(IStrategy):

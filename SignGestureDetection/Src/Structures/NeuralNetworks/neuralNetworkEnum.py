@@ -25,4 +25,5 @@ class ClassifierEnum(Enum):
 class LabelsRequirement(Enum):
     NUMERIC = "numeric"
     ALPHA = "alpha"
+    ABC = "abc"
     ALL = "all"

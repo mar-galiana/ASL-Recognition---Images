@@ -4,18 +4,19 @@ from StrategyFactory.helpStrategy import HelpStrategy
 from Storage.storageController import StorageController
 from Exception.inputOutputException import InputException
 from StrategyFactory.predictStrategy import PredictStrategy
+from StrategyFactory.Utils.accuracyUtil import AccuracyUtil
 from StrategyFactory.saveDatabaseStrategy import SaveDatabaseStrategy
 from Structures.DecisionTree.decisionTreeUtil import DecisionTreeUtil
-from StrategyFactory.accuracyStrategy.accuracyUtil import AccuracyUtil
 from StrategyFactory.setupProjectStrategy import SetupProjectStructure
 from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
-from StrategyFactory.trainStrategy.trainDecisionTreeStrategy import TrainDecisionTreeStrategy
+from StrategyFactory.Utils.binaryNeuralNetworkUtil import BinaryNeuralNetworkUtil
+from StrategyFactory.TrainStrategy.trainDecisionTreeStrategy import TrainDecisionTreeStrategy
 from StrategyFactory.hyperparameterOptimizationStrategy import HyperparameterOptimizationStrategy
-from StrategyFactory.accuracyStrategy.accuracyDecisionTreeStrategy import AccuracyDecisionTreeStrategy
-from StrategyFactory.trainStrategy.trainBinaryNeuralNetworkStrategy import TrainBinaryNeuralNetworkStrategy
-from StrategyFactory.accuracyStrategy.accuracyBinaryNeuralNetworkStrategy import AccuracyBinaryNeuralNetworkStrategy
-from StrategyFactory.trainStrategy.trainCategoricalNeuralNetworkStrategy import TrainCategoricalNeuralNetworkStrategy
-from StrategyFactory.accuracyStrategy.accuracyCategoricalNeuralNetworkStrategy import AccuracyCategoricalNeuralNetworkStrategy
+from StrategyFactory.AccuracyStrategy.accuracyDecisionTreeStrategy import AccuracyDecisionTreeStrategy
+from StrategyFactory.TrainStrategy.trainBinaryNeuralNetworkStrategy import TrainBinaryNeuralNetworkStrategy
+from StrategyFactory.AccuracyStrategy.accuracyBinaryNeuralNetworkStrategy import AccuracyBinaryNeuralNetworkStrategy
+from StrategyFactory.TrainStrategy.trainCategoricalNeuralNetworkStrategy import TrainCategoricalNeuralNetworkStrategy
+from StrategyFactory.AccuracyStrategy.accuracyCategoricalNeuralNetworkStrategy import AccuracyCategoricalNeuralNetworkStrategy
 
 
 class ExecutionFactory:
@@ -28,6 +29,7 @@ class ExecutionFactory:
         self.nn_util = NeuralNetworkUtil(self.logger, self.model)
         self.decision_tree_util = DecisionTreeUtil(self.logger, self.model)
         self.accuracy_util = AccuracyUtil(self.model, self.logger)
+        self.binary_nn_util = BinaryNeuralNetworkUtil(self.model)
         self.storage_controller = StorageController()
 
         self.strategy_switcher = self.__get_strategy_switcher()
@@ -83,15 +85,15 @@ class ExecutionFactory:
         if len(self.arguments) < 2:
             raise InputException("This strategy requires two or more arguments to be executed")
 
-        return TrainBinaryNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.storage_controller,
-                                                self.arguments)
+        return TrainBinaryNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.binary_nn_util,
+                                                self.storage_controller, self.arguments)
 
     def get_accuracy_binary_neural_network(self):
         if len(self.arguments) < 1:
             raise InputException("This strategy requires one or more arguments to be executed")
 
         return AccuracyBinaryNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.accuracy_util,
-                                                   self.storage_controller, self.arguments)
+                                                   self.binary_nn_util, self.storage_controller, self.arguments)
 
     def predict_image(self):
         if len(self.arguments) < 1:
