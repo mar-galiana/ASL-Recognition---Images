@@ -1,6 +1,7 @@
 import numpy as np
-from sklearn.metrics import accuracy_score
 from Model.modelEnum import Environment
+from sklearn.metrics import accuracy_score
+from Structures.NeuralNetworks.neuralNetworkEnum import NeuralNetworkTypeEnum
 
 
 class AccuracyUtil:
@@ -24,14 +25,17 @@ class AccuracyUtil:
         accuracy = accuracy_score(prediction, values)
         return accuracy*100
 
-    def perform_test_data(self, structure, structure_model):
+    def perform_test_data(self, structure, structure_model, nn_type=NeuralNetworkTypeEnum.CNN):
 
         n_classes = np.unique(self.model.get_y(Environment.TEST)).shape[0] + 1
         shape = self.model.get_x(Environment.TEST).shape
 
-        x_test = structure.resize_data(Environment.TEST, shape)
+        self.model.resize_data(structure, Environment.TEST, shape, nn_type=nn_type)
+        x_test = self.model.get_x(Environment.TEST)
+
         labels = self.model.get_sign_values(self.model.get_y(Environment.TEST))
         y_test = self.model.get_categorical_vectors(Environment.TEST, n_classes)
+
         y_pred = structure_model.predict(x_test)
 
         accuracy = self.get_accuracy(y_pred, y_test)

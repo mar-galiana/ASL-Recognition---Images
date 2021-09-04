@@ -31,8 +31,8 @@ class AccuracyCategoricalNeuralNetworkStrategy(IStrategy):
     def execute(self):
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-        nn, nn_model = self.__get_neural_network_model()
-        self.accuracy_util.perform_test_data(nn, nn_model)
+        nn, nn_model, nn_type = self.__get_neural_network_model()
+        self.accuracy_util.perform_test_data(nn, nn_model, nn_type=nn_type)
         self.logger.write_info("Strategy executed successfully")
 
     def __get_neural_network_model(self):
@@ -43,4 +43,4 @@ class AccuracyCategoricalNeuralNetworkStrategy(IStrategy):
         else:
             nn = ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util)
 
-        return nn, nn_model
+        return nn, nn_model, nn_type

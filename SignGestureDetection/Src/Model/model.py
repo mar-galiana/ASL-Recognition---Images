@@ -3,10 +3,13 @@ import numpy as np
 from Model.signs import Signs
 from Model.modelEnum import Image
 from Model.modelEnum import Environment
+from Structures.iUtilStructure import Structure
 from tensorflow.python.keras.utils import np_utils
 from Exception.modelException import EnvironmentException
 from Model.DatasetController.inputModel import InputModel
 from Model.DatasetController.outputModel import OutputModel
+from Exception.structureException import StructureException
+from Structures.NeuralNetworks.neuralNetworkEnum import NeuralNetworkTypeEnum
 
 
 class Model:
@@ -80,3 +83,24 @@ class Model:
         self.set_y(Environment.TEST, y_test)
 
         return n_classes
+
+    def resize_data(self, structure, environment, shape, nn_type=NeuralNetworkTypeEnum.CNN):
+        if not isinstance(structure, Structure):
+            raise StructureException("Incorrect structure exception")
+
+        if not isinstance(nn_type, NeuralNetworkTypeEnum):
+            raise StructureException("Incorrect neural network type")
+
+        if nn_type == NeuralNetworkTypeEnum.NN or structure == Structure.DecisionTree:
+            self.__resize_basic_nn_and_dt_data(environment, shape)
+
+        else:
+            self.__resize_cnn_data(environment, shape)
+
+    def __resize_cnn_data(self, environment, shape):
+        x_data = self.get_x(environment).reshape(shape[0], shape[1], shape[2], 1)
+        self.set_x(environment, x_data)
+
+    def __resize_basic_nn_and_dt_data(self, environment, shape):
+        x_data = self.get_x(environment).reshape(shape[0], shape[1]*shape[2])
+        self.set_x(environment, x_data)

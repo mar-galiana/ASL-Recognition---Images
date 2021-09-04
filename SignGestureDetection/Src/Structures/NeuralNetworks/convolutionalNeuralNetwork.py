@@ -3,14 +3,15 @@ One major advantage of using CNNs over NNs is that you do not need to flatten th
 of working with image data in 2D.
 """
 import numpy as np
-from Constraints.hyperparameters import *
 from Model.modelEnum import Environment
+from Constraints.hyperparameters import *
+from Structures.iUtilStructure import Structure
 from tensorflow.keras.constraints import max_norm
 from tensorflow.python.keras.models import Sequential
 from Structures.NeuralNetworks.iNeuralNetwork import INeuralNetwork
-from Structures.NeuralNetworks.neuralNetworkEnum import NeuralNetworkTypeEnum
 from Exception.parametersException import IncorrectNumberOfParameters
 from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
+from Structures.NeuralNetworks.neuralNetworkEnum import NeuralNetworkTypeEnum
 from tensorflow.python.keras.layers import Dense, Conv2D, MaxPool2D, Flatten, Dropout
 
 
@@ -22,10 +23,6 @@ class ConvolutionalNeuralNetwork(INeuralNetwork):
         self.model = model
         self.nn_util = nn_util
         self.improved_nn = improved_nn
-
-    def resize_data(self, environment, shape):
-        x_data = self.model.get_x(environment).reshape(shape[0], shape[1], shape[2], 1)
-        return x_data
 
     def train_neural_network(self):
         if self.improved_nn is None:
@@ -43,11 +40,8 @@ class ConvolutionalNeuralNetwork(INeuralNetwork):
     def prepare_images(self, shape_train, shape_test):
 
         # Flattening the images from the 150x150 pixels to 1D 787 pixels
-        x_train = self.resize_data(Environment.TRAIN, shape_train)
-        x_test = self.resize_data(Environment.TEST, shape_test)
-
-        self.model.set_x(Environment.TRAIN, x_train)
-        self.model.set_x(Environment.TEST, x_test)
+        self.model.resize_data(Structure.CategoricalNeuralNetwork, Environment.TRAIN, shape_train)
+        self.model.resize_data(Structure.CategoricalNeuralNetwork, Environment.TEST, shape_test)
 
         n_classes = self.model.convert_to_one_hot_data()
 

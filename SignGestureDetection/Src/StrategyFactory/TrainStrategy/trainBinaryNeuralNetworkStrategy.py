@@ -4,6 +4,7 @@ from enum import Enum
 from Model.model import Model
 from Model.modelEnum import Environment
 from Storage.storageEnum import FileEnum
+from Structures.iUtilStructure import Structure
 from StrategyFactory.iStrategy import IStrategy
 from Exception.inputOutputException import InputException
 from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
@@ -46,19 +47,14 @@ class TrainBinaryNeuralNetworkStrategy(IStrategy):
 
         self.logger.write_info("Strategy executed successfully")
 
-    def __resize_data(self, environment, shape):
-        x_data = self.model.get_x(environment).reshape(shape[0], shape[1], shape[2], 1)
-        return x_data
-
     def __prepare_images(self):
         shape_train = self.model.get_x(Environment.TRAIN).shape
-        shape_test = self.model.get_x(Environment.TEST).shape
 
-        x_train = self.__resize_data(Environment.TRAIN, shape_train).astype('float32')
-        x_test = self.__resize_data(Environment.TEST, shape_test).astype('float32')
+        self.model.resize_data(Structure.BinaryNeuralNetwork, Environment.TRAIN, shape_train)
+
+        x_train = self.model.get_x(Environment.TRAIN).astype('float32')
 
         self.model.set_x(Environment.TRAIN, x_train)
-        self.model.set_x(Environment.TEST, x_test)
 
     def __train_binary_cnn(self):
 

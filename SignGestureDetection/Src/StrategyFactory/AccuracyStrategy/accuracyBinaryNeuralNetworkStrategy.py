@@ -3,6 +3,7 @@ import numpy as np
 from skimage import io
 from skimage.transform import resize
 from Model.modelEnum import Environment
+from Structures.iUtilStructure import Structure
 from StrategyFactory.iStrategy import IStrategy
 from tensorflow.python.keras.preprocessing import image
 from Exception.inputOutputException import InputException
@@ -57,7 +58,8 @@ class AccuracyBinaryNeuralNetworkStrategy(IStrategy):
 
         shape = self.model.get_x(Environment.TEST).shape
 
-        x_test = self.__resize_data(Environment.TEST, shape)
+        self.model.resize_data(Structure.BinaryNeuralNetwork, Environment.TEST, shape)
+        x_test = self.model.get_x(Environment.TEST)
         y_test = self.model.get_sign_values(self.model.get_y(Environment.TEST))
 
         for classifier_dict in classifiers:
@@ -115,10 +117,6 @@ class AccuracyBinaryNeuralNetworkStrategy(IStrategy):
             })
 
         return classifiers
-
-    def __resize_data(self, environment, shape):
-        x_data = self.model.get_x(environment).reshape(shape[0], shape[1], shape[2], 1)
-        return x_data
 
     def __remove_temporal_files(self, model_name):
         directory_path = TMP_BINARY_NEURAL_NETWORK_MODEL_PATH + model_name[:-len(".zip")]
