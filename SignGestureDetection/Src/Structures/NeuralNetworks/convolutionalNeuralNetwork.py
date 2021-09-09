@@ -62,7 +62,7 @@ class ConvolutionalNeuralNetwork(INeuralNetwork):
 
     @staticmethod
     def __get_improved_sequential_model(n_classes, shape, is_categorical):
-        activation = ('sigmoid', 'softmax')[is_categorical]
+        output_layer_activation = ('sigmoid', 'softmax')[is_categorical]
 
         sequential_model = Sequential()
         sequential_model.add(Conv2D(NEURONS_CONV_LAYER, kernel_size=(3, 3), strides=(1, 1), padding='valid',
@@ -71,7 +71,7 @@ class ConvolutionalNeuralNetwork(INeuralNetwork):
         sequential_model.add(MaxPool2D(pool_size=(1, 1)))
         sequential_model.add(Flatten())
         sequential_model.add(Dense(NEURONS_DENSE_LAYER, kernel_initializer=INIT_MODE, activation=ACTIVATION))
-        sequential_model.add(Dense(n_classes, activation=activation))
+        sequential_model.add(Dense(n_classes, activation=output_layer_activation))
 
         return sequential_model
 
