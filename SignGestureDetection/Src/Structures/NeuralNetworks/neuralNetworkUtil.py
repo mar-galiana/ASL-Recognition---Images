@@ -79,7 +79,7 @@ class NeuralNetworkUtil(IUtilStructure):
 
     @staticmethod
     def resize_single_image(image, nn_type):
-        if nn_type == NeuralNetworkTypeEnum.NN.value:
+        if nn_type == NeuralNetworkTypeEnum.ANN.value:
             resized_image = image.reshape(1, image.shape[0] * image.shape[1])
         else:
             resized_image = image.reshape(1, image.shape[0], image.shape[1], 1)

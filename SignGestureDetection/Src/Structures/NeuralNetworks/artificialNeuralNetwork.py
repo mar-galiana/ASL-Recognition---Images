@@ -1,10 +1,8 @@
-import numpy as np
 from Model.modelEnum import Environment
 from tensorflow.python.keras.layers import Dense
 from tensorflow.python.keras.models import Sequential
 from Structures.NeuralNetworks.iNeuralNetwork import INeuralNetwork
 from Structures.NeuralNetworks.neuralNetworkEnum import NeuralNetworkTypeEnum
-from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 
 
 class ArtificialNeuralNetwork(INeuralNetwork):
@@ -26,7 +24,7 @@ class ArtificialNeuralNetwork(INeuralNetwork):
         shape_test = self.model.get_x(Environment.TEST).shape
         n_classes = self.__prepare_images(shape_test, shape_train)
         sequential_model = self.__build_sequential_model(n_classes, shape_train)
-        self.nn_util.save_model(sequential_model, NeuralNetworkTypeEnumNN)
+        self.nn_util.save_model(sequential_model, NeuralNetworkTypeEnum.ANN)
 
     def __prepare_images(self, shape_test, shape_train):
         # Flattening the images from the 150x150 pixels to 1D 787 pixels

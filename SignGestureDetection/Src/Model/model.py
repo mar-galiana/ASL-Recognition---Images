@@ -1,4 +1,3 @@
-import os
 import numpy as np
 from Model.signs import Signs
 from Model.modelEnum import Image
@@ -91,7 +90,7 @@ class Model:
         if not isinstance(nn_type, NeuralNetworkTypeEnum):
             raise StructureException("Incorrect neural network type")
 
-        if nn_type == NeuralNetworkTypeEnum.NN or structure == Structure.DecisionTree:
+        if nn_type == NeuralNetworkTypeEnum.ANN or structure == Structure.DecisionTree:
             self.__resize_basic_nn_and_dt_data(environment, shape)
 
         else:
