@@ -1,15 +1,12 @@
 import os
-import numpy as np
 from tensorflow import keras
 from Model.modelEnum import Environment
-from tensorflow.python.keras.utils import np_utils
 from Exception.modelException import EnvironmentException
-from Exception.parametersException import IncorrectVariableType
+from Constraints.path import TMP_BINARY_NEURAL_NETWORK_MODEL_PATH
 from Structures.iUtilStructure import IUtilStructure, Structure
 from Constraints.path import CATEGORICAL_NEURAL_NETWORK_MODEL_PATH
 from Structures.NeuralNetworks.neuralNetworkEnum import NeuralNetworkTypeEnum
 from Exception.inputOutputException import PathDoesNotExistException
-from Constraints.path import BINARY_NEURAL_NETWORK_MODEL_PATH, TMP_BINARY_NEURAL_NETWORK_MODEL_PATH
 
 
 class NeuralNetworkUtil(IUtilStructure):
@@ -82,7 +79,7 @@ class NeuralNetworkUtil(IUtilStructure):
 
     @staticmethod
     def resize_single_image(image, nn_type):
-        if nn_type == NeuralNetworkTypeEnumNN.value:
+        if nn_type == NeuralNetworkTypeEnum.NN.value:
             resized_image = image.reshape(1, image.shape[0] * image.shape[1])
         else:
             resized_image = image.reshape(1, image.shape[0], image.shape[1], 1)
@@ -90,7 +87,7 @@ class NeuralNetworkUtil(IUtilStructure):
         return resized_image
 
     def __get_keras_model_path(self, neural_network_type):
-        if not isinstance(neural_network_type, NeuralNetworkEnum):
+        if not isinstance(neural_network_type, NeuralNetworkTypeEnum):
             raise EnvironmentException("Environment used is not a valid one")
 
         file_name = neural_network_type.value + "_" + self.model.get_pickels_name() + "_model"

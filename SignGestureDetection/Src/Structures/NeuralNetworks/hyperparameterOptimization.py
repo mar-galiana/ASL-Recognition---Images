@@ -12,8 +12,8 @@ from sklearn.model_selection import GridSearchCV
 from tensorflow.keras.constraints import max_norm
 from tensorflow.python.keras.models import Sequential
 from Exception.parametersException import IncorrectVariableType
-from Structures.NeuralNetworks.neuralNetworkEnum import AttributeToTuneEnum
 from tensorflow.python.keras.wrappers.scikit_learn import KerasClassifier
+from Structures.NeuralNetworks.neuralNetworkEnum import AttributeToTuneEnum
 from tensorflow.python.keras.layers import Dense, Conv2D, MaxPool2D, Flatten, Dropout
 from Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 

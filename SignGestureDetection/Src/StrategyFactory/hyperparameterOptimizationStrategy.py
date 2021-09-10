@@ -1,7 +1,4 @@
 import os
-from enum import Enum
-from Model.model import Model
-from Model.modelEnum import Environment
 from StrategyFactory.iStrategy import IStrategy
 from Exception.inputOutputException import InputException
 from Structures.NeuralNetworks.neuralNetworkEnum import AttributeToTuneEnum

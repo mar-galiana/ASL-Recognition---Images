@@ -1,4 +1,3 @@
-import numpy as np
 from StrategyFactory.iStrategy import IStrategy
 from Structures.DecisionTree.decisionTree import DecisionTree
 

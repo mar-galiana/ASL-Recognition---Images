@@ -7,7 +7,7 @@ from Structures.NeuralNetworks.neuralNetworkEnum import NeuralNetworkTypeEnum
 from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 
 
-class NeuralNetwork(INeuralNetwork):
+class ArtificialNeuralNetwork(INeuralNetwork):
 
     def __init__(self, logger, model, nn_util):
         self.model = model

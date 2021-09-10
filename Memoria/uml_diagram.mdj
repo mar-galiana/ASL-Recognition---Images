@@ -15656,7 +15656,7 @@
 											"top": 343,
 											"width": 167.3115234375,
 											"height": 13,
-											"text": "NeuralNetwork"
+											"text": "ArtificialNeuralNetwork"
 										},
 										{
 											"_type": "LabelView",
@@ -18352,7 +18352,7 @@
 											"top": 394,
 											"width": 158.20263671875,
 											"height": 13,
-											"text": "NN",
+											"text": "ANN",
 											"horizontalAlignment": 0
 										},
 										{
@@ -27374,7 +27374,7 @@
 									"_parent": {
 										"$ref": "AAAAAAF7y1XP91q0ej0="
 									},
-									"name": "NeuralNetwork",
+									"name": "ArtificialNeuralNetwork",
 									"ownedElements": [
 										{
 											"_type": "UMLGeneralization",
@@ -27655,7 +27655,7 @@
 													"_parent": {
 														"$ref": "AAAAAAF7y22wmxBRXOU="
 													},
-													"name": "NN"
+													"name": "ANN"
 												},
 												{
 													"_type": "UMLEnumerationLiteral",

@@ -1,13 +1,9 @@
 import os
-import numpy as np
-from skimage import io
 from skimage.transform import resize
-from Model.modelEnum import Environment
 from StrategyFactory.iStrategy import IStrategy
 from tensorflow.python.keras.preprocessing import image
-from Exception.inputOutputException import InputException
-from Structures.NeuralNetworks.neuralNetwork import NeuralNetwork
 from Structures.NeuralNetworks.neuralNetworkEnum import NeuralNetworkTypeEnum
+from Structures.NeuralNetworks.artificialNeuralNetwork import ArtificialNeuralNetwork
 from Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 
 
@@ -38,8 +34,8 @@ class AccuracyCategoricalNeuralNetworkStrategy(IStrategy):
     def __get_neural_network_model(self):
         nn_model, nn_type = self.nn_util.load_model(self.name_nn_model)
 
-        if nn_type == NeuralNetworkTypeEnumNN:
-            nn = NeuralNetwork(self.logger, self.model, self.nn_util)
+        if nn_type == NeuralNetworkTypeEnum.ANN:
+            nn = ArtificialNeuralNetwork(self.logger, self.model, self.nn_util)
         else:
             nn = ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util)
 

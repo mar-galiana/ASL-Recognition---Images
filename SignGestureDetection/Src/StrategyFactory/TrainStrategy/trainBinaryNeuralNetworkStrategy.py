@@ -1,6 +1,5 @@
 import os
 import numpy as np
-from enum import Enum
 from Model.model import Model
 from Model.modelEnum import Environment
 from Storage.storageEnum import FileEnum

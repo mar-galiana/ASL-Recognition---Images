@@ -1,4 +1,3 @@
-import numpy as np
 from xgboost import XGBClassifier
 from Model.modelEnum import Environment
 from Structures.iUtilStructure import Structure

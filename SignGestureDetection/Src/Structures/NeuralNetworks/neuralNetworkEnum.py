@@ -3,7 +3,7 @@ from enum import Enum
 
 class NeuralNetworkTypeEnum(Enum):
     CNN = "cnn"
-    NN = "nn"
+    ANN = "ann"
     IMPROVED_CNN = "improved_cnn"
 
 

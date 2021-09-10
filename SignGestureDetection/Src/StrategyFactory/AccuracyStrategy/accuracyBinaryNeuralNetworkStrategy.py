@@ -1,18 +1,12 @@
 import os
 import numpy as np
-from skimage import io
-from skimage.transform import resize
 from Model.modelEnum import Environment
 from Structures.iUtilStructure import Structure
 from StrategyFactory.iStrategy import IStrategy
-from tensorflow.python.keras.preprocessing import image
 from Exception.inputOutputException import InputException
 from Exception.modelException import DifferentPickelsException
-from Structures.NeuralNetworks.neuralNetwork import NeuralNetwork
 from Structures.NeuralNetworks.neuralNetworkEnum import ClassifierEnum
 from Structures.NeuralNetworks.neuralNetworkEnum import LabelsRequirement
-from Structures.NeuralNetworks.neuralNetworkEnum import NeuralNetworkTypeEnum
-from Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 from Constraints.path import TMP_BINARY_NEURAL_NETWORK_MODEL_PATH, BINARY_NEURAL_NETWORK_MODEL_PATH
 
 

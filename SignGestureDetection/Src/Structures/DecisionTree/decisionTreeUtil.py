@@ -3,7 +3,6 @@ import pickle
 import numpy as np
 from xgboost import plot_tree
 import matplotlib.pyplot as plt
-from Model.modelEnum import Environment
 from Structures.iUtilStructure import IUtilStructure, Structure
 from Constraints.path import DECISION_TREE_MODEL_PATH, DECISION_TREE_PLOT_PATH
 from Exception.inputOutputException import PathDoesNotExistException

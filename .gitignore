@@ -1,6 +1,7 @@
 # Internal Files
 /SignGestureDetection/venv/
 /SignGestureDetection/.idea/
+/SignGestureDetection/.vscode/
 
 /SignGestureDetection/Assets/Dataset/Images/
 /SignGestureDetection/Assets/Dataset/Pickels/

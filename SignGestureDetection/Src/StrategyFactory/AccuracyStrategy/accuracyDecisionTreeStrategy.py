@@ -1,7 +1,4 @@
 import os
-import numpy as np
-from sklearn.metrics import accuracy_score
-from Model.modelEnum import Environment
 from StrategyFactory.iStrategy import IStrategy
 from Structures.DecisionTree.decisionTree import DecisionTree
 

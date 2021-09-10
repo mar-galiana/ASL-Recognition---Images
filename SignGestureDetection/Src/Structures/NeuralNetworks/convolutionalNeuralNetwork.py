@@ -10,9 +10,8 @@ from tensorflow.keras.constraints import max_norm
 from tensorflow.python.keras.models import Sequential
 from Structures.NeuralNetworks.iNeuralNetwork import INeuralNetwork
 from Exception.parametersException import IncorrectNumberOfParameters
-from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
+from tensorflow.python.keras.layers import Dense, Conv2D, MaxPool2D, Flatten
 from Structures.NeuralNetworks.neuralNetworkEnum import NeuralNetworkTypeEnum
-from tensorflow.python.keras.layers import Dense, Conv2D, MaxPool2D, Flatten, Dropout
 
 
 class ConvolutionalNeuralNetwork(INeuralNetwork):
@@ -34,7 +33,7 @@ class ConvolutionalNeuralNetwork(INeuralNetwork):
         n_classes = self.prepare_images(shape_train, shape_test)
         sequential_model = self.build_sequential_model(n_classes, shape_train)
 
-        nn_type = (NeuralNetworkTypeEnumCNN, NeuralNetworkTypeEnumIMPROVED_CNN)[self.improved_nn]
+        nn_type = (NeuralNetworkTypeEnum.CNN, NeuralNetworkTypeEnum.IMPROVED_CNN)[self.improved_nn]
         self.nn_util.save_model(sequential_model, nn_type)
 
     def prepare_images(self, shape_train, shape_test):
