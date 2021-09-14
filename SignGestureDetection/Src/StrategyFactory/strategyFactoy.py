@@ -43,7 +43,7 @@ class ExecutionFactory:
         return strategy_method()
 
     def save_database(self):
-        if len(self.arguments) != 4:
+        if len(self.arguments) != 3:
             raise InputException("This strategy requires four arguments to be executed")
 
         return SaveDatabaseStrategy(self.logger, self.model, self.arguments)

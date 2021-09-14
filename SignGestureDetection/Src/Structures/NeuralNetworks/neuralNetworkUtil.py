@@ -43,7 +43,7 @@ class NeuralNetworkUtil(IUtilStructure):
 
         keras_model = self.read_model(nn_model_path)
 
-        return keras_model, nn_type
+        return keras_model, NeuralNetworkTypeEnum(nn_type)
 
     def save_model(self, model, neural_network_type):
         model_path, model_name = self.__get_keras_model_path(neural_network_type)

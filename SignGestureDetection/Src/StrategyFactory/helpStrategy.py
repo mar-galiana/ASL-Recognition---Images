@@ -25,15 +25,13 @@ class HelpStrategy(IStrategy):
                "\tThis strategy will save all the images, from the directory selected inside the " \
                "directory: Assets/Dataset/Images, in two pickles (test and train). To execute it "\
                "you need the following arguments:\n " \
-               "\t\t--saveDatabase <string> <string> <boolean> <boolean>\n" \
+               "\t\t--saveDatabase <string> <string> <boolean>\n" \
                "\t· The first string has to contain the name of the pickel to use, for example:\n" \
                "\t\t\tsign_gesture_gray_150x150px\n" \
                "\t· The second string indicates witch model to use, the possibilities are:\n" \
                "\t\t* " + self.datasets + "\n" \
-               "\t· The first boolean will be true if the directory GestureImageData contains the " \
-               "images separated in test and train.\n" \
-               "\t· The second boolean will be true if the dataset has to be saved in gray " \
-               "colors.\n\n"
+               "\t· The boolean will be true if the directory GestureImageData contains the " \
+               "images separated in test and train.\n\n"
 
     def __get_information_train_categorical_nn_strategy(self):
         return "* Train Neural Network:\n"\

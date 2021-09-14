@@ -18,8 +18,8 @@ class Model:
         self.output_model = OutputModel(width, height)
         self.input_model = InputModel()
 
-    def create_pickle(self, pickel_name, dataset, environments_separated, as_gray):
-        self.output_model.create_pickle(pickel_name, dataset, environments_separated, as_gray)
+    def create_pickle(self, pickel_name, dataset, environments_separated):
+        self.output_model.create_pickle(pickel_name, dataset, environments_separated)
 
     def set_pickels_name(self, names):
         self.input_model.set_pickels_name(names)

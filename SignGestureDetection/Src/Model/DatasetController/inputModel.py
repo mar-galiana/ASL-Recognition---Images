@@ -1,5 +1,7 @@
 import os
 import joblib
+import _pickle as cPickle
+import gzip
 import numpy as np
 from Constraints.path import PICKELS_PATH
 from Model.modelEnum import Environment, Image
@@ -97,7 +99,9 @@ class InputModel:
         if not os.path.exists(pickle_src):
             raise PathDoesNotExistException("The pickle needs to exists before using it")
 
-        actual_pickel_data = joblib.load(pickle_src)
+        with gzip.open(pickle_src, 'rb') as f:
+            actual_pickel_data = cPickle.load(f)
+        
         actual_pickel_data[Image.DATA.value] = np.array(actual_pickel_data[Image.DATA.value])
         actual_pickel_data[Image.LABEL.value] = np.array(actual_pickel_data[Image.LABEL.value])
 

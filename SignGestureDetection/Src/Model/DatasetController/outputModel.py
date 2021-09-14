@@ -1,6 +1,8 @@
 import os
 import joblib
 import numpy as np
+import _pickle as cPickle
+import gzip
 from skimage import io
 from skimage.transform import resize
 from Constraints.path import IMAGES_PATH, PICKELS_PATH
@@ -16,9 +18,9 @@ class OutputModel:
         self.width = width
         self.height = (height, width)[height is None]
 
-    def create_pickle(self, pickel_name, dataset, environments_separated, as_gray):
+    def create_pickle(self, pickel_name, dataset, environments_separated):
         base_pickle_src = f"{PICKELS_PATH}{pickel_name}/"
-        data = self.__get_data(dataset, environments_separated, as_gray)
+        data = self.__get_data(dataset, environments_separated)
 
         if not os.path.isdir(base_pickle_src):
             os.mkdir(base_pickle_src)
@@ -34,7 +36,7 @@ class OutputModel:
                                       Environment.TRAIN.value,
                                       base_pickle_src)
 
-    def __get_data(self, dataset, environments_separated, as_gray):
+    def __get_data(self, dataset, environments_separated):
 
         if not isinstance(dataset, Dataset):
             raise DatasetException("Dataset selected is not a valid one")
@@ -46,10 +48,10 @@ class OutputModel:
 
         image_path = f"{IMAGES_PATH}{dataset.value}/"
         if environments_separated:
-            data[Environment.TEST] = self.__read_images(image_path + "test/", as_gray)
-            data[Environment.TRAIN] = self.__read_images(image_path + "train/", as_gray)
+            data[Environment.TEST] = self.__read_images(image_path + "test/")
+            data[Environment.TRAIN] = self.__read_images(image_path + "train/")
         else:
-            images_data = self.__read_images(image_path, as_gray)
+            images_data = self.__read_images(image_path)
             data[Environment.TEST], data[Environment.TRAIN] = self.__split_data_into_test_and_train(images_data)
 
         return data
@@ -65,7 +67,7 @@ class OutputModel:
 
         return test_data, train_data
 
-    def __read_images(self, path, as_gray):
+    def __read_images(self, path):
         images_data = {
             Image.LABEL.value: [],
             Image.DATA.value: []
@@ -79,8 +81,11 @@ class OutputModel:
                 continue
 
             for file in os.listdir(current_path):
+                if file.startswith("."):
+                    continue
+
                 src = os.path.join(current_path, file)
-                image = self.load_image(src, as_gray)
+                image = self.load_image(src)
                 images_data[Image.LABEL.value].append(subdir)
                 images_data[Image.DATA.value].append(image)
 
@@ -95,12 +100,15 @@ class OutputModel:
             Image.DATA.value: x
         }
 
-        joblib.dump(environment_data, base_pickle_src % environment)
+        with gzip.open(base_pickle_src % environment, 'wb') as f:
+            cPickle.dump(environment_data, f, -1)
+        
+        # joblib.dump(environment_data, base_pickle_src % environment)
 
     def load_image(self, src, as_gray=True):
         if not os.path.exists(src):
             raise PathDoesNotExistException("Image " + src + " does not exist.")
-
+        
         image = io.imread(src, as_gray=as_gray)
         image = resize(image, (self.width, self.height))
         return image
