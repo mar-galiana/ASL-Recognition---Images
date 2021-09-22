@@ -18,7 +18,7 @@ class Model:
     Attributes
     ----------
     signs : Signs
-        a formatted string to print out what the animal says
+        A class used to store the different types of signs in the database
     output_model : OutputModel
         the name of the animal
     input_model : InputModel
@@ -46,10 +46,10 @@ class Model:
         Set the labels stored in the pickles
     get_signs_dictionary()
         Get the signs from the pickels selected
-    get_sign_values(labels)
-        Get the value of all the signs from the pickles selected
     get_sign_value(label)
         Get the value of the sign from the pickles selected
+    get_signs_based_on_values(labels)
+        Get the signs given their values
     get_sign_based_on_value(value):
         Get the sign given its value.
     get_categorical_vectors(environment, n_classes)
@@ -203,21 +203,6 @@ class Model:
         """
         return self.signs.get_signs_dictionary()
 
-    def get_sign_values(self, labels):
-        """Get the value of all the signs from the pickles selected.
-
-        Parameters
-        ----------
-        label : array
-            Array of labels samples
-
-        Returns
-        -------
-        array
-            Array of label's values
-        """
-        return self.signs.transform_labels_to_sign_values(labels)
-
     def get_sign_value(self, label):
         """Get the value of the sign from the pickles selected.
 
@@ -232,6 +217,21 @@ class Model:
             The value of the input label
         """
         return self.signs.get_sign_value(label)
+    
+    def get_signs_based_on_values(self, labels):
+        """Get the signs given their values.
+
+        Parameters
+        ----------
+        label : array
+            Array of labels samples
+
+        Returns
+        -------
+        array
+            Array of label's values
+        """
+        return self.signs.get_signs_based_on_values(labels)
     
     def get_sign_based_on_value(self, value):
         """Get the sign given its value.
