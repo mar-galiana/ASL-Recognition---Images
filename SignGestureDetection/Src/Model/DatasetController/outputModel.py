@@ -1,9 +1,8 @@
 import os
-import joblib
-import numpy as np
-import _pickle as cPickle
 import gzip
+import numpy as np
 from skimage import io
+import _pickle as cPickle
 from skimage.transform import resize
 from Constraints.path import IMAGES_PATH, PICKLES_PATH
 from sklearn.model_selection import train_test_split
@@ -13,12 +12,48 @@ from Exception.inputOutputException import PathDoesNotExistException
 
 
 class OutputModel:
+    """
+    A class used to read the samples stored in the pickles' files.
 
+    Attributes
+    ----------
+    width : number
+        Width used to resize the images
+    height : number
+        Height used to resize the images
+    
+    Methods
+    -------
+    create_pickle(pickle_name, dataset, environments_separated)
+        Write images from dataset into pickle
+    load_image(src, as_gray=True)
+        Read image stored in the source path
+    """
     def __init__(self, width=150, height=None):
+        """
+        Parameters
+        ----------
+        width : number
+            Width used to resize the images
+        height : number, optional
+            Height used to resize the images (default is None)
+        """
         self.width = width
         self.height = (height, width)[height is None]
 
     def create_pickle(self, pickle_name, dataset, environments_separated):
+        """Write images from dataset into pickle.
+
+        Parameters
+        ----------
+        pickle_name : string
+            Name of the file to create
+        dataset : Dataset
+            Name of the dataset containing the images to store in the pickle
+        environments_separated : boolean
+            Boolean indicating if the database contains the samples separated in test
+            and train folders.
+        """
         base_pickle_src = f"{PICKLES_PATH}{pickle_name}/"
         data = self.__get_data(dataset, environments_separated)
 
@@ -35,6 +70,28 @@ class OutputModel:
                                       data[Environment.TRAIN][Image.LABEL.value],
                                       Environment.TRAIN.value,
                                       base_pickle_src)
+    
+    def load_image(self, src, as_gray=True):
+        """Read image stored in the source path.
+
+        Parameters
+        ----------
+        src : string
+            Image's path
+        as_gray : boolean
+            Boolean indicating if the images will be tranform to a gray color scale
+    
+        Returns
+        ----------
+        array
+            Array of the image's pixels 
+        """
+        if not os.path.exists(src):
+            raise PathDoesNotExistException("Image " + src + " does not exist.")
+        
+        image = io.imread(src, as_gray=as_gray)
+        image = resize(image, (self.width, self.height))
+        return image
 
     def __get_data(self, dataset, environments_separated):
 
@@ -73,7 +130,7 @@ class OutputModel:
             Image.DATA.value: []
         }
 
-        # read all images in PATH, resize and write to DESTINATION_PATH
+        # read all images in path, resize and write to DESTINATION_PATH
         for subdir in os.listdir(path):
             current_path = os.path.join(path, subdir)
 
@@ -102,13 +159,3 @@ class OutputModel:
 
         with gzip.open(base_pickle_src % environment, 'wb') as f:
             cPickle.dump(environment_data, f, -1)
-        
-        # joblib.dump(environment_data, base_pickle_src % environment)
-
-    def load_image(self, src, as_gray=True):
-        if not os.path.exists(src):
-            raise PathDoesNotExistException("Image " + src + " does not exist.")
-        
-        image = io.imread(src, as_gray=as_gray)
-        image = resize(image, (self.width, self.height))
-        return image

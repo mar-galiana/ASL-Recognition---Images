@@ -22,7 +22,7 @@ class Model:
     output_model : OutputModel
         the name of the animal
     input_model : InputModel
-        the sound that the animal makes
+        A class used to read the samples stored in the pickles' files.
 
     Methods
     -------
@@ -68,8 +68,8 @@ class Model:
         ----------
         width : number
             Width used to resize the images
-        height : number
-            Height used to resize the images
+        height : number, optional
+            Height used to resize the images (default is None)
         """
         self.signs = Signs()
         self.output_model = OutputModel(width, height)
