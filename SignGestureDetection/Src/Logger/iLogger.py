@@ -2,6 +2,9 @@ from abc import ABC, abstractmethod
 
 
 class ILogger(ABC):
+    """
+    Execution information interface
+    """
 
     @abstractmethod
     def write_info(self, message):
