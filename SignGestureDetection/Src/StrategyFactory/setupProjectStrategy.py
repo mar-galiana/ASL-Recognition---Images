@@ -14,6 +14,7 @@ class SetupProjectStructure(IStrategy):
         # Dataset directories and files
         self.storage_controller.create_directory(DATASET_PATH)
         self.storage_controller.create_directory(IMAGES_PATH)
+        self.storage_controller.create_directory(SIGNS_IMAGES)
         self.storage_controller.create_directory(PICKLES_PATH)
         self.storage_controller.create_json_file(SIGNS_FILE, {})
 

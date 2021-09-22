@@ -40,11 +40,6 @@ class DecisionTreeUtil(IUtilStructure):
 
         return xgboost_model
 
-    @staticmethod
-    def resize_single_image(image):
-        resized_image = image.reshape(1, image.shape[0]*image.shape[1])
-        return resized_image
-
     def __get_keras_model_name_path(self):
         return self.model.get_pickles_name() + "_model"
 

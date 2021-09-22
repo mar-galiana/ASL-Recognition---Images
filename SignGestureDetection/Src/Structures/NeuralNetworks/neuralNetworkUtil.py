@@ -77,15 +77,6 @@ class NeuralNetworkUtil(IUtilStructure):
     def read_model(nn_model_path):
         return keras.models.load_model(nn_model_path)
 
-    @staticmethod
-    def resize_single_image(image, nn_type):
-        if nn_type == NeuralNetworkTypeEnum.ANN.value:
-            resized_image = image.reshape(1, image.shape[0] * image.shape[1])
-        else:
-            resized_image = image.reshape(1, image.shape[0], image.shape[1], 1)
-
-        return resized_image
-
     def __get_keras_model_path(self, neural_network_type):
         if not isinstance(neural_network_type, NeuralNetworkTypeEnum):
             raise EnvironmentException("Environment used is not a valid one")

@@ -44,9 +44,9 @@ class IUtilStructure(object):
 
         if not isinstance(structure, Structure):
             raise StructureException("Structure selected is not a valid one")
-
+        
         if not os.path.exists(MODEL_PICKLES_FILE):
-            raise PathDoesNotExistException("File " + MODEL_PICKLES_FILE + "not found")
+            raise PathDoesNotExistException("File " + MODEL_PICKLES_FILE + " not found")
 
         with open(MODEL_PICKLES_FILE) as file:
             data = json.load(file)

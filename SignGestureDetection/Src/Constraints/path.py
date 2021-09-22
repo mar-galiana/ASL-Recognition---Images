@@ -1,3 +1,7 @@
+"""
+Path of the folders and files used in the project 
+"""
+
 import os
 
 # ASSETS_PATH = os.getcwd() + "/../Assets/"
@@ -7,6 +11,7 @@ ASSETS_PATH = os.getcwd() + "/Assets/"
 DATASET_PATH = ASSETS_PATH + "Dataset/"
 PICKLES_PATH = DATASET_PATH + "Pickles/"
 IMAGES_PATH = DATASET_PATH + "Images/"
+SIGNS_IMAGES = DATASET_PATH + "Signs/"
 SIGNS_FILE = DATASET_PATH + "signs.json"
 
 # Model Structures

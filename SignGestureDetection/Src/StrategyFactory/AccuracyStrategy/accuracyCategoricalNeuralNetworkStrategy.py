@@ -27,6 +27,6 @@ class AccuracyCategoricalNeuralNetworkStrategy(IStrategy):
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
         nn_model, nn_type = self.nn_util.load_model(self.name_nn_model)
-        print(nn_type)
+
         self.accuracy_util.perform_test_data(Structure.CategoricalNeuralNetwork, nn_model, nn_type=nn_type)
         self.logger.write_info("Strategy executed successfully")

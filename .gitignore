@@ -4,7 +4,7 @@
 /SignGestureDetection/.vscode/
 
 /SignGestureDetection/Assets/Dataset/Images/
-/SignGestureDetection/Assets/Dataset/Pickels/
+/SignGestureDetection/Assets/Dataset/Pickles/
 /SignGestureDetection/Assets/ModelStructures/
 
 /tensorflow_macos/

@@ -1,7 +1,10 @@
 import os
-from Constraints.path import IMAGES_PATH
+import numpy as np
+from PIL import Image
+import matplotlib.pyplot as plt
 from StrategyFactory.iStrategy import IStrategy
 from Structures.iUtilStructure import Structure
+from Constraints.path import IMAGES_PATH, SIGNS_IMAGES
 from Exception.inputOutputException import InputException
 
 
@@ -29,19 +32,31 @@ class PredictStrategy(IStrategy):
 
     def execute(self):
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-
+        
         image = self.model.load_image(IMAGES_PATH + self.image_name, True)
-        structure_model, resized_image = self.get_model(image)
+        structure_model, resized_image = self.__get_model(image)
         prediction = structure_model.predict(resized_image)
-
+        sign_value = np.int16(np.argmax(prediction)).item()
+        sign = self.model.get_sign_based_on_value(sign_value)
+        self.__show_result(sign)
         self.logger.write_info("Strategy executed successfully")
 
-    def get_model(self, image):
+    def __get_model(self, image):
+
         if self.type_structure is Structure.CategoricalNeuralNetwork:
             structure_model, nn_type = self.structure_util.load_model(self.name_model)
-            resized_image = self.structure_util.resize_single_image(image, nn_type)
+            resized_image = self.model.resize_image(image, self.type_structure, nn_type=nn_type)
         else:
             structure_model = self.structure_util.load_model(self.name_model)
-            resized_image = self.structure_util.resize_single_image(image)
+            resized_image = self.model.resize_image(image, self.type_structure)
 
         return structure_model, resized_image
+    
+    def __show_result(self, sign):
+        self.logger.write_info("The image represents the sign '" + sign + "'")
+
+        image_path = SIGNS_IMAGES + sign.lower() + ".png"
+        img = Image.open(image_path)
+        plt.imshow(img)
+        plt.axis('off')
+        plt.show()

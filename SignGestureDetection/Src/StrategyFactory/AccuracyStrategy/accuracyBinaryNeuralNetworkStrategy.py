@@ -4,7 +4,7 @@ from Model.modelEnum import Environment
 from Structures.iUtilStructure import Structure
 from StrategyFactory.iStrategy import IStrategy
 from Exception.inputOutputException import InputException
-from Exception.modelException import DifferentPickelsException
+from Exception.modelException import DifferentPicklesException
 from Structures.NeuralNetworks.neuralNetworkEnum import ClassifierEnum
 from Structures.NeuralNetworks.neuralNetworkEnum import LabelsRequirement
 from Constraints.path import TMP_BINARY_NEURAL_NETWORK_MODEL_PATH, BINARY_NEURAL_NETWORK_MODEL_PATH
@@ -84,7 +84,7 @@ class AccuracyBinaryNeuralNetworkStrategy(IStrategy):
                 global_pickles = model_pickles
 
             elif set(model_pickles) != set(global_pickles):
-                raise DifferentPickelsException("Selected models use different pickles, be sure to select models "
+                raise DifferentPicklesException("Selected models use different pickles, be sure to select models "
                                                 "trained with the same pickles.")
 
         self.model.set_pickles_name(global_pickles)

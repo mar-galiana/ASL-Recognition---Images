@@ -50,12 +50,16 @@ class Model:
         Get the value of all the signs from the pickles selected
     get_sign_value(label)
         Get the value of the sign from the pickles selected
+    get_sign_based_on_value(value):
+        Get the sign given its value.
     get_categorical_vectors(environment, n_classes)
         Convert data to categorical vectors
     convert_to_one_hot_data()
         Convert data to one hot
     resize_data(structure, environment, shape, nn_type=NeuralNetworkTypeEnum.CNN)
         Resize data depending on the structure
+    resize_image(image, structure, nn_type=NeuralNetworkTypeEnum.CNN)
+        Resize image depending on the structure
     """
 
     def __init__(self, width=150, height=None):
@@ -71,6 +75,8 @@ class Model:
         self.output_model = OutputModel(width, height)
         self.input_model = InputModel()
 
+
+    #region dataset_controller
     def create_pickle(self, pickle_name, dataset, environments_separated):
         """Save the dataset into a pickle.
 
@@ -184,7 +190,9 @@ class Model:
             Array of labels samples
         """
         self.input_model.set_y(environment, label)
+    #endregion
 
+    #region signs_controller 
     def get_signs_dictionary(self):
         """Get the signs from the pickels selected.
 
@@ -224,7 +232,25 @@ class Model:
             The value of the input label
         """
         return self.signs.get_sign_value(label)
+    
+    def get_sign_based_on_value(self, value):
+        """Get the sign given its value.
 
+        Parameters
+        ----------
+        label : array
+            A label samples
+
+        Returns
+        -------
+        array
+            The value of the input label
+        """
+        return self.signs.get_sign_based_on_value(value)
+
+    #endregion
+
+    #region data_processing
     def get_categorical_vectors(self, environment, n_classes):
         """Convert data to categorical vectors.
 
@@ -252,7 +278,7 @@ class Model:
 
         Returns
         -------
-        n_classes : number
+        number
             Number of classes in the dataset
         """
         x_train = self.get_x(Environment.TRAIN).astype('float32')
@@ -293,18 +319,53 @@ class Model:
             raise StructureException("Incorrect neural network type")
 
         # Check structure to select the resize formt
+        shape = self.get_x(environment).shape
+        data = self.get_x(environment)
+
         if nn_type == NeuralNetworkTypeEnum.ANN or structure == Structure.DecisionTree:
-            self.__resize_ann_and_dt_data(environment)
+            resized_data = self.__resize_ann_and_dt_data(data, shape)
 
         else:
-            self.__resize_cnn_data(environment)
+            resized_data = self.__resize_cnn_data(data, shape)
+        
+        self.set_x(environment, resized_data)
+    
+    def resize_image(self, image, structure, nn_type=NeuralNetworkTypeEnum.CNN):
+        """Resize image depending on the structure.
 
-    def __resize_cnn_data(self, environment):
-        shape = self.get_x(environment).shape
-        x_data = self.get_x(environment).reshape(shape[0], shape[1], shape[2], 1)
-        self.set_x(environment, x_data)
+        Parameters
+        ----------
+        image : array
+            Pixels of the image to resize 
+        structure : Structure
+            Structure that the data is gone be used to   
+        nn_type : NeuralNetworkTypeEnum, optional
+            Neural network type (default is CNN)
+        
+        Returns
+        -------
+        array
+            array with a single element, the image resized
+        """
+        # Input control
+        if not isinstance(structure, Structure):
+            raise StructureException("Incorrect structure exception")
+        
+        data = np.array([image])
+        shape = data.shape
 
-    def __resize_ann_and_dt_data(self, environment):
-        shape = self.get_x(environment).shape
-        x_data = self.get_x(environment).reshape(shape[0], shape[1]*shape[2])
-        self.set_x(environment, x_data)
+        if nn_type == NeuralNetworkTypeEnum.ANN or structure == Structure.DecisionTree:
+            resized_data = self.__resize_ann_and_dt_data(data, shape)
+
+        else:
+            resized_data = self.__resize_cnn_data(data, shape)
+
+        return resized_data
+
+    def __resize_cnn_data(self, data, shape):
+        return data.reshape(shape[0], shape[1], shape[2], 1)
+        
+    def __resize_ann_and_dt_data(self, data, shape):
+        return data.reshape(shape[0], shape[1]*shape[2])
+
+    #endregion
