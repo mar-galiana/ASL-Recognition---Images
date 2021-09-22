@@ -43,14 +43,14 @@ class SignIsNotInJsonFileException(Exception):
         super().__init__(self.message)
 
 
-class DifferentPickelsException(Exception):
+class DifferentPicklesException(Exception):
     """Exception raised for errors in the model.
 
         Attributes:
             message -- explanation of the error
         """
 
-    def __init__(self, message="models selected use different pickels"):
+    def __init__(self, message="models selected use different pickles"):
         if len(message) > 0:
             message = message[0].lower() + message[1:]
 

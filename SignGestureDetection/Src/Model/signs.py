@@ -36,7 +36,6 @@ class Signs:
         values = []
         for aux in range(len(labels)):
             values.append(self.__signs_dict.get(labels[aux]))
-            pass
 
         return values
 

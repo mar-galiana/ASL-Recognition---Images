@@ -37,9 +37,9 @@ class NeuralNetworkUtil(IUtilStructure):
         if not os.path.exists(nn_model_path):
             raise PathDoesNotExistException("The model needs to exists to be able to use it")
 
-        pickels, nn_type = super(NeuralNetworkUtil, self).get_pickels_used(Structure.CategoricalNeuralNetwork,
+        pickles, nn_type = super(NeuralNetworkUtil, self).get_pickles_used(Structure.CategoricalNeuralNetwork,
                                                                            name_model)
-        self.model.set_pickels_name(pickels)
+        self.model.set_pickles_name(pickles)
 
         keras_model = self.read_model(nn_model_path)
 
@@ -50,21 +50,21 @@ class NeuralNetworkUtil(IUtilStructure):
 
         model.save(model_path + model_name)
 
-        super(NeuralNetworkUtil, self).save_pickels_used(Structure.CategoricalNeuralNetwork,
-                                                         self.model.get_pickels_name(),
+        super(NeuralNetworkUtil, self).save_pickles_used(Structure.CategoricalNeuralNetwork,
+                                                         self.model.get_pickles_name(),
                                                          model_name)
 
         self.logger.write_info("A new categorical neural network model has been created with the name of: " + model_name
                                + "\nIn the path: " + model_path + "\nThis is the name that will be needed in the "
                                "other strategies if you want to work with this model.")
 
-    def get_pickels_used_in_binary_zip(self, name_model):
-        pickels = super(NeuralNetworkUtil, self).get_pickels_used(Structure.BinaryNeuralNetwork, name_model)
-        return pickels
+    def get_pickles_used_in_binary_zip(self, name_model):
+        pickles = super(NeuralNetworkUtil, self).get_pickles_used(Structure.BinaryNeuralNetwork, name_model)
+        return pickles
 
     def record_binary_model(self, file_name, file_path, restriction):
 
-        super(NeuralNetworkUtil, self).save_pickels_used(Structure.BinaryNeuralNetwork, self.model.get_pickels_name(),
+        super(NeuralNetworkUtil, self).save_pickles_used(Structure.BinaryNeuralNetwork, self.model.get_pickles_name(),
                                                          file_name, restriction=restriction)
 
         self.logger.write_info("A new set of binary neural network models have been created with the name of: " +
@@ -90,6 +90,6 @@ class NeuralNetworkUtil(IUtilStructure):
         if not isinstance(neural_network_type, NeuralNetworkTypeEnum):
             raise EnvironmentException("Environment used is not a valid one")
 
-        file_name = neural_network_type.value + "_" + self.model.get_pickels_name() + "_model"
+        file_name = neural_network_type.value + "_" + self.model.get_pickles_name() + "_model"
 
         return CATEGORICAL_NEURAL_NETWORK_MODEL_PATH, file_name + ".h5"

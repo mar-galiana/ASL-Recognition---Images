@@ -28,25 +28,24 @@ class ConvolutionalNeuralNetwork(INeuralNetwork):
             raise IncorrectNumberOfParameters("Convolutional Neural Network needs the improved_nn parameter if it has "
                                               "to be trained")
 
-        shape_train = self.model.get_x(Environment.TRAIN).shape
-        shape_test = self.model.get_x(Environment.TEST).shape
-        n_classes = self.prepare_images(shape_train, shape_test)
-        sequential_model = self.build_sequential_model(n_classes, shape_train)
+        n_classes = self.prepare_images()
+        sequential_model = self.build_sequential_model(n_classes)
 
         nn_type = (NeuralNetworkTypeEnum.CNN, NeuralNetworkTypeEnum.IMPROVED_CNN)[self.improved_nn]
         self.nn_util.save_model(sequential_model, nn_type)
 
-    def prepare_images(self, shape_train, shape_test):
+    def prepare_images(self):
 
         # Flattening the images from the 150x150 pixels to 1D 787 pixels
-        self.model.resize_data(Structure.CategoricalNeuralNetwork, Environment.TRAIN, shape_train)
-        self.model.resize_data(Structure.CategoricalNeuralNetwork, Environment.TEST, shape_test)
+        self.model.resize_data(Structure.CategoricalNeuralNetwork, Environment.TRAIN)
+        self.model.resize_data(Structure.CategoricalNeuralNetwork, Environment.TEST)
 
         n_classes = self.model.convert_to_one_hot_data()
 
         return n_classes
 
-    def build_sequential_model(self, n_classes, shape, is_categorical=True):
+    def build_sequential_model(self, n_classes, is_categorical=True):
+        shape = self.model.get_x(Environment.TRAIN).shape
 
         if self.improved_nn:
             seq_model = self.__get_improved_sequential_model(n_classes, shape, is_categorical)

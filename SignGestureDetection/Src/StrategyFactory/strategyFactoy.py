@@ -71,7 +71,7 @@ class ExecutionFactory:
         if len(self.arguments) != 1:
             raise InputException("This strategy requires one argument to be executed")
 
-        self.model.set_pickels_name(self.arguments[0])
+        self.model.set_pickles_name(self.arguments[0])
         return AccuracyDecisionTreeStrategy(self.logger, self.model, self.decision_tree_util, self.accuracy_util,
                                             self.arguments)
 

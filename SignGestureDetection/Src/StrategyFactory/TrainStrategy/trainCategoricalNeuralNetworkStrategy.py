@@ -15,7 +15,7 @@ class TrainCategoricalNeuralNetworkStrategy(IStrategy):
         self.__show_arguments_entered(arguments)
 
         self.nn_type = arguments[0]
-        self.pickels = arguments[1:]
+        self.pickles = arguments[1:]
 
         self.algorithm_switcher = {
             NeuralNetworkTypeEnum.ANN.value: ArtificialNeuralNetwork(self.logger, self.model, self.nn_util),
@@ -27,7 +27,7 @@ class TrainCategoricalNeuralNetworkStrategy(IStrategy):
     def __show_arguments_entered(self, arguments):
         info_arguments = "Arguments entered:\n" \
                          "\t* Neural Network type: " + arguments[0] + "\n" \
-                         "\t* Pickels selected: " + ", ".join(arguments[1:])
+                         "\t* Pickles selected: " + ", ".join(arguments[1:])
         self.logger.write_info(info_arguments)
 
     def execute(self):
@@ -36,7 +36,7 @@ class TrainCategoricalNeuralNetworkStrategy(IStrategy):
 
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-        self.model.set_pickels_name(self.pickels)
+        self.model.set_pickles_name(self.pickles)
 
         algorithm_execution = self.algorithm_switcher.get(self.nn_type)
         algorithm_execution.train_neural_network()

@@ -26,18 +26,18 @@ class TrainBinaryNeuralNetworkStrategy(IStrategy):
             raise InputException(self.execution_strategy + " is not a valid sign requirement")
 
         self.labels_requirement = LabelsRequirement(arguments[0])
-        self.pickels = arguments[1:]
+        self.pickles = arguments[1:]
 
     def __show_arguments_entered(self, arguments):
         info_arguments = "Arguments entered:\n" \
                          "\t* Signs to train: " + arguments[0] + "\n"\
-                         "\t* Pickels selected: " + ", ".join(arguments[1:])
+                         "\t* Pickles selected: " + ", ".join(arguments[1:])
         self.logger.write_info(info_arguments)
 
     def execute(self):
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-        self.model.set_pickels_name(self.pickels)
+        self.model.set_pickles_name(self.pickles)
 
         self.bnn_util.remove_not_wanted_labels(Environment.TRAIN, self.labels_requirement)
 
@@ -47,9 +47,8 @@ class TrainBinaryNeuralNetworkStrategy(IStrategy):
         self.logger.write_info("Strategy executed successfully")
 
     def __prepare_images(self):
-        shape_train = self.model.get_x(Environment.TRAIN).shape
 
-        self.model.resize_data(Structure.BinaryNeuralNetwork, Environment.TRAIN, shape_train)
+        self.model.resize_data(Structure.BinaryNeuralNetwork, Environment.TRAIN)
 
         x_train = self.model.get_x(Environment.TRAIN).astype('float32')
 
@@ -86,7 +85,7 @@ class TrainBinaryNeuralNetworkStrategy(IStrategy):
         model = Model()
         model.set_y(Environment.TRAIN, y_train)
         model.set_x(Environment.TRAIN, self.model.get_x(Environment.TRAIN))
-        model.set_pickels_name(self.pickels)
+        model.set_pickles_name(self.pickles)
 
         nn_util = NeuralNetworkUtil(self.logger, model)
         cnn = ConvolutionalNeuralNetwork(self.logger, model, nn_util, improved_nn=True)
@@ -112,5 +111,5 @@ class TrainBinaryNeuralNetworkStrategy(IStrategy):
         return "binary_classifier_" + sign + ".h5"
 
     def __get_compressed_file_path(self):
-        file_name = self.labels_requirement.value + "_" + self.model.get_pickels_name() + "_models.zip"
+        file_name = self.labels_requirement.value + "_" + self.model.get_pickles_name() + "_models.zip"
         return BINARY_NEURAL_NETWORK_MODEL_PATH, file_name

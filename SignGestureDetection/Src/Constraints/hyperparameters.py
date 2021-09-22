@@ -1,6 +1,6 @@
 """
-After executing the --showOptimizedHyperparameter strategy, these are the best results obtained for the convolutional
-neural network.
+After executing the --showOptimizedHyperparameter strategy, the user will set in the best results obtained for the convolutional
+neural network in this file.
 """
 
 EPOCHS = 10

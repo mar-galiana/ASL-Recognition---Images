@@ -26,7 +26,7 @@ class HelpStrategy(IStrategy):
                "directory: Assets/Dataset/Images, in two pickles (test and train). To execute it "\
                "you need the following arguments:\n " \
                "\t\t--saveDatabase <string> <string> <boolean>\n" \
-               "\t· The first string has to contain the name of the pickel to use, for example:\n" \
+               "\t· The first string has to contain the name of the pickle to use, for example:\n" \
                "\t\t\tsign_gesture_gray_150x150px\n" \
                "\t· The second string indicates witch model to use, the possibilities are:\n" \
                "\t\t* " + self.datasets + "\n" \
@@ -36,13 +36,13 @@ class HelpStrategy(IStrategy):
     def __get_information_train_categorical_nn_strategy(self):
         return "* Train Neural Network:\n"\
                "\tThis strategy will train an specific neural network based on the models stored "\
-               "in the Dataset/Pickels. To execute it you need the following arguments:\n "\
+               "in the Dataset/Pickles. To execute it you need the following arguments:\n "\
                "\t\t--trainCategoricalNeuralNetwork <string> <string> ...\n"\
                "\t· The first string specifies the type of Neural Network to train, the possibilities are:\n"\
                "\t\t* nn: Basic Neural Network.\n" + \
                "\t\t* cnn: Convolutional Neural Network.\n" + \
                "\t\t* improved_cnn: Improved Convolutional Neural Network.\n" + \
-               self.__get_information_to_select_pickel("other", "--trainNeuralNetwork nn")
+               self.__get_information_to_select_pickle("other", "--trainNeuralNetwork nn")
 
     def __get_information_accuracy_categorical_nn_strategy(self):
         example_model_name = "cnn_sign_gesture_optimizer_150x150px_model.h5"
@@ -57,10 +57,10 @@ class HelpStrategy(IStrategy):
 
     def __get_information_train_decision_tree_strategy(self):
         return "* Train Decision Tree:\n" \
-               "\tThis strategy will train a decision tree based on the models stored in the Dataset/Pickels. To " \
+               "\tThis strategy will train a decision tree based on the models stored in the Dataset/Pickles. To " \
                "execute it you need the following arguments:\n" \
                "\t\t--trainDecisionTree <string> ...\n" + \
-               self.__get_information_to_select_pickel("", "--decisionTree")
+               self.__get_information_to_select_pickle("", "--decisionTree")
 
     def __get_information_accuracy_dt_strategy(self):
         example_model_name = "sign_gesture_gray_150x150px_model.pickle.dat"
@@ -86,14 +86,14 @@ class HelpStrategy(IStrategy):
                "\t\t--help\n\n"
 
     @staticmethod
-    def __get_information_to_select_pickel(argument_position, strategy):
+    def __get_information_to_select_pickle(argument_position, strategy):
         return "\t· The " + argument_position + " strings have to contain the name of the directories storing the " \
-               "pickels. For example, if the pickel you want to use is in the path:\n " \
-               "\t\t\tAssets/Dataset/Pickels/sign_gesture_gray_150x150px" \
+               "pickles. For example, if the pickle you want to use is in the path:\n " \
+               "\t\t\tAssets/Dataset/Pickles/sign_gesture_gray_150x150px" \
                "/sign_gesture_gray_150x150px_train.pkl\n " \
                "\t  You will have to enter:\n" \
                "\t\t\tsign_gesture_gray_150x150px\n" \
-               "\t If you want to use more than one pickel you can do it by adding all their names in the following " \
+               "\t If you want to use more than one pickle you can do it by adding all their names in the following " \
                "format:\n" \
                "\t\t\t" + strategy + " sign_gesture_gray_150x150px sign_gesture_gray_150x150px " \
                "sign_gesture_optimizer_150x150px\n\n "

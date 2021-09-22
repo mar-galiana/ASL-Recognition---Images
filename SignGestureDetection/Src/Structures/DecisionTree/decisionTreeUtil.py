@@ -19,7 +19,7 @@ class DecisionTreeUtil(IUtilStructure):
 
         pickle.dump(model, open(model_path + model_name, "wb"))
 
-        super(DecisionTreeUtil, self).save_pickels_used(Structure.DecisionTree, self.model.get_pickels_name(),
+        super(DecisionTreeUtil, self).save_pickles_used(Structure.DecisionTree, self.model.get_pickles_name(),
                                                         model_name)
 
         self.logger.write_info("A new decision tree model has been created with the name of: " + model_name + "\n"
@@ -33,8 +33,8 @@ class DecisionTreeUtil(IUtilStructure):
         if not os.path.exists(dt_model_path):
             raise PathDoesNotExistException("The model needs to exists to be able to use it")
 
-        pickels = super(DecisionTreeUtil, self).get_pickels_used(Structure.DecisionTree, name_model)
-        self.model.set_pickels_name(pickels)
+        pickles = super(DecisionTreeUtil, self).get_pickles_used(Structure.DecisionTree, name_model)
+        self.model.set_pickles_name(pickles)
 
         xgboost_model = pickle.load(open(dt_model_path, "rb"))
 
@@ -46,7 +46,7 @@ class DecisionTreeUtil(IUtilStructure):
         return resized_image
 
     def __get_keras_model_name_path(self):
-        return self.model.get_pickels_name() + "_model"
+        return self.model.get_pickles_name() + "_model"
 
     def __get_keras_model_path(self):
         file_name = self.__get_keras_model_name_path()

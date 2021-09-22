@@ -28,9 +28,8 @@ class AccuracyUtil:
     def perform_test_data(self, structure, structure_model, nn_type=NeuralNetworkTypeEnum.CNN):
 
         n_classes = np.unique(self.model.get_y(Environment.TEST)).shape[0] + 1
-        shape = self.model.get_x(Environment.TEST).shape
 
-        self.model.resize_data(structure, Environment.TEST, shape, nn_type=nn_type)
+        self.model.resize_data(structure, Environment.TEST, nn_type=nn_type)
         x_test = self.model.get_x(Environment.TEST)
 
         labels = self.model.get_sign_values(self.model.get_y(Environment.TEST))

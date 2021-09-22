@@ -50,9 +50,7 @@ class AccuracyBinaryNeuralNetworkStrategy(IStrategy):
     def perform_test_data(self, classifiers):
         predictions = []
 
-        shape = self.model.get_x(Environment.TEST).shape
-
-        self.model.resize_data(Structure.BinaryNeuralNetwork, Environment.TEST, shape)
+        self.model.resize_data(Structure.BinaryNeuralNetwork, Environment.TEST)
         x_test = self.model.get_x(Environment.TEST)
         y_test = self.model.get_sign_values(self.model.get_y(Environment.TEST))
 
@@ -68,28 +66,28 @@ class AccuracyBinaryNeuralNetworkStrategy(IStrategy):
         order_signs = np.array([self.model.get_sign_value(sign[ClassifierEnum.SIGN.value]) for sign in classifiers])
         self.__show_global_accuracy(y_test, predictions, order_signs)
 
-    def __get_model_pickels(self, model_name):
-        pickels = self.nn_util.get_pickels_used_in_binary_zip(model_name)
+    def __get_model_pickles(self, model_name):
+        pickles = self.nn_util.get_pickles_used_in_binary_zip(model_name)
 
-        return pickels
+        return pickles
 
     def __get_classifiers(self):
         classifiers = []
-        global_pickels = None
+        global_pickles = None
 
         for model_name in self.models_names:
-            model_pickels = self.__get_model_pickels(model_name)
+            model_pickles = self.__get_model_pickles(model_name)
             classifiers += self.__get_classifiers_from_specific_models(model_name)
             self.__remove_temporal_files(model_name)
 
-            if global_pickels is None:
-                global_pickels = model_pickels
+            if global_pickles is None:
+                global_pickles = model_pickles
 
-            elif set(model_pickels) != set(global_pickels):
+            elif set(model_pickles) != set(global_pickles):
                 raise DifferentPickelsException("Selected models use different pickles, be sure to select models "
                                                 "trained with the same pickles.")
 
-        self.model.set_pickels_name(global_pickels)
+        self.model.set_pickles_name(global_pickles)
 
         return classifiers
 

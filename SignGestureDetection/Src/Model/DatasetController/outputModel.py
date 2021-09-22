@@ -5,7 +5,7 @@ import _pickle as cPickle
 import gzip
 from skimage import io
 from skimage.transform import resize
-from Constraints.path import IMAGES_PATH, PICKELS_PATH
+from Constraints.path import IMAGES_PATH, PICKLES_PATH
 from sklearn.model_selection import train_test_split
 from Exception.modelException import DatasetException
 from Model.modelEnum import Environment, Image, Dataset
@@ -18,14 +18,14 @@ class OutputModel:
         self.width = width
         self.height = (height, width)[height is None]
 
-    def create_pickle(self, pickel_name, dataset, environments_separated):
-        base_pickle_src = f"{PICKELS_PATH}{pickel_name}/"
+    def create_pickle(self, pickle_name, dataset, environments_separated):
+        base_pickle_src = f"{PICKLES_PATH}{pickle_name}/"
         data = self.__get_data(dataset, environments_separated)
 
         if not os.path.isdir(base_pickle_src):
             os.mkdir(base_pickle_src)
 
-        base_pickle_src = f"{base_pickle_src}{pickel_name}_%s.pkl"
+        base_pickle_src = f"{base_pickle_src}{pickle_name}_%s.pkl"
 
         self.__write_data_into_pickle(data[Environment.TEST][Image.DATA.value],
                                       data[Environment.TEST][Image.LABEL.value],

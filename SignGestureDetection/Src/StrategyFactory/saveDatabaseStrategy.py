@@ -13,13 +13,13 @@ class SaveDatabaseStrategy(IStrategy):
         self.model = model
         self.__show_arguments_entered(arguments)
 
-        self.pickel_name = arguments[0]
+        self.pickle_name = arguments[0]
         self.dataset = Dataset(arguments[1])
         self.environments_separated = (arguments[2] == "true")
 
     def __show_arguments_entered(self, arguments):
         info_arguments = "Arguments entered:\n" \
-                         "\t* Pickel's name: " + arguments[0] + "\n" \
+                         "\t* Pickle's name: " + arguments[0] + "\n" \
                          "\t* Dataset: " + arguments[1] + "\n" \
                          "\t* Environments separated: " + arguments[2]
         self.logger.write_info(info_arguments)
@@ -32,7 +32,7 @@ class SaveDatabaseStrategy(IStrategy):
             raise InputException("The third argument of this execution needs to be true or false")
 
     def execute(self):
-        self.model.create_pickle(self.pickel_name, self.dataset, self.environments_separated)
+        self.model.create_pickle(self.pickle_name, self.dataset, self.environments_separated)
         self.logger.write_info("Test and Train pickles have been created")
 
     @staticmethod
