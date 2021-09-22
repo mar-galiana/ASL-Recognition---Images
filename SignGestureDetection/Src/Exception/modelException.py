@@ -1,5 +1,5 @@
 class EnvironmentException(Exception):
-    """Exception raised for errors in the model.
+    """Exception raised for errors in the environment.
 
     Attributes:
         message -- explanation of the error
@@ -14,7 +14,7 @@ class EnvironmentException(Exception):
 
 
 class DatasetException(Exception):
-    """Exception raised for errors in the model.
+    """Exception raised for errors in the dataset.
 
     Attributes:
         message -- explanation of the error
@@ -29,7 +29,7 @@ class DatasetException(Exception):
 
 
 class SignIsNotInJsonFileException(Exception):
-    """Exception raised for errors in the model.
+    """Exception raised for errors in the sign file.
 
     Attributes:
         message -- explanation of the error
@@ -44,7 +44,7 @@ class SignIsNotInJsonFileException(Exception):
 
 
 class DifferentPicklesException(Exception):
-    """Exception raised for errors in the model.
+    """Exception raised for errors in the pickle.
 
         Attributes:
             message -- explanation of the error
@@ -59,7 +59,7 @@ class DifferentPicklesException(Exception):
 
 
 class SignsFileHasNotBeenReadException(Exception):
-    """Exception raised for errors in the model.
+    """Exception raised for not reading the sign file before using it's information.
 
         Attributes:
             message -- explanation of the error
