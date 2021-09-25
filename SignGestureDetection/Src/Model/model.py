@@ -48,7 +48,7 @@ class Model:
         Get the signs from the pickels selected
     get_sign_value(label)
         Get the value of the sign from the pickles selected
-    get_signs_based_on_values(labels)
+    get_signs_values(labels)
         Get the signs given their values
     get_sign_based_on_value(value):
         Get the sign given its value.
@@ -75,8 +75,7 @@ class Model:
         self.output_model = OutputModel(width, height)
         self.input_model = InputModel()
 
-
-    #region dataset_controller
+    # region dataset_controller
     def create_pickle(self, pickle_name, dataset, environments_separated):
         """Save the dataset into a pickle.
 
@@ -190,9 +189,10 @@ class Model:
             Array of labels samples
         """
         self.input_model.set_y(environment, label)
-    #endregion
 
-    #region signs_controller 
+    # endregion
+
+    # region signs_controller
     def get_signs_dictionary(self):
         """Get the signs from the pickels selected.
 
@@ -217,13 +217,13 @@ class Model:
             The value of the input label
         """
         return self.signs.get_sign_value(label)
-    
-    def get_signs_based_on_values(self, labels):
+
+    def get_signs_values(self, labels):
         """Get the signs given their values.
 
         Parameters
         ----------
-        label : array
+        labels : array
             Array of labels samples
 
         Returns
@@ -231,15 +231,15 @@ class Model:
         array
             Array of label's values
         """
-        return self.signs.get_signs_based_on_values(labels)
-    
+        return self.signs.get_signs_values(labels)
+
     def get_sign_based_on_value(self, value):
         """Get the sign given its value.
 
         Parameters
         ----------
-        label : array
-            A label samples
+        value : number
+            A sign's value
 
         Returns
         -------
@@ -248,9 +248,9 @@ class Model:
         """
         return self.signs.get_sign_based_on_value(value)
 
-    #endregion
+    # endregion
 
-    #region data_processing
+    # region data_processing
     def get_categorical_vectors(self, environment, n_classes):
         """Convert data to categorical vectors.
 
@@ -269,7 +269,11 @@ class Model:
         if not isinstance(environment, Environment):
             raise EnvironmentException("Environment used is not a valid one")
 
-        vectors = self.get_sign_values(self.get_y(environment))
+        vectors = self.signs.get_signs_values(self.get_y(environment))
+        for vector in vectors:
+            if not isinstance(vector, int):
+                print("error")
+
         y_data = np_utils.to_categorical(vectors, num_classes=n_classes)
         return y_data
 
@@ -327,9 +331,9 @@ class Model:
 
         else:
             resized_data = self.__resize_cnn_data(data, shape)
-        
+
         self.set_x(environment, resized_data)
-    
+
     def resize_image(self, image, structure, nn_type=NeuralNetworkTypeEnum.CNN):
         """Resize image depending on the structure.
 
@@ -350,7 +354,7 @@ class Model:
         # Input control
         if not isinstance(structure, Structure):
             raise StructureException("Incorrect structure exception")
-        
+
         data = np.array([image])
         shape = data.shape
 
@@ -362,10 +366,12 @@ class Model:
 
         return resized_data
 
-    def __resize_cnn_data(self, data, shape):
+    @staticmethod
+    def __resize_cnn_data(data, shape):
         return data.reshape(shape[0], shape[1], shape[2], 1)
-        
-    def __resize_ann_and_dt_data(self, data, shape):
-        return data.reshape(shape[0], shape[1]*shape[2])
 
-    #endregion
+    @staticmethod
+    def __resize_ann_and_dt_data(data, shape):
+        return data.reshape(shape[0], shape[1] * shape[2])
+
+    # endregion

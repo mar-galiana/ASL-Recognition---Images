@@ -16,7 +16,7 @@ class DecisionTree:
         self.model.resize_data(Structure.DecisionTree, Environment.TRAIN)
 
         x_train = self.model.get_x(Environment.TRAIN)
-        y_train = self.model.get_sign_values(self.model.get_y(Environment.TRAIN))
+        y_train = self.model.get_signs_values(self.model.get_y(Environment.TRAIN))
 
         xgboost_model = XGBClassifier()
         xgboost_model.fit(x_train, y_train, verbose=True)

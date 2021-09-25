@@ -16,10 +16,10 @@ class Signs:
     -------
     get_signs_dictionary()
         Return the dictionary of signs
-    get_sign_value(sign)
+    get_sign_value(key)
         Return the value based on its sign
-    get_signs_based_on_values(values)
-        Return the keys based on theis values
+    get_signs_values(keys)
+        Return the values based on their signs
     get_sign_based_on_value(sign_value)
         Return the key based on its value
     """
@@ -39,12 +39,12 @@ class Signs:
 
         return self.__signs_dict
 
-    def get_sign_value(self, sign):
+    def get_sign_value(self, key):
         """Return the value based on its sign.
 
         Parameters
         ----------
-        sign : string
+        key : string
             Sign to get the value from
         
         Raises
@@ -59,13 +59,13 @@ class Signs:
         """
         self.__check_sign_is_not_null()
 
-        if sign not in self.__signs_dict:
-            raise SignIsNotInJsonFileException("The sign '" + sign + "' is not in the json file")
+        if key not in self.__signs_dict:
+            raise SignIsNotInJsonFileException("The sign '" + key + "' is not in the json file")
 
-        return self.__signs_dict[sign]
+        return self.__signs_dict[key]
 
-    def get_signs_based_on_values(self, values):
-        """Return the keys based on theis values.
+    def get_signs_values(self, keys):
+        """Return the values based on theis signs.
 
         Parameters
         ----------
@@ -79,11 +79,11 @@ class Signs:
         """
         self.__check_sign_is_not_null()
 
-        keys = []
-        for aux in range(len(values)):
-            keys.append(self.__signs_dict.get(values[aux]))
+        values = []
+        for key in keys:
+            values.append(self.__signs_dict.get(key))
 
-        return keys
+        return values
 
     def get_sign_based_on_value(self, value):
         """Return the key based on its value.

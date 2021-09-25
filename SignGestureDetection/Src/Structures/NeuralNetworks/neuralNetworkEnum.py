@@ -4,7 +4,7 @@ from enum import Enum
 class NeuralNetworkTypeEnum(Enum):
     CNN = "cnn"
     ANN = "ann"
-    IMPROVED_CNN = "improved_cnn"
+    IMPROVED_CNN = "improvedcnn"
 
 
 class AttributeToTuneEnum(Enum):

@@ -1,5 +1,6 @@
 import os
 from StrategyFactory.iStrategy import IStrategy
+from Structures.iUtilStructure import Structure
 from Structures.DecisionTree.decisionTree import DecisionTree
 
 
@@ -20,13 +21,12 @@ class AccuracyDecisionTreeStrategy(IStrategy):
 
     def execute(self):
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-        decision_tree, xgboost_model = self.__get_decision_tree_model()
-        self.accuracy_util.perform_test_data(decision_tree, xgboost_model)
+
+        xgboost_model = self.__get_decision_tree_model()
+        self.accuracy_util.perform_test_data(Structure.DecisionTree, xgboost_model)
         self.dt_util.show_decision_tree(xgboost_model)
         self.logger.write_info("Strategy executed successfully")
 
     def __get_decision_tree_model(self):
-
-        decision_tree = DecisionTree(self.logger, self.model, self.dt_util)
         xgboost_model = self.dt_util.load_model(self.name_dt_model)
-        return decision_tree, xgboost_model
+        return xgboost_model
