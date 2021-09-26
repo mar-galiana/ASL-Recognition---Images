@@ -20,8 +20,71 @@ from StrategyFactory.AccuracyStrategy.accuracyCategoricalNeuralNetworkStrategy i
 
 
 class ExecutionFactory:
+    """
+    A factory class to get the object that will execute the strategy
+
+    Attributes
+    ----------
+    logger : Logger
+        A class used to show the execution information.
+    execution_strategy : string
+        A value of the Strategies enumeration selecting the strategy to execute
+    arguments : array
+        Array of arguments entered without the execution strategy
+    model : Model
+        A class used to sync up all the functionalities that refer to the database
+    nn_util : NeuralNetworkUtil
+        TODO
+    decision_tree_util : DecisionTreeUtil
+        TODO
+    accuracy_util : AccuracyUtil
+        TODO
+    binary_nn_util : BinaryNeuralNetworkUtil
+        TODO
+    storage_controller : StorageController
+        A class used to remove and create the directories and files used in the execution
+    strategy_switcher : dictionary
+        A dictionary to select the method to execute depending on the Strategies' enumeration
+    
+    Methods
+    -------
+    get_execution_strategy()
+        Get the object that will execute the strategy selected
+    save_database()
+        Method that will return the object that will excecute the --saveDatabase strategy
+    train_categorical_neural_network()
+        Method that will return the object that will excecute the --trainCategoricalNeuralNetwork strategy
+    get_accuracy_categorical_neural_network()
+        Method that will return the object that will excecute the --accuracyCategoricalNeuralNetwork strategy
+    train_decision_tree()
+        Method that will return the object that will excecute the --trainDecisionTree strategy
+    get_accuracy_decision_tree()
+        Method that will return the object that will excecute the --accuracyDecisionTree strategy
+    show_optimized_hyperparameter()
+        Method that will return the object that will excecute the --showOptimizedHyperparameter strategy
+    train_binary_neural_network()
+        Method that will return the object that will excecute the --trainBinaryNeuralNetwork strategy
+    get_accuracy_binary_neural_network()
+        Method that will return the object that will excecute the --accuracyBinaryNeuralNetwork strategy
+    predict_image()
+        Method that will return the object that will excecute the --predict strategy
+    setup()
+        Method that will return the object that will excecute the --setup strategy
+    help()
+        Method that will return the object that will excecute the --help strategy
+    """
 
     def __init__(self, logger, strategy, arguments):
+        """
+        Parameters
+        ----------
+        logger : Logger
+            A class used to show the execution information.
+        strategy : string
+            A value of the Strategies enumeration selecting the strategy to execute
+        arguments: array
+            Array of arguments entered without the execution strategy
+        """
         self.logger = logger
         self.execution_strategy = strategy
         self.arguments = arguments
@@ -35,6 +98,13 @@ class ExecutionFactory:
         self.strategy_switcher = self.__get_strategy_switcher()
 
     def get_execution_strategy(self):
+        """Get the object that will execute the strategy selected
+
+        Returns
+        -------
+        IStrategy
+            Returns an object implementing the IStrategy inteface.
+        """
         if self.execution_strategy not in self.strategy_switcher:
             raise InputException(self.execution_strategy + " is not a valid strategy")
 
@@ -43,18 +113,39 @@ class ExecutionFactory:
         return strategy_method()
 
     def save_database(self):
+        """Method that will return the object that will excecute the --saveDatabase strategy
+
+        Returns
+        -------
+        SaveDatabaseStrategy
+            Returns an object implementing the IStrategy inteface.
+        """
         if len(self.arguments) != 3:
             raise InputException("This strategy requires four arguments to be executed")
 
         return SaveDatabaseStrategy(self.logger, self.model, self.arguments)
 
     def train_categorical_neural_network(self):
+        """Method that will return the object that will excecute the --trainCategoricalNeuralNetwork strategy
+
+        Returns
+        -------
+        TrainCategoricalNeuralNetworkStrategy
+            Returns an object implementing the IStrategy inteface.
+        """
         if len(self.arguments) < 2:
             raise InputException("This strategy requires two or more arguments to be executed")
 
         return TrainCategoricalNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.arguments)
 
     def get_accuracy_categorical_neural_network(self):
+        """Method that will return the object that will excecute the --accuracyCategoricalNeuralNetwork strategy
+
+        Returns
+        -------
+        AccuracyCategoricalNeuralNetworkStrategy
+            Returns an object implementing the IStrategy inteface.
+        """
         if len(self.arguments) != 1:
             raise InputException("This strategy requires one argument to be executed")
 
@@ -62,12 +153,26 @@ class ExecutionFactory:
                                                         self.arguments)
 
     def train_decision_tree(self):
+        """Method that will return the object that will excecute the --trainDecisionTree strategy
+
+        Returns
+        -------
+        TrainDecisionTreeStrategy
+            Returns an object implementing the IStrategy inteface.
+        """
         if len(self.arguments) < 1:
             raise InputException("This strategy requires one or more arguments to be executed")
 
         return TrainDecisionTreeStrategy(self.logger, self.model, self.decision_tree_util, self.arguments)
 
     def get_accuracy_decision_tree(self):
+        """Method that will return the object that will excecute the --accuracyDecisionTree strategy
+
+        Returns
+        -------
+        AccuracyDecisionTreeStrategy
+            Returns an object implementing the IStrategy inteface.
+        """
         if len(self.arguments) != 1:
             raise InputException("This strategy requires one argument to be executed")
 
@@ -76,12 +181,26 @@ class ExecutionFactory:
                                             self.arguments)
 
     def show_optimized_hyperparameter(self):
+        """Method that will return the object that will excecute the --showOptimizedHyperparameter strategy
+
+        Returns
+        -------
+        HyperparameterOptimizationStrategy
+            Returns an object implementing the IStrategy inteface.
+        """
         if len(self.arguments) < 1:
             raise InputException("This strategy requires one or more arguments to be executed")
 
         return HyperparameterOptimizationStrategy(self.logger, self.model, self.nn_util, self.arguments)
 
     def train_binary_neural_network(self):
+        """Method that will return the object that will excecute the --trainBinaryNeuralNetwork strategy
+
+        Returns
+        -------
+        TrainBinaryNeuralNetworkStrategy
+            Returns an object implementing the IStrategy inteface.
+        """
         if len(self.arguments) < 2:
             raise InputException("This strategy requires two or more arguments to be executed")
 
@@ -89,6 +208,13 @@ class ExecutionFactory:
                                                 self.storage_controller, self.arguments)
 
     def get_accuracy_binary_neural_network(self):
+        """Method that will return the object that will excecute the --accuracyBinaryNeuralNetwork strategy
+
+        Returns
+        -------
+        AccuracyBinaryNeuralNetworkStrategy
+            Returns an object implementing the IStrategy inteface.
+        """
         if len(self.arguments) < 1:
             raise InputException("This strategy requires one or more arguments to be executed")
 
@@ -96,15 +222,36 @@ class ExecutionFactory:
                                                    self.binary_nn_util, self.storage_controller, self.arguments)
 
     def predict_image(self):
+        """Method that will return the object that will excecute the --predict strategy
+
+        Returns
+        -------
+        PredictStrategy
+            Returns an object implementing the IStrategy inteface.
+        """
         if len(self.arguments) < 1:
             raise InputException("This strategy requires one or more arguments to be executed")
 
         return PredictStrategy(self.logger, self.model, self.nn_util, self.decision_tree_util, self.arguments)
 
     def setup(self):
+        """Method that will return the object that will excecute the --setup strategy
+
+        Returns
+        -------
+        SetupProjectStructure
+            Returns an object implementing the IStrategy inteface.
+        """
         return SetupProjectStructure(self.logger, self.storage_controller)
 
     def help(self):
+        """Method that will return the object that will excecute the --help strategy
+
+        Returns
+        -------
+        HelpStrategy
+            Returns an object implementing the IStrategy inteface.
+        """
         return HelpStrategy(self.logger)
 
     def __get_strategy_switcher(self):
@@ -124,6 +271,10 @@ class ExecutionFactory:
 
 
 class Strategies(Enum):
+    """
+    Different types of strategies to be executed
+    """
+    
     HELP = "--help"
     SETUP = "--setup"
     PREDICT_IMAGE = "--predict"
