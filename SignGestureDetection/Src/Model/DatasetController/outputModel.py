@@ -13,7 +13,7 @@ from Exception.inputOutputException import PathDoesNotExistException
 
 class OutputModel:
     """
-    A class used to read the samples stored in the pickles' files.
+    A class used to store the samples in the pickles' files.
 
     Attributes
     ----------

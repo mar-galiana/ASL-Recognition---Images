@@ -3,6 +3,7 @@ from Constraints.path import SIGNS_FILE
 from Exception.parametersException import IncorrectVariableType
 from Exception.modelException import SignIsNotInJsonFileException
 
+
 class Signs:
     """
     A class used to store the different types of signs in the database
@@ -69,7 +70,7 @@ class Signs:
 
         Parameters
         ----------
-        values : array
+        keys : array
             Array of values to get the keys from
 
         Returns
@@ -107,8 +108,8 @@ class Signs:
         """
         if not isinstance(value, int):
             raise IncorrectVariableType("In the signs json file the values are all numbers, the character '" +
-                                               value + "' is not accepted")
-                                            
+                                        value + "' is not accepted")
+
         self.__check_sign_is_not_null()
 
         signs_list = list(self.__signs_dict.values())

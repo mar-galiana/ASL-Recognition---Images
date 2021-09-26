@@ -1,8 +1,7 @@
 import os
-import joblib
-import _pickle as cPickle
 import gzip
 import numpy as np
+import _pickle as cPickle
 from Constraints.path import PICKLES_PATH
 from Model.modelEnum import Environment, Image
 from Exception.modelException import EnvironmentException

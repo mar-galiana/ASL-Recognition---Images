@@ -20,7 +20,7 @@ class Model:
     signs : Signs
         A class used to store the different types of signs in the database
     output_model : OutputModel
-        the name of the animal
+        A class used to store the samples in the pickles' files.
     input_model : InputModel
         A class used to read the samples stored in the pickles' files.
 
@@ -49,7 +49,7 @@ class Model:
     get_sign_value(label)
         Get the value of the sign from the pickles selected
     get_signs_values(labels)
-        Get the signs given their values
+        Get the values of the signs from the pickles selected
     get_sign_based_on_value(value):
         Get the sign given its value.
     get_categorical_vectors(environment, n_classes)
@@ -219,7 +219,7 @@ class Model:
         return self.signs.get_sign_value(label)
 
     def get_signs_values(self, labels):
-        """Get the signs given their values.
+        """Get the values of the signs from the pickles selected.
 
         Parameters
         ----------
@@ -322,7 +322,7 @@ class Model:
         if not isinstance(nn_type, NeuralNetworkTypeEnum):
             raise StructureException("Incorrect neural network type")
 
-        # Check structure to select the resize formt
+        # Check structure to select the resize format
         shape = self.get_x(environment).shape
         data = self.get_x(environment)
 
