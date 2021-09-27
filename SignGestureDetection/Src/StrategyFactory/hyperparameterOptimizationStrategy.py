@@ -16,11 +16,11 @@ class HyperparameterOptimizationStrategy(IStrategy):
     model : Model
         A class used to sync up all the functionalities that refer to the database
     attribute_tune : AttributeToTuneEnum
-        TODO
+        Types of attributes to be improved in the convolutional neural network model
     pickles : array
         Array of pickles to use in the execution
     hyperparameterOptimization : HyperparameterOptimization
-        TODO
+        Calculate the best value for the CNN module based on the attribute selected
 
     Methods
     -------
@@ -37,7 +37,7 @@ class HyperparameterOptimizationStrategy(IStrategy):
         model : Model
             A class used to sync up all the functionalities that refer to the database
         nn_util : NeuralNetworkUtil
-            TODO
+            A class to execute the common functionalities of a neural network structure
         arguments: array
             Array of arguments entered without the execution strategy
         

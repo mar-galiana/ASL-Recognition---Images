@@ -34,13 +34,13 @@ class ExecutionFactory:
     model : Model
         A class used to sync up all the functionalities that refer to the database
     nn_util : NeuralNetworkUtil
-        TODO
+        A class to execute the common functionalities of a neural network structure
     decision_tree_util : DecisionTreeUtil
-        TODO
+        A class to execute the common functionalities of a decision tree structure
     accuracy_util : AccuracyUtil
-        TODO
+        A class to execute the common functionalities in accuracy strategies
     binary_nn_util : BinaryNeuralNetworkUtil
-        TODO
+        A class to execute the common functionalities in the binary neural networks strategies
     storage_controller : StorageController
         A class used to remove and create the directories and files used in the execution
     strategy_switcher : dictionary

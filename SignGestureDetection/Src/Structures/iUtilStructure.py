@@ -39,7 +39,7 @@ class IUtilStructure(object):
         model_name : string
             Model's name
         restriction : LabelsRequirement, optional
-            TODO (Default is LabelsRequirement.ALL)
+            Types of labels allowed to reduce the database size (Default is LabelsRequirement.ALL)
         
         Raises
         ------

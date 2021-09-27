@@ -22,7 +22,7 @@ class DecisionTreeUtil(IUtilStructure):
     Methods
     -------
     save_model(model)
-        Store the decision tree trained model into a file with extension "pickle.dat"
+        Store the decision tree trained model into a file with extension ".pickle.dat"
     load_model(name_model)
         Load the decision tree trained model and set the dataset used while trianing it 
     show_decision_tree(xgboost_model)
@@ -40,7 +40,7 @@ class DecisionTreeUtil(IUtilStructure):
         self.model = model
 
     def save_model(self, model):
-        """Store the decision tree trained model into a file with extension "pickle.dat"
+        """Store the decision tree trained model into a file with extension ".pickle.dat"
 
         Parameters
         ----------

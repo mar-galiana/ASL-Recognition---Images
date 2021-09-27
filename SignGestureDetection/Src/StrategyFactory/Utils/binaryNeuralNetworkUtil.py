@@ -6,7 +6,7 @@ from Structures.NeuralNetworks.neuralNetworkEnum import LabelsRequirement
 
 class BinaryNeuralNetworkUtil:
     """
-    A class to execute the common functionalities in the binary neural networks strategies
+    A class to execute the common functionalities in the binary neural networks strategies.
 
     Attributes
     ----------
@@ -33,7 +33,7 @@ class BinaryNeuralNetworkUtil:
         environment : Environment
             Types of environments in a dataset
         labels_requirement : LabelsRequirement
-            TODO
+            Types of labels allowed to reduce the database size
         
         Raises
         ------

@@ -28,7 +28,7 @@ class DecisionTree:
         model : Model
             A class used to sync up all the functionalities that refer to the database
         dt_util : DecisionTreeUtil
-            TODO
+            A class to execute the common functionalities of a decision tree structure
         """
         self.logger = logger
         self.model = model
@@ -40,7 +40,7 @@ class DecisionTree:
         Returns
         -------
         XGBClassifier
-            The decision's tree model trained
+            The decision tree model trained
         """
         self.logger.write_info("Start training model")
 

@@ -17,7 +17,7 @@ class TrainCategoricalNeuralNetworkStrategy(IStrategy):
     model : Model
         A class used to sync up all the functionalities that refer to the database
     nn_util : NeuralNetworkUtil
-        TODO
+        A class to execute the common functionalities of a neural network structure
     nn_type : string
         Type of neural network, it has to be a value of the NeuralNetworkTypeEnum enumerator
     pickles : array
@@ -38,7 +38,7 @@ class TrainCategoricalNeuralNetworkStrategy(IStrategy):
         model : Model
             A class used to sync up all the functionalities that refer to the database
         nn_util : NeuralNetworkUtil
-            TODO
+            A class to execute the common functionalities of a neural network structure
         arguments : array
             Array of arguments entered in the execution
         """

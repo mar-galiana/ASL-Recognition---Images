@@ -11,7 +11,7 @@ from Structures.NeuralNetworks.NeuralNetworksTypes.iNeuralNetwork import INeural
 
 class ConvolutionalNeuralNetwork(INeuralNetwork):
     """
-    A class that contains the convolutional neural network structure and all its functinalities.
+    A class that contains the convolutional neural network structure and all its functionalities.
 
     Attributes
     ----------
@@ -20,7 +20,7 @@ class ConvolutionalNeuralNetwork(INeuralNetwork):
     model : Model
         A class used to sync up all the functionalities that refer to the database
     nn_util : NeuralNetworkUtil
-        TODO
+        A class to execute the common functionalities of a neural network structure
     improved_nn : boolean, optional
         Indicates if the model should be build with the improved structure (Defult is false)
 
@@ -41,7 +41,7 @@ class ConvolutionalNeuralNetwork(INeuralNetwork):
         model : Model
             A class used to sync up all the functionalities that refer to the database
         nn_util : NeuralNetworkUtil
-            TODO
+            A class to execute the common functionalities of a neural network structure
         improved_nn : boolean, optional
             Indicates if the model should be build with the improved structure (Defult is false)
         """

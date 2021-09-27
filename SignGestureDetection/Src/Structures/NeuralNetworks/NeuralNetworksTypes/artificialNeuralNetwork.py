@@ -8,7 +8,7 @@ from Structures.NeuralNetworks.NeuralNetworksTypes.iNeuralNetwork import INeural
 
 class ArtificialNeuralNetwork(INeuralNetwork):
     """
-    A class that contains the artificial neural network structure and all its functinalities.
+    A class that contains the artificial neural network structure and all its functionalities.
 
     Attributes
     ----------
@@ -17,7 +17,7 @@ class ArtificialNeuralNetwork(INeuralNetwork):
     model : Model
         A class used to sync up all the functionalities that refer to the database
     nn_util : NeuralNetworkUtil
-        TODO
+        A class to execute the common functionalities of a neural network structure
 
     Methods
     -------
@@ -32,7 +32,7 @@ class ArtificialNeuralNetwork(INeuralNetwork):
         model : Model
             A class used to sync up all the functionalities that refer to the database
         nn_util : NeuralNetworkUtil
-            TODO
+            A class to execute the common functionalities of a neural network structure
         """
         self.model = model
         self.logger = logger

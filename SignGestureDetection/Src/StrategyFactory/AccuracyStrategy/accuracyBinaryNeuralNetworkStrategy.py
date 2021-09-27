@@ -21,7 +21,7 @@ class AccuracyBinaryNeuralNetworkStrategy(IStrategy):
     model : Model
         A class used to sync up all the functionalities that refer to the database
     nn_util : NeuralNetworkUtil
-        TODO
+        A class to execute the common functionalities of a neural network structure
     accuracy_util : AccuracyUtil
         A class to execute the common functionalities in accuracy strategies
     bnn_util : BinaryNeuralNetworkUtil
@@ -46,7 +46,7 @@ class AccuracyBinaryNeuralNetworkStrategy(IStrategy):
         model : Model
             A class used to sync up all the functionalities that refer to the database
         nn_util : NeuralNetworkUtil
-            TODO
+            A class to execute the common functionalities of a neural network structure
         accuracy_util : AccuracyUtil
             A class to execute the common functionalities in accuracy strategies
         bnn_util : BinaryNeuralNetworkUtil

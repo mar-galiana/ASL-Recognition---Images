@@ -22,13 +22,13 @@ class TrainBinaryNeuralNetworkStrategy(IStrategy):
     model : Model
         A class used to sync up all the functionalities that refer to the database
     nn_util : NeuralNetworkUtil
-        TODO
+        A class to execute the common functionalities of a neural network structure
     bnn_util : BinaryNeuralNetworkUtil
         A class to execute the common functionalities in the binary neural networks strategies
     storage_controller : StorageController
         A class used to remove and create the directories and files used in the execution
     labels_requirement : LabelsRequirement
-        TODO
+        Types of labels allowed to reduce the database size
     pickles : array
         Array of pickles' name to use in this strategy
 
@@ -45,7 +45,7 @@ class TrainBinaryNeuralNetworkStrategy(IStrategy):
         model : Model
             A class used to sync up all the functionalities that refer to the database
         nn_util : NeuralNetworkUtil
-            TODO
+            A class to execute the common functionalities of a neural network structure
         bnn_util : BinaryNeuralNetworkUtil
             A class to execute the common functionalities in the binary neural networks strategies
         storage_controller : StorageController

@@ -6,7 +6,7 @@ from Structures.NeuralNetworks.neuralNetworkEnum import NeuralNetworkTypeEnum
 
 class AccuracyUtil:
     """
-    A class to execute the common functionalities in accuracy strategies
+    A class to execute the common functionalities in accuracy strategies.
 
     Attributes
     ----------

@@ -42,9 +42,9 @@ class PredictStrategy(IStrategy):
         model : Model
             A class used to sync up all the functionalities that refer to the database
         nn_util : NeuralNetworkUtil
-            TODO
+            A class to execute the common functionalities of a neural network structure
         dt_util : DecisionTreeUtil
-            TODO
+            A class to execute the common functionalities of a decision tree structure
         arguments: array
             Array of arguments entered without the execution strategy
         
