@@ -23,7 +23,7 @@ class TrainCategoricalNeuralNetworkStrategy(IStrategy):
     pickles : array
         Array of pickles to use in the training
     algorithm_switcher : dictionary
-        Dictionary that conatins the model class that will execute the training depending on the neural network type
+        Dictionary that contains the model class that will execute the training depending on the neural network type
 
     Methods
     -------

@@ -25,7 +25,7 @@ class TrainBinaryNeuralNetworkStrategy(IStrategy):
     nn_util : NeuralNetworkUtil
         TODO
     bnn_util : BinaryNeuralNetworkUtil
-        TODO
+        A class to execute the common functionalities in the binary neural networks strategies
     storage_controller : StorageController
         A class used to remove and create the directories and files used in the execution
     labels_requirement : LabelsRequirement
@@ -48,7 +48,7 @@ class TrainBinaryNeuralNetworkStrategy(IStrategy):
         nn_util : NeuralNetworkUtil
             TODO
         bnn_util : BinaryNeuralNetworkUtil
-            TODO
+            A class to execute the common functionalities in the binary neural networks strategies
         storage_controller : StorageController
             A class used to remove and create the directories and files used in the execution
         arguments : array

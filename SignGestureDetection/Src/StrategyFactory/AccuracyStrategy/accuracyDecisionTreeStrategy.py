@@ -17,7 +17,7 @@ class AccuracyDecisionTreeStrategy(IStrategy):
     dt_util : DecisionTreeUtil
         TODO
     accuracy_util : AccuracyUtil
-        TODO
+        A class to execute the common functionalities in accuracy strategies
     name_dt_model : string
         Name of the file that contains the model to test
 
@@ -35,7 +35,7 @@ class AccuracyDecisionTreeStrategy(IStrategy):
         dt_util : DecisionTreeUtil
             TODO
         accuracy_util : AccuracyUtil
-            TODO
+            A class to execute the common functionalities in accuracy strategies
         arguments : array
             Array of arguments entered in the execution
         """
