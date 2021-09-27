@@ -13,11 +13,11 @@ class TrainDecisionTreeStrategy(IStrategy):
     model : Model
         A class used to sync up all the functionalities that refer to the database
     dt_util : DecisionTreeUtil
-        TODO
+        A class to execute the common functionalities of a decision tree structure
     pickles : array
         Array of pickles to use in the training
     decisionTree : DecisionTree
-        TODO
+        A class that contains the decision tree structure and all its functinalities
 
     Methods
     -------
@@ -31,9 +31,7 @@ class TrainDecisionTreeStrategy(IStrategy):
         model : Model
             A class used to sync up all the functionalities that refer to the database
         dt_util : DecisionTreeUtil
-            TODO
-        accuracy_util : AccuracyUtil
-            TODO
+            A class to execute the common functionalities of a decision tree structure
         arguments : array
             Array of arguments entered in the execution
         """

@@ -100,6 +100,11 @@ class ExecutionFactory:
     def get_execution_strategy(self):
         """Get the object that will execute the strategy selected
 
+        Raises
+        ------
+        InputException
+            If the strategy selected is not a value of the Strategies enumeration
+
         Returns
         -------
         IStrategy
@@ -115,6 +120,11 @@ class ExecutionFactory:
     def save_database(self):
         """Method that will return the object that will execute the --saveDatabase strategy
 
+        Raises
+        ------
+        InputException
+            If the number of arguments entered is incorrect
+        
         Returns
         -------
         SaveDatabaseStrategy
@@ -128,6 +138,11 @@ class ExecutionFactory:
     def train_categorical_neural_network(self):
         """Method that will return the object that will execute the --trainCategoricalNeuralNetwork strategy
 
+        Raises
+        ------
+        InputException
+            If the number of arguments entered is incorrect
+
         Returns
         -------
         TrainCategoricalNeuralNetworkStrategy
@@ -140,6 +155,11 @@ class ExecutionFactory:
 
     def get_accuracy_categorical_neural_network(self):
         """Method that will return the object that will execute the --accuracyCategoricalNeuralNetwork strategy
+
+        Raises
+        ------
+        InputException
+            If the number of arguments entered is incorrect
 
         Returns
         -------
@@ -155,6 +175,11 @@ class ExecutionFactory:
     def train_decision_tree(self):
         """Method that will return the object that will execute the --trainDecisionTree strategy
 
+        Raises
+        ------
+        InputException
+            If the number of arguments entered is incorrect
+
         Returns
         -------
         TrainDecisionTreeStrategy
@@ -167,6 +192,11 @@ class ExecutionFactory:
 
     def get_accuracy_decision_tree(self):
         """Method that will return the object that will execute the --accuracyDecisionTree strategy
+
+        Raises
+        ------
+        InputException
+            If the number of arguments entered is incorrect
 
         Returns
         -------
@@ -183,6 +213,11 @@ class ExecutionFactory:
     def show_optimized_hyperparameter(self):
         """Method that will return the object that will execute the --showOptimizedHyperparameter strategy
 
+        Raises
+        ------
+        InputException
+            If the number of arguments entered is incorrect
+
         Returns
         -------
         HyperparameterOptimizationStrategy
@@ -195,6 +230,11 @@ class ExecutionFactory:
 
     def train_binary_neural_network(self):
         """Method that will return the object that will execute the --trainBinaryNeuralNetwork strategy
+
+        Raises
+        ------
+        InputException
+            If the number of arguments entered is incorrect
 
         Returns
         -------
@@ -210,6 +250,11 @@ class ExecutionFactory:
     def get_accuracy_binary_neural_network(self):
         """Method that will return the object that will execute the --accuracyBinaryNeuralNetwork strategy
 
+        Raises
+        ------
+        InputException
+            If the number of arguments entered is incorrect
+
         Returns
         -------
         AccuracyBinaryNeuralNetworkStrategy
@@ -224,6 +269,11 @@ class ExecutionFactory:
     def predict_image(self):
         """Method that will return the object that will execute the --predict strategy
 
+        Raises
+        ------
+        InputException
+            If the number of arguments entered is incorrect
+            
         Returns
         -------
         PredictStrategy

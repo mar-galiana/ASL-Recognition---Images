@@ -96,6 +96,11 @@ class InputModel:
     def get_data(self, environment):
         """Get the environment's data.
 
+        Raises
+        ------
+        EnvironmentException
+            If the environment variable is not an Environment enumeration
+
         Returns
         ----------
         dictionary
@@ -123,6 +128,11 @@ class InputModel:
         ----------
         environment : Environment
             Environment of the pickles to combine
+
+        Raises
+        ------
+        EnvironmentException
+            If the environment variable is not an Environment enumeration
         """
         if not isinstance(environment, Environment):
             raise EnvironmentException("Environment used is not a valid one")

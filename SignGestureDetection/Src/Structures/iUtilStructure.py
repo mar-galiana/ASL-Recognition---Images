@@ -40,6 +40,13 @@ class IUtilStructure(object):
             Model's name
         restriction : LabelsRequirement, optional
             TODO (Default is LabelsRequirement.ALL)
+        
+        Raises
+        ------
+        StructureException
+            If the structure variable is not an Structure enumeration
+        LabelsRequirementException
+            If the restriction variable is not an LabelsRequirementException enumeration
         """
         if not isinstance(structure, Structure):
             raise StructureException("Structure selected is not a valid one")
@@ -66,6 +73,15 @@ class IUtilStructure(object):
         model_name : string
             Model's name
         
+        Raises
+        ------
+        StructureException
+            If the structure variable is not an Structure enumeration
+        PathDoesNotExistException
+            If the json storing all the models names does not exist
+        StructureFileElementDoesNotExists
+            If the model's name is not found in the json file
+
         Returns
         -------
         If the structure is a categorical neural network it will return two values: 

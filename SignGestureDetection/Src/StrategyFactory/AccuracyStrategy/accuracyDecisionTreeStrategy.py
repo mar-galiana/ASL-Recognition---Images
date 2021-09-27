@@ -15,7 +15,7 @@ class AccuracyDecisionTreeStrategy(IStrategy):
     model : Model
         A class used to sync up all the functionalities that refer to the database
     dt_util : DecisionTreeUtil
-        TODO
+        A class to execute the common functionalities of a decision tree structure
     accuracy_util : AccuracyUtil
         A class to execute the common functionalities in accuracy strategies
     name_dt_model : string
@@ -33,7 +33,7 @@ class AccuracyDecisionTreeStrategy(IStrategy):
         model : Model
             A class used to sync up all the functionalities that refer to the database
         dt_util : DecisionTreeUtil
-            TODO
+            A class to execute the common functionalities of a decision tree structure
         accuracy_util : AccuracyUtil
             A class to execute the common functionalities in accuracy strategies
         arguments : array

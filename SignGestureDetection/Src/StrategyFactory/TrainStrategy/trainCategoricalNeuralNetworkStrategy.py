@@ -65,6 +65,11 @@ class TrainCategoricalNeuralNetworkStrategy(IStrategy):
 
     def execute(self):
         """To train a categorical neural network model using the training samples of the pickle selected
+
+        Raises
+        ------
+        InputException
+            If the neural network type is not a value of the NeuralNetworkTypeEnum enumeration
         """
 
         if self.nn_type not in self.algorithm_switcher:

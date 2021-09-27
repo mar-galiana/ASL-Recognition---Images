@@ -80,7 +80,12 @@ class OutputModel:
             Image's path
         as_gray : boolean
             Boolean indicating if the images will be tranform to a gray color scale
-    
+
+        Raises
+        ------
+        PathDoesNotExistException
+            If the image source does not exist
+
         Returns
         ----------
         array

@@ -261,6 +261,11 @@ class Model:
         n_classes : number
             Number of classes in the dataset
 
+        Raises
+        ------
+        EnvironmentException
+            If the environment variable is not an Environment enumeration
+
         Returns
         -------
         array
@@ -314,6 +319,12 @@ class Model:
         nn_type : NeuralNetworkTypeEnum, optional
             Neural network type (default is CNN)
 
+        Raises
+        ------
+        StructureException
+            If the structure variable is not an Structure enumeration
+        StructureException
+            If the nn_type variable is not an NeuralNetworkTypeEnum enumeration
         """
         # Input control
         if not isinstance(structure, Structure):
@@ -346,6 +357,11 @@ class Model:
         nn_type : NeuralNetworkTypeEnum, optional
             Neural network type (default is CNN)
         
+        Raises
+        ------
+        StructureException
+            If the structure variable is not an Structure enumeration
+
         Returns
         -------
         array

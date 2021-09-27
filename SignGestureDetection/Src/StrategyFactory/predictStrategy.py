@@ -47,6 +47,11 @@ class PredictStrategy(IStrategy):
             TODO
         arguments: array
             Array of arguments entered without the execution strategy
+        
+         Raises
+        ------
+        InputException
+            If the first argument is not a value of the Structure enumeration
         """
         self.logger = logger
         self.model = model

@@ -34,6 +34,13 @@ class BinaryNeuralNetworkUtil:
             Types of environments in a dataset
         labels_requirement : LabelsRequirement
             TODO
+        
+        Raises
+        ------
+        IncorrectVariableType
+            If the environment variable is not an Environment enumeration
+        IncorrectVariableType
+            If the labels_requirement variable is not an LabelsRequirement enumeration
         """
         if not isinstance(environment, Environment):
             raise IncorrectVariableType("Expected Environment enum variable")

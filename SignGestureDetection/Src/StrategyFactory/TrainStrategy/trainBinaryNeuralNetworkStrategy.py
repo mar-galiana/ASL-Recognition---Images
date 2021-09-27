@@ -53,6 +53,11 @@ class TrainBinaryNeuralNetworkStrategy(IStrategy):
             A class used to remove and create the directories and files used in the execution
         arguments : array
             Array of arguments entered in the execution
+        
+        Raises
+        ------
+        InputException
+            If the first argument entered is not a value of the LabelsRequirement enumeration
         """
         self.logger = logger
         self.model = model
