@@ -104,8 +104,8 @@ class TrainBinaryNeuralNetworkStrategy(IStrategy):
         for sign in classes:
             self.logger.write_info("Start training the " + sign + " binary classifier")
 
-            cnn, nn_util = self._init_new_convolution_neural_network_object(sign)
-            classifier = cnn.build_sequential_model(1, self.model.get_x(Environment.TRAIN).shape, is_categorical=False)
+            cnn = self._init_new_convolution_neural_network_object(sign)
+            classifier = cnn.build_sequential_model(1, is_categorical=False)
 
             file_name = self.__get_sign_model_path(sign)
 
@@ -116,6 +116,7 @@ class TrainBinaryNeuralNetworkStrategy(IStrategy):
                 FileEnum.FILE_NAME.value: file_name
             })
 
+        # Save models in a compressed file
         file_path, file_name = self.__get_compressed_file_path()
         self.storage_controller.compress_files(files, file_path + file_name)
         self.storage_controller.remove_files_from_list(files)
@@ -132,7 +133,7 @@ class TrainBinaryNeuralNetworkStrategy(IStrategy):
         nn_util = NeuralNetworkUtil(self.logger, model)
         cnn = ConvolutionalNeuralNetwork(self.logger, model, nn_util, improved_nn=True)
 
-        return cnn, nn_util
+        return cnn
 
     def __transform_data(self, actual_sign):
         y_train = self.model.get_y(Environment.TRAIN)

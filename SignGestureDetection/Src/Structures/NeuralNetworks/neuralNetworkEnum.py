@@ -27,3 +27,9 @@ class LabelsRequirement(Enum):
     ALPHA = "alpha"
     ABC = "abc"
     ALL = "all"
+
+
+class NeuralNetworkInformation(Enum):
+    Pickle = "pickle"
+    Type = "type"
+    Restriction = "restriction"

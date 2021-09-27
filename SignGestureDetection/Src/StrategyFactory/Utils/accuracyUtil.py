@@ -64,7 +64,7 @@ class AccuracyUtil:
         Parameters
         ----------
         structure : Structure
-            TODO
+            Different types of models available to be trained
         structure_model : Sequential
             Pre-trained sequential model
         nn_type : NeuralNetworkTypeEnum, optional

@@ -308,7 +308,7 @@ class Model:
         Parameters
         ----------
         structure : Structure
-            Structure that the data is gone be used to
+            Different types of models available to be trained
         environment : Environment
             Environment of the data to convert            
         nn_type : NeuralNetworkTypeEnum, optional
@@ -342,7 +342,7 @@ class Model:
         image : array
             Pixels of the image to resize 
         structure : Structure
-            Structure that the data is gone be used to   
+            Different types of models available to be trained
         nn_type : NeuralNetworkTypeEnum, optional
             Neural network type (default is CNN)
         

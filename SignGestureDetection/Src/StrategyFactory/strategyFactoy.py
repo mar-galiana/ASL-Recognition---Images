@@ -215,8 +215,8 @@ class ExecutionFactory:
         AccuracyBinaryNeuralNetworkStrategy
             Returns an object implementing the IStrategy interface.
         """
-        if len(self.arguments) < 1:
-            raise InputException("This strategy requires one or more arguments to be executed")
+        if len(self.arguments) != 1:
+            raise InputException("This strategy requires only one argument to be executed")
 
         return AccuracyBinaryNeuralNetworkStrategy(self.logger, self.model, self.nn_util, self.accuracy_util,
                                                    self.binary_nn_util, self.storage_controller, self.arguments)

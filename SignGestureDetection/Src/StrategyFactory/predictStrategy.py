@@ -19,9 +19,9 @@ class PredictStrategy(IStrategy):
     model : Model
         A class used to sync up all the functionalities that refer to the database
     structure_util : IUtilStructure
-        TODO
+        Common functionalities interface for the different util structures
     type_structure : Structure
-        TODO
+        Different types of models available to be trained
     name_model : string
         Name of the model used to predict the sign
     image_name : string
