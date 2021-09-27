@@ -2,8 +2,8 @@ import os
 from StrategyFactory.iStrategy import IStrategy
 from Exception.inputOutputException import InputException
 from Structures.NeuralNetworks.neuralNetworkEnum import NeuralNetworkTypeEnum
-from Structures.NeuralNetworks.artificialNeuralNetwork import ArtificialNeuralNetwork
-from Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
+from Structures.NeuralNetworks.NeuralNetworksTypes.artificialNeuralNetwork import ArtificialNeuralNetwork
+from Structures.NeuralNetworks.NeuralNetworksTypes.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 
 
 class TrainCategoricalNeuralNetworkStrategy(IStrategy):

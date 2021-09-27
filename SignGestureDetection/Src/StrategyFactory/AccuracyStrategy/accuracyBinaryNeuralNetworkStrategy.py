@@ -3,7 +3,6 @@ import numpy as np
 from Model.modelEnum import Environment
 from Structures.iUtilStructure import Structure
 from StrategyFactory.iStrategy import IStrategy
-from Exception.modelException import DifferentPicklesException
 from Structures.NeuralNetworks.neuralNetworkEnum import ClassifierEnum
 from Structures.NeuralNetworks.neuralNetworkEnum import LabelsRequirement
 from Constraints.path import TMP_BINARY_NEURAL_NETWORK_MODEL_PATH, BINARY_NEURAL_NETWORK_MODEL_PATH

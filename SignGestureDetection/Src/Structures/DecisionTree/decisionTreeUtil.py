@@ -10,7 +10,7 @@ from Exception.inputOutputException import PathDoesNotExistException
 
 class DecisionTreeUtil(IUtilStructure):
     """
-    A class to execute the common functionalities of a decision tree structure
+    A class to execute the common functionalities of a decision tree structure.
 
     Attributes
     ----------

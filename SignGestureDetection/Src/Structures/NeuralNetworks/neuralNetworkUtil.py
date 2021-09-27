@@ -2,11 +2,11 @@ import os
 from tensorflow import keras
 from Model.modelEnum import Environment
 from Exception.modelException import EnvironmentException
-from Constraints.path import TMP_BINARY_NEURAL_NETWORK_MODEL_PATH
 from Structures.iUtilStructure import IUtilStructure, Structure
+from Constraints.path import TMP_BINARY_NEURAL_NETWORK_MODEL_PATH
 from Constraints.path import CATEGORICAL_NEURAL_NETWORK_MODEL_PATH
-from Structures.NeuralNetworks.neuralNetworkEnum import NeuralNetworkTypeEnum
 from Exception.inputOutputException import PathDoesNotExistException
+from Structures.NeuralNetworks.neuralNetworkEnum import NeuralNetworkTypeEnum
 
 
 class NeuralNetworkUtil(IUtilStructure):

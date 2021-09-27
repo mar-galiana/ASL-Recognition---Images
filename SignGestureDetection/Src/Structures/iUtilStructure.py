@@ -6,8 +6,8 @@ from Constraints.path import MODEL_PICKLES_FILE
 from Exception.structureException import LabelsRequirementException
 from Exception.inputOutputException import PathDoesNotExistException
 from Structures.NeuralNetworks.neuralNetworkEnum import LabelsRequirement
-from Exception.structureException import StructureException, StructureFileElementDoesNotExists
 from Structures.NeuralNetworks.neuralNetworkEnum import NeuralNetworkInformation
+from Exception.structureException import StructureException, StructureFileElementDoesNotExists
 
 
 class IUtilStructure(object):

@@ -15,7 +15,7 @@ from Exception.parametersException import IncorrectVariableType
 from tensorflow.python.keras.wrappers.scikit_learn import KerasClassifier
 from Structures.NeuralNetworks.neuralNetworkEnum import AttributeToTuneEnum
 from tensorflow.python.keras.layers import Dense, Conv2D, MaxPool2D, Flatten, Dropout
-from Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
+from Structures.NeuralNetworks.NeuralNetworksTypes.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 
 
 def get_default_sequential_model(num_classes, image_size):

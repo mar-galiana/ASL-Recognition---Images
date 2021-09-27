@@ -1,9 +1,6 @@
 import os
 from StrategyFactory.iStrategy import IStrategy
 from Structures.iUtilStructure import Structure
-from Structures.NeuralNetworks.neuralNetworkEnum import NeuralNetworkTypeEnum
-from Structures.NeuralNetworks.artificialNeuralNetwork import ArtificialNeuralNetwork
-from Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 
 
 class AccuracyCategoricalNeuralNetworkStrategy(IStrategy):

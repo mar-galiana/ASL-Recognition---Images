@@ -8,9 +8,8 @@ from StrategyFactory.iStrategy import IStrategy
 from Exception.inputOutputException import InputException
 from Structures.NeuralNetworks.neuralNetworkUtil import NeuralNetworkUtil
 from Structures.NeuralNetworks.neuralNetworkEnum import LabelsRequirement
-from Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 from Constraints.path import BINARY_NEURAL_NETWORK_MODEL_PATH, TMP_BINARY_NEURAL_NETWORK_MODEL_PATH
-
+from Structures.NeuralNetworks.NeuralNetworksTypes.convolutionalNeuralNetwork import ConvolutionalNeuralNetwork
 
 class TrainBinaryNeuralNetworkStrategy(IStrategy):
     """
