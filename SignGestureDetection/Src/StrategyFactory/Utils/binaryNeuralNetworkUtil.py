@@ -5,11 +5,36 @@ from Structures.NeuralNetworks.neuralNetworkEnum import LabelsRequirement
 
 
 class BinaryNeuralNetworkUtil:
+    """
+    A class to execute the common functionalities in the binary neural networks strategies
 
+    Attributes
+    ----------
+    model : Model
+        A class used to sync up all the functionalities that refer to the database
+
+    Methods
+    -------
+    remove_not_wanted_labels(self, environment, labels_requirement)
+        Remove the dataset samples that will not be used in the training and in the prediction
+    """
     def __init__(self, model):
+        """
+        model : Model
+            A class used to sync up all the functionalities that refer to the database
+        """
         self.model = model
 
     def remove_not_wanted_labels(self, environment, labels_requirement):
+        """Remove the dataset samples that will not be used in the training and in the prediction
+
+        Parameters
+        ----------
+        environment : Environment
+            Types of environments in a dataset
+        labels_requirement : LabelsRequirement
+            TODO
+        """
         if not isinstance(environment, Environment):
             raise IncorrectVariableType("Expected Environment enum variable")
 

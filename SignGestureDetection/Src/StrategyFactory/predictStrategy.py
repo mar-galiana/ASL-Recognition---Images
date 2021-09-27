@@ -9,8 +9,45 @@ from Exception.inputOutputException import InputException
 
 
 class PredictStrategy(IStrategy):
+    """
+    A class to predict the value of the image entered
+
+    Attributes
+    ----------
+    logger : Logger
+        A class used to show the execution information
+    model : Model
+        A class used to sync up all the functionalities that refer to the database
+    structure_util : IUtilStructure
+        TODO
+    type_structure : Structure
+        TODO
+    name_model : string
+        Name of the model used to predict the sign
+    image_name : string
+        Path of the image used to do the prediction
+
+    Methods
+    -------
+    execute()
+        Predict the image entered based on the model selected
+    """
 
     def __init__(self, logger, model, nn_util, dt_util, arguments):
+        """
+        Parameters
+        ----------
+        logger : Logger
+            A class used to show the execution information.
+        model : Model
+            A class used to sync up all the functionalities that refer to the database
+        nn_util : NeuralNetworkUtil
+            TODO
+        dt_util : DecisionTreeUtil
+            TODO
+        arguments: array
+            Array of arguments entered without the execution strategy
+        """
         self.logger = logger
         self.model = model
         self.__show_arguments_entered(arguments)
@@ -31,6 +68,9 @@ class PredictStrategy(IStrategy):
         self.logger.write_info(info_arguments)
 
     def execute(self):
+        """Predict the image entered based on the model selected
+        """
+
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
         
         image = self.model.load_image(IMAGES_PATH + self.image_name, True)
@@ -38,7 +78,9 @@ class PredictStrategy(IStrategy):
         prediction = structure_model.predict(resized_image)
         sign_value = np.int16(np.argmax(prediction)).item()
         sign = self.model.get_sign_based_on_value(sign_value)
+        
         self.__show_result(sign)
+
         self.logger.write_info("Strategy executed successfully")
 
     def __get_model(self, image):

@@ -4,12 +4,36 @@ from Constraints.path import CATEGORICAL_NEURAL_NETWORK_MODEL_PATH, DECISION_TRE
 
 
 class HelpStrategy(IStrategy):
+    """
+    A class to print the information of each strategy
+
+    Attributes
+    ----------
+    logger : Logger
+        A class used to show the execution information.
+    datasets : string
+        Names of the dataset to use.
+    
+    Methods
+    -------
+    execute()
+        Show the arguments needed to execute each strategy
+    """
 
     def __init__(self, logger):
+        """
+        Parameters
+        ----------
+        logger : Logger
+            A class used to show the execution information.
+        """
         self.logger = logger
         self.datasets = "\n\t\t* ".join(list(map(lambda c: c.value, Dataset)))
 
     def execute(self):
+        """Show the arguments needed to execute each strategy
+        """
+
         information = "This project contains three different strategies:\n" + \
                       self.__get_information_save_database_strategy() + \
                       self.__get_information_train_categorical_nn_strategy() + \

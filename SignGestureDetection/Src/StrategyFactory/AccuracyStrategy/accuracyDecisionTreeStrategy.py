@@ -5,8 +5,40 @@ from Structures.DecisionTree.decisionTree import DecisionTree
 
 
 class AccuracyDecisionTreeStrategy(IStrategy):
+    """
+    A class to predict the value of the image entered
 
+    Attributes
+    ----------
+    logger : Logger
+        A class used to show the execution information
+    model : Model
+        A class used to sync up all the functionalities that refer to the database
+    dt_util : DecisionTreeUtil
+        TODO
+    accuracy_util : AccuracyUtil
+        TODO
+    name_dt_model : string
+        Name of the file that contains the model to test
+
+    Methods
+    -------
+    execute()
+        Show the accuracy of the decision tree model, previously trained, using the test database
+    """
     def __init__(self, logger, model, dt_util, accuracy_util, arguments):
+        """
+        logger : Logger
+            A class used to show the execution information
+        model : Model
+            A class used to sync up all the functionalities that refer to the database
+        dt_util : DecisionTreeUtil
+            TODO
+        accuracy_util : AccuracyUtil
+            TODO
+        arguments : array
+            Array of arguments entered in the execution
+        """
         self.logger = logger
         self.model = model
         self.dt_util = dt_util
@@ -20,6 +52,8 @@ class AccuracyDecisionTreeStrategy(IStrategy):
         self.logger.write_info(info_arguments)
 
     def execute(self):
+        """Show the accuracy of the decision tree model, previously trained, using the test database
+        """
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
         xgboost_model = self.__get_decision_tree_model()

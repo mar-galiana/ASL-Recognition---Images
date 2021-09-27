@@ -6,7 +6,7 @@ from Storage.storageEnum import FileEnum
 
 class StorageController:
     """
-    A class used to remove and create the directories and files used in the execution
+    A class used to remove and create the directories and files used in the execution.
 
     Methods
     -------

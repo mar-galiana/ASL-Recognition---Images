@@ -6,8 +6,41 @@ from Structures.NeuralNetworks.hyperparameterOptimization import HyperparameterO
 
 
 class HyperparameterOptimizationStrategy(IStrategy):
+    """
+    A class to check the optimal value for the hyperparameter selected
+
+    Attributes
+    ----------
+    logger : Logger
+        A class used to show the execution information
+    model : Model
+        A class used to sync up all the functionalities that refer to the database
+    attribute_tune : AttributeToTuneEnum
+        TODO
+    pickles : array
+        Array of pickles to use in the execution
+    hyperparameterOptimization : HyperparameterOptimization
+        TODO
+
+    Methods
+    -------
+    execute()
+        Show the optimal value of the attribute selected
+    """
 
     def __init__(self, logger, model, nn_util, arguments):
+        """
+        Parameters
+        ----------
+        logger : Logger
+            A class used to show the execution information.
+        model : Model
+            A class used to sync up all the functionalities that refer to the database
+        nn_util : NeuralNetworkUtil
+            TODO
+        arguments: array
+            Array of arguments entered without the execution strategy
+        """
         self.logger = logger
         self.model = model
 
@@ -27,6 +60,9 @@ class HyperparameterOptimizationStrategy(IStrategy):
         self.logger.write_info(info_arguments)
 
     def execute(self):
+        """Show the optimal value of the attribute selected
+        """
+
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
         self.model.set_pickles_name(self.pickles)

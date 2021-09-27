@@ -7,8 +7,42 @@ from Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNe
 
 
 class AccuracyCategoricalNeuralNetworkStrategy(IStrategy):
+    """
+    A class to test the accuracy of a categorical neural network model
+
+    Attributes
+    ----------
+    logger : Logger
+        A class used to show the execution information
+    model : Model
+        A class used to sync up all the functionalities that refer to the database
+    nn_util : NeuralNetworkUtil
+        TODO
+    accuracy_util : AccuracyUtil
+        TODO
+    name_nn_model : string
+        Name of the file that contains the model to test
+
+    Methods
+    -------
+    execute()
+        Show the accuracy of the categorical neural network model, previously trained, using the test database
+    """
 
     def __init__(self, logger, model, nn_util, accuracy_util, arguments):
+        """
+        logger : Logger
+            A class used to show the execution information
+        model : Model
+            A class used to sync up all the functionalities that refer to the database
+        nn_util : NeuralNetworkUtil
+            TODO
+        accuracy_util : AccuracyUtil
+            TODO
+        arguments : array
+            Array of arguments entered in the execution
+        """
+
         self.logger = logger
         self.model = model
         self.nn_util = nn_util
@@ -24,6 +58,9 @@ class AccuracyCategoricalNeuralNetworkStrategy(IStrategy):
         self.logger.write_info(info_arguments)
 
     def execute(self):
+        """Show the accuracy of the categorical neural network model, previously trained, using the test database
+        """
+        
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
         nn_model, nn_type = self.nn_util.load_model(self.name_nn_model)

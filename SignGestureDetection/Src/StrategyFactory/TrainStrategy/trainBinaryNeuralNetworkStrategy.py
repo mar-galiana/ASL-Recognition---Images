@@ -13,8 +13,47 @@ from Constraints.path import BINARY_NEURAL_NETWORK_MODEL_PATH, TMP_BINARY_NEURAL
 
 
 class TrainBinaryNeuralNetworkStrategy(IStrategy):
+    """
+    A class to train a set of binary neural networks models
+
+    Attributes
+    ----------
+    logger : Logger
+        A class used to show the execution information
+    model : Model
+        A class used to sync up all the functionalities that refer to the database
+    nn_util : NeuralNetworkUtil
+        TODO
+    bnn_util : BinaryNeuralNetworkUtil
+        TODO
+    storage_controller : StorageController
+        A class used to remove and create the directories and files used in the execution
+    labels_requirement : LabelsRequirement
+        TODO
+    pickles : array
+        Array of pickles' name to use in this strategy
+
+    Methods
+    -------
+    execute()
+        To train a set of binary neural networks models using the training samples of the pickle selected
+    """
 
     def __init__(self, logger, model, nn_util, bnn_util, storage_controller, arguments):
+        """
+        logger : Logger
+            A class used to show the execution information
+        model : Model
+            A class used to sync up all the functionalities that refer to the database
+        nn_util : NeuralNetworkUtil
+            TODO
+        bnn_util : BinaryNeuralNetworkUtil
+            TODO
+        storage_controller : StorageController
+            A class used to remove and create the directories and files used in the execution
+        arguments : array
+            Array of arguments entered in the execution
+        """
         self.logger = logger
         self.model = model
         self.nn_util = nn_util
@@ -35,6 +74,9 @@ class TrainBinaryNeuralNetworkStrategy(IStrategy):
         self.logger.write_info(info_arguments)
 
     def execute(self):
+        """To train a set of binary neural networks models using the training samples of the pickle selected
+        """
+
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
         self.model.set_pickles_name(self.pickles)

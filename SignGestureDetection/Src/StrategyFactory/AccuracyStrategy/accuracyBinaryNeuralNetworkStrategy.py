@@ -11,10 +11,55 @@ from Constraints.path import TMP_BINARY_NEURAL_NETWORK_MODEL_PATH, BINARY_NEURAL
 
 
 class AccuracyBinaryNeuralNetworkStrategy(IStrategy):
+    """
+    A class to test the accuracy of a set of binary neural networks models
+
+    Attributes
+    ----------
+    ACCURACY_PERCENTAGE : number
+        Limit set to define that a result is successful
+    logger : Logger
+        A class used to show the execution information
+    model : Model
+        A class used to sync up all the functionalities that refer to the database
+    nn_util : NeuralNetworkUtil
+        TODO
+    accuracy_util : AccuracyUtil
+        TODO
+    bnn_util : BinaryNeuralNetworkUtil
+        TODO
+    storage_controller : StorageController
+        A class used to remove and create the directories and files used in the execution
+    labels_requirement : LabelsRequirement
+        TODO
+    pickles_names : array
+        Array of pickles' name to use in this strategy
+
+    Methods
+    -------
+    execute()
+        Show the accuracy of a set of binary neural network models, previously trained, using the test database
+    """
 
     ACCURACY_PERCENTAGE = 0.60
 
     def __init__(self, logger, model, nn_util, accuracy_util, bnn_util, storage_controller, arguments):
+        """
+        logger : Logger
+            A class used to show the execution information
+        model : Model
+            A class used to sync up all the functionalities that refer to the database
+        nn_util : NeuralNetworkUtil
+            TODO
+        accuracy_util : AccuracyUtil
+            TODO
+        bnn_util : BinaryNeuralNetworkUtil
+            TODO
+        storage_controller : StorageController
+            A class used to remove and create the directories and files used in the execution
+        arguments : array
+            Array of arguments entered in the execution
+        """
         self.logger = logger
         self.model = model
         self.nn_util = nn_util
@@ -28,7 +73,7 @@ class AccuracyBinaryNeuralNetworkStrategy(IStrategy):
             raise InputException(self.execution_strategy + " is not a valid sign requirement")
 
         self.labels_requirement = LabelsRequirement(arguments[0])
-        self.models_names = arguments[1:]
+        self.model_name = arguments[1:]
 
     def __show_arguments_entered(self, arguments):
         info_arguments = "Arguments entered:\n" \
@@ -37,17 +82,20 @@ class AccuracyBinaryNeuralNetworkStrategy(IStrategy):
         self.logger.write_info(info_arguments)
 
     def execute(self):
+        """Show the accuracy of a set of binary neural network models, previously trained, using the test database
+        """
+        
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
         classifiers = self.__get_classifiers()
 
         self.bnn_util.remove_not_wanted_labels(Environment.TEST, self.labels_requirement)
 
-        self.perform_test_data(classifiers)
+        self.__perform_test_data(classifiers)
 
         self.logger.write_info("Strategy executed successfully")
 
-    def perform_test_data(self, classifiers):
+    def __perform_test_data(self, classifiers):
         predictions = []
 
         self.model.resize_data(Structure.BinaryNeuralNetwork, Environment.TEST)
@@ -75,7 +123,7 @@ class AccuracyBinaryNeuralNetworkStrategy(IStrategy):
         classifiers = []
         global_pickles = None
 
-        for model_name in self.models_names:
+        for model_name in self.pickles_names:
             model_pickles = self.__get_model_pickles(model_name)
             classifiers += self.__get_classifiers_from_specific_models(model_name)
             self.__remove_temporal_files(model_name)

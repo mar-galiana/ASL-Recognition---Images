@@ -3,12 +3,30 @@ from StrategyFactory.iStrategy import IStrategy
 
 
 class SetupProjectStructure(IStrategy):
+    """
+    A class to setup the project by creating the directories and the files needed in all the strategies
+
+    Attributes
+    ----------
+    logger : Logger
+        A class used to show the execution information
+    storage_controller : StorageController
+        A class used to remove and create the directories and files used in the execution
+
+    Methods
+    -------
+    execute()
+        Create the directories and the files needed to execute the strategies
+    """
 
     def __init__(self, logger, storage_controller):
         self.logger = logger
         self.storage_controller = storage_controller
 
     def execute(self):
+        """Create the directories and the files needed to execute the strategies
+        """
+        
         self.storage_controller.create_directory(ASSETS_PATH)
 
         # Dataset directories and files

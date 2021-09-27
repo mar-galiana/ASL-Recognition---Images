@@ -7,8 +7,41 @@ from Structures.NeuralNetworks.convolutionalNeuralNetwork import ConvolutionalNe
 
 
 class TrainCategoricalNeuralNetworkStrategy(IStrategy):
+    """
+    A class to train a categorical neural network model
+
+    Attributes
+    ----------
+    logger : Logger
+        A class used to show the execution information
+    model : Model
+        A class used to sync up all the functionalities that refer to the database
+    nn_util : NeuralNetworkUtil
+        TODO
+    nn_type : string
+        Type of neural network, it has to be a value of the NeuralNetworkTypeEnum enumerator
+    pickles : array
+        Array of pickles to use in the training
+    algorithm_switcher : dictionary
+        Dictionary that conatins the model class that will execute the training depending on the neural network type
+
+    Methods
+    -------
+    execute()
+        To train a categorical neural network model using the training samples of the pickle selected
+    """
 
     def __init__(self, logger, model, nn_util, arguments):
+        """
+        logger : Logger
+            A class used to show the execution information
+        model : Model
+            A class used to sync up all the functionalities that refer to the database
+        nn_util : NeuralNetworkUtil
+            TODO
+        arguments : array
+            Array of arguments entered in the execution
+        """
         self.logger = logger
         self.model = model
         self.nn_util = nn_util
@@ -31,6 +64,9 @@ class TrainCategoricalNeuralNetworkStrategy(IStrategy):
         self.logger.write_info(info_arguments)
 
     def execute(self):
+        """To train a categorical neural network model using the training samples of the pickle selected
+        """
+
         if self.nn_type not in self.algorithm_switcher:
             raise InputException(self.nn_type + " is not a valid strategy")
 
