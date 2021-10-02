@@ -1,4 +1,5 @@
 from Logger.iLogger import ILogger
+from enum import Enum
 
 
 class Logger(ILogger):
@@ -48,7 +49,7 @@ class Logger(ILogger):
         message : string
             Message to print
         """
-        print("[ERROR]: " + message)
+        print(Color.RED + "[ERROR]: " + message + Color.END)
 
     @staticmethod
     def write_action_required(message):
@@ -60,3 +61,20 @@ class Logger(ILogger):
             Message to print
         """
         print("[ACTION REQUIRED]: " + message)
+
+
+class Color(Enum):
+    """
+    This enumeration is used to change the color and the format of the text that will be printed to the console.
+    """
+
+    PURPLE = '\033[95m'
+    CYAN = '\033[96m'
+    DARKCYAN = '\033[36m'
+    BLUE = '\033[94m'
+    GREEN = '\033[92m'
+    YELLOW = '\033[93m'
+    RED = '\033[91m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+    END = '\033[0m'

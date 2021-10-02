@@ -1,5 +1,5 @@
-from enum import Enum
 from Model.model import Model
+from StrategyFactory.strategyEnum import Strategies
 from StrategyFactory.helpStrategy import HelpStrategy
 from Storage.storageController import StorageController
 from Exception.inputOutputException import InputException
@@ -310,7 +310,7 @@ class ExecutionFactory:
             Strategies.SETUP.value: lambda: self.setup(),
             Strategies.SAVE_DATABASE.value: lambda: self.save_database(),
             Strategies.PREDICT_IMAGE.value: lambda: self.predict_image(),
-            Strategies.DECISION_TREE.value: lambda: self.train_decision_tree(),
+            Strategies.TRAIN_DECISION_TREE.value: lambda: self.train_decision_tree(),
             Strategies.ACCURACY_DECISION_TREE.value: lambda: self.get_accuracy_decision_tree(),
             Strategies.TRAIN_BINARY_NEURAL_NETWORK.value: lambda: self.train_binary_neural_network(),
             Strategies.HYPERPARAMETER_OPTIMIZATION.value: lambda: self.show_optimized_hyperparameter(),
@@ -318,21 +318,3 @@ class ExecutionFactory:
             Strategies.TRAIN_CATEGORICAL_NEURAL_NETWORK.value: lambda: self.train_categorical_neural_network(),
             Strategies.ACCURACY_CATEGORICAL_NEURAL_NETWORK.value: lambda: self.get_accuracy_categorical_neural_network()
         }
-
-
-class Strategies(Enum):
-    """
-    Different types of strategies to be executed
-    """
-    
-    HELP = "--help"
-    SETUP = "--setup"
-    PREDICT_IMAGE = "--predict"
-    SAVE_DATABASE = "--saveDatabase"
-    DECISION_TREE = "--trainDecisionTree"
-    ACCURACY_DECISION_TREE = "--accuracyDecisionTree"
-    TRAIN_BINARY_NEURAL_NETWORK = "--trainBinaryNeuralNetwork"
-    HYPERPARAMETER_OPTIMIZATION = "--showOptimizedHyperparameter"
-    ACCURACY_BINARY_NEURAL_NETWORK = "--accuracyBinaryNeuralNetwork"
-    TRAIN_CATEGORICAL_NEURAL_NETWORK = "--trainCategoricalNeuralNetwork"
-    ACCURACY_CATEGORICAL_NEURAL_NETWORK = "--accuracyCategoricalNeuralNetwork"
