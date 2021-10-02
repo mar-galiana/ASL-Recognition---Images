@@ -1,6 +1,6 @@
 # PROCESAMIENTO DEL LENGUAJE DE SIGNOS Y SU CONVERSIÓN A TEXTO
 
-##OBJECTIVE
+## OBJECTIVE
 In this project we wanted to implement a predictive model that uses images as an input data. These images refer to thirty-eight static gestures, belonging to the American Sign Language (ASL). The gestures represent the English alphabet and the numbers from zero to ten.
 
 There have been two predictive models used: decision trees and neural networks. The Extreme Gradient Boosting algorithm was used with the decision tree, obtening an accuracy of 100%. It was eventually discarded because, as the number of samples in the dataset increased, its time cost increased too much to be used under this project execution conditions.
@@ -9,10 +9,10 @@ As far as neural networks are concerned, two types were implemented: one artific
 
 The best results were obtained with the multi-class convolutional neural net- work, achieving an accuracy of 99.52 % with a total execution time of 1 hour, 55 minutes and 36 seconds, and a memory cost of 12,88 GB.
 
-##IMPLEMENTATION
+## IMPLEMENTATION
 This project was implemented using the Python 3.9 interpreter and the open source package conda.
 
-##STEPS TO EXECUTE IT
+## STEPS TO EXECUTE IT
 In order to run it, you must first install the requirements from the requirements.txt file, using the command:
 ``pip install -r requirements.txt``
 
