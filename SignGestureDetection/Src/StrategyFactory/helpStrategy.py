@@ -1,4 +1,3 @@
-import textwrap
 from Logger.logger import Color
 from Model.modelEnum import Dataset
 from Structures.iUtilStructure import Structure
@@ -174,8 +173,8 @@ class HelpStrategy(IStrategy):
         return "* " + Color.BOLD.value + "Predict" + Color.END.value + "\n\n" + \
                "This strategy will predict the value of the input image based on the model selected.\n\n" \
                "To execute it you need the following arguments:\n" + \
-               Color.BLUE.value + "\t" + Strategies.PREDICT_IMAGE.value + " " + Color.END.value + "<string> " \
-               "<string> <string>\n\n" \
+               Color.BLUE.value + "\t" + Strategies.PREDICT_IMAGE.value + " " + "<string> <string> <string>\n\n" \
+               + Color.END.value +\
                "· The first string specifies the type of model that will be used, the possibilities are:\n" \
                "\t* " + self.structures + "\n\n" + \
                "· The second string will be the name of the file storing the model selected.\n\n" \

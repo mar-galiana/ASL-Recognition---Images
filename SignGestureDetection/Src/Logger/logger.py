@@ -30,6 +30,17 @@ class Logger(ILogger):
         print(message)
 
     @staticmethod
+    def write_title(message):
+        """Print informative message.
+
+        Parameters
+        ----------
+        message : string
+            Message to print
+        """
+        print(Color.UNDERLINE.value + Color.BOLD.value + "\n" + message + "\n" + Color.END.value)
+
+    @staticmethod
     def write_info(message):
         """Print informative message.
 
@@ -49,7 +60,7 @@ class Logger(ILogger):
         message : string
             Message to print
         """
-        print(Color.RED + "[ERROR]: " + message + Color.END)
+        print(Color.RED.value + "[ERROR]: " + message + Color.END.value)
 
     @staticmethod
     def write_action_required(message):
@@ -60,7 +71,7 @@ class Logger(ILogger):
         message : string
             Message to print
         """
-        print("[ACTION REQUIRED]: " + message)
+        print(Color.PURPLE.value + "[ACTION REQUIRED]: " + message + Color.END.value)
 
 
 class Color(Enum):
