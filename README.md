@@ -16,3 +16,7 @@ The setup strategy will install all the folders and files needed to execute the 
 Then you need to clone the repository stored at the URL https://github.com/marGaliana/SignLanguageProcessingDataset.git. it's very important to clone it in the Assets/Dataset/Images path. These folders will be created after the setup strategy has been executed. This respository contains the samples from each dataset used.
 
 To execute the other strategies it's recommended to check the information shown in the help strategy.
+
+If when executing the project it doesn't find the files that are correctly located, change the value of the variable ASSETS stored in the Src/Constraints/path.py file. It's value will depend on the environment where the execution is done.
+
+In case there is any doubt of how to start executing the project, the file SignGestureDetection/SignLanguageProcessing.ipynb contains an exemple of how to execute each one of these strategies, this file can be opend with the jupyter notebook. It'srecomended to execute the prroject in this environment.
