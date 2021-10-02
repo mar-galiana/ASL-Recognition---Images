@@ -1,5 +1,5 @@
 class StructureException(Exception):
-    """Exception raised for errors in the model.
+    """Exception raised for errors in the structure.
 
     Attributes:
         message -- explanation of the error
@@ -14,7 +14,7 @@ class StructureException(Exception):
 
 
 class LabelsRequirementException(Exception):
-    """Exception raised for errors in the model.
+    """Exception raised for errors in the labels.
 
     Attributes:
         message -- explanation of the error
@@ -29,7 +29,7 @@ class LabelsRequirementException(Exception):
 
 
 class StructureFileElementDoesNotExists(Exception):
-    """Exception raised for errors in the model.
+    """Exception raised for errors in the structure.
 
     Attributes:
         message -- explanation of the error

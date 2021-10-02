@@ -1,13 +1,58 @@
 import os
-from Constraints.path import IMAGES_PATH
+import numpy as np
+from PIL import Image
+import matplotlib.pyplot as plt
+from Constraints.path import SIGNS_IMAGES
 from StrategyFactory.iStrategy import IStrategy
 from Structures.iUtilStructure import Structure
 from Exception.inputOutputException import InputException
 
 
 class PredictStrategy(IStrategy):
+    """
+    A class to predict the value of the image entered
+
+    Attributes
+    ----------
+    logger : Logger
+        A class used to show the execution information
+    model : Model
+        A class used to sync up all the functionalities that refer to the database
+    structure_util : IUtilStructure
+        Common functionalities interface for the different util structures
+    type_structure : Structure
+        Different types of models available to be trained
+    name_model : string
+        Name of the model used to predict the sign
+    image_name : string
+        Path of the image used to do the prediction
+
+    Methods
+    -------
+    execute()
+        Predict the image entered based on the model selected
+    """
 
     def __init__(self, logger, model, nn_util, dt_util, arguments):
+        """
+        Parameters
+        ----------
+        logger : Logger
+            A class used to show the execution information.
+        model : Model
+            A class used to sync up all the functionalities that refer to the database
+        nn_util : NeuralNetworkUtil
+            A class to execute the common functionalities of a neural network structure
+        dt_util : DecisionTreeUtil
+            A class to execute the common functionalities of a decision tree structure
+        arguments: array
+            Array of arguments entered without the execution strategy
+        
+         Raises
+        ------
+        InputException
+            If the first argument is not a value of the Structure enumeration
+        """
         self.logger = logger
         self.model = model
         self.__show_arguments_entered(arguments)
@@ -28,20 +73,41 @@ class PredictStrategy(IStrategy):
         self.logger.write_info(info_arguments)
 
     def execute(self):
+        """Predict the image entered based on the model selected
+        """
+
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-        image = self.model.load_image(IMAGES_PATH + self.image_name, True)
-        structure_model, resized_image = self.get_model(image)
+        # image = self.model.load_image(IMAGES_PATH + self.image_name, True)
+        image = self.model.load_image(self.image_name, True)
+
+        # normalizing the data to help with the training
+        structure_model, resized_image = self.__get_model(image)
+
         prediction = structure_model.predict(resized_image)
+        sign_value = np.int16(np.argmax(prediction)).item()
+        sign = self.model.get_sign_based_on_value(sign_value)
+        
+        self.__show_result(sign)
 
         self.logger.write_info("Strategy executed successfully")
 
-    def get_model(self, image):
+    def __get_model(self, image):
+
         if self.type_structure is Structure.CategoricalNeuralNetwork:
             structure_model, nn_type = self.structure_util.load_model(self.name_model)
-            resized_image = self.structure_util.resize_single_image(image, nn_type)
+            resized_image = self.model.resize_image(image, self.type_structure, nn_type=nn_type)
         else:
             structure_model = self.structure_util.load_model(self.name_model)
-            resized_image = self.structure_util.resize_single_image(image)
+            resized_image = self.model.resize_image(image, self.type_structure)
 
         return structure_model, resized_image
+    
+    def __show_result(self, sign):
+        self.logger.write_info("The image represents the sign '" + sign + "'")
+
+        image_path = SIGNS_IMAGES + sign.lower() + ".png"
+        img = Image.open(image_path)
+        plt.imshow(img)
+        plt.axis('off')
+        plt.show()

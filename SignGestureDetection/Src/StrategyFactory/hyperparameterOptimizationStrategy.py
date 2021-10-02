@@ -6,8 +6,46 @@ from Structures.NeuralNetworks.hyperparameterOptimization import HyperparameterO
 
 
 class HyperparameterOptimizationStrategy(IStrategy):
+    """
+    A class to check the optimal value for the hyperparameter selected
+
+    Attributes
+    ----------
+    logger : Logger
+        A class used to show the execution information
+    model : Model
+        A class used to sync up all the functionalities that refer to the database
+    attribute_tune : AttributeToTuneEnum
+        Types of attributes to be improved in the convolutional neural network model
+    pickles : array
+        Array of pickles to use in the execution
+    hyperparameterOptimization : HyperparameterOptimization
+        Calculate the best value for the CNN module based on the attribute selected
+
+    Methods
+    -------
+    execute()
+        Show the optimal value of the attribute selected
+    """
 
     def __init__(self, logger, model, nn_util, arguments):
+        """
+        Parameters
+        ----------
+        logger : Logger
+            A class used to show the execution information.
+        model : Model
+            A class used to sync up all the functionalities that refer to the database
+        nn_util : NeuralNetworkUtil
+            A class to execute the common functionalities of a neural network structure
+        arguments: array
+            Array of arguments entered without the execution strategy
+        
+        Raises
+        ------
+        InputException
+            If the first argument is not a value of the AttributeToTuneEnum enumeration
+        """
         self.logger = logger
         self.model = model
 
@@ -17,20 +55,23 @@ class HyperparameterOptimizationStrategy(IStrategy):
             raise InputException(arguments[0] + "is not a possible parameter optimization.")
 
         self.attribute_tune = AttributeToTuneEnum(arguments[0])
-        self.pickels = arguments[1:]
+        self.pickles = arguments[1:]
         self.hyperparameterOptimization = HyperparameterOptimization(logger, model, nn_util)
 
     def __show_arguments_entered(self, arguments):
         info_arguments = "Arguments entered:\n" \
-                         "\t* Attribute to tune: " + arguments[0] + "\n" \
-                         "\t* Pickels selected: " + ", ".join(arguments[1:])
+                         "\t* Attribute to optimize: " + arguments[0] + "\n" \
+                         "\t* Pickles selected: " + ", ".join(arguments[1:])
         self.logger.write_info(info_arguments)
 
     def execute(self):
+        """Show the optimal value of the attribute selected
+        """
+
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-        self.model.set_pickels_name(self.pickels)
-        self.model.save_reduced_pickels()
+        self.model.set_pickles_name(self.pickles)
+        self.model.read_reduced_pickles()
 
         self.hyperparameterOptimization.calculate_best_hyperparameter_optimization(self.attribute_tune)
 

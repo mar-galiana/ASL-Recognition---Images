@@ -1,52 +1,92 @@
-"""
-One major advantage of using CNNs over NNs is that you do not need to flatten the input images to 1D as they are capable
-of working with image data in 2D.
-"""
-import numpy as np
 from Model.modelEnum import Environment
 from Constraints.hyperparameters import *
 from Structures.iUtilStructure import Structure
 from tensorflow.keras.constraints import max_norm
 from tensorflow.python.keras.models import Sequential
-from Structures.NeuralNetworks.iNeuralNetwork import INeuralNetwork
 from Exception.parametersException import IncorrectNumberOfParameters
 from tensorflow.python.keras.layers import Dense, Conv2D, MaxPool2D, Flatten
 from Structures.NeuralNetworks.neuralNetworkEnum import NeuralNetworkTypeEnum
+from Structures.NeuralNetworks.NeuralNetworksTypes.iNeuralNetwork import INeuralNetwork
 
 
 class ConvolutionalNeuralNetwork(INeuralNetwork):
+    """
+    A class that contains the convolutional neural network structure and all its functionalities.
+
+    Attributes
+    ----------
+    logger : Logger
+        A class used to show the execution information
+    model : Model
+        A class used to sync up all the functionalities that refer to the database
+    nn_util : NeuralNetworkUtil
+        A class to execute the common functionalities of a neural network structure
+    improved_nn : boolean, optional
+        Indicates if the model should be build with the improved structure (Defult is false)
+
+    Methods
+    -------
+    train_neural_network()
+        Trains the convolutional neural network model based on the training samples of the database
+    prepare_images()
+        Process the dataset's samples in order to be ablte to train the model with them
+    build_sequential_model(n_classes, is_categorical=True)
+        Create sequential model based on f it has to be improved and if it will return a binary or a categorical result
+    """
 
     def __init__(self, logger, model, nn_util, improved_nn=False):
-
+        """
+        logger : Logger
+            A class used to show the execution information
+        model : Model
+            A class used to sync up all the functionalities that refer to the database
+        nn_util : NeuralNetworkUtil
+            A class to execute the common functionalities of a neural network structure
+        improved_nn : boolean, optional
+            Indicates if the model should be build with the improved structure (Defult is false)
+        """
         self.logger = logger
         self.model = model
         self.nn_util = nn_util
         self.improved_nn = improved_nn
 
     def train_neural_network(self):
-        if self.improved_nn is None:
-            raise IncorrectNumberOfParameters("Convolutional Neural Network needs the improved_nn parameter if it has "
-                                              "to be trained")
+        """Trains the convolutional neural network model based on the training samples of the database
+        """
 
-        shape_train = self.model.get_x(Environment.TRAIN).shape
-        shape_test = self.model.get_x(Environment.TEST).shape
-        n_classes = self.prepare_images(shape_train, shape_test)
-        sequential_model = self.build_sequential_model(n_classes, shape_train)
+        n_classes = self.prepare_images()
+        sequential_model = self.build_sequential_model(n_classes)
 
         nn_type = (NeuralNetworkTypeEnum.CNN, NeuralNetworkTypeEnum.IMPROVED_CNN)[self.improved_nn]
         self.nn_util.save_model(sequential_model, nn_type)
 
-    def prepare_images(self, shape_train, shape_test):
+    def prepare_images(self):
+        """Process the dataset's samples in order to be ablte to train the model with them
+        """
 
-        # Flattening the images from the 150x150 pixels to 1D 787 pixels
-        self.model.resize_data(Structure.CategoricalNeuralNetwork, Environment.TRAIN, shape_train)
-        self.model.resize_data(Structure.CategoricalNeuralNetwork, Environment.TEST, shape_test)
+        self.model.resize_data(Structure.CategoricalNeuralNetwork, Environment.TRAIN)
+        self.model.resize_data(Structure.CategoricalNeuralNetwork, Environment.TEST)
 
         n_classes = self.model.convert_to_one_hot_data()
 
         return n_classes
 
-    def build_sequential_model(self, n_classes, shape, is_categorical=True):
+    def build_sequential_model(self, n_classes, is_categorical=True):
+        """Load the decision tree trained model and set the dataset used while trianing it
+
+        Parameters
+        ----------
+        n_classes : number
+            Number of different types of classes in the database
+        is_categorical : boolean, optional
+            Indicates if the model should return a categorical value
+
+        Returns
+        -------
+        Sequential
+            The convolutional neural network model
+        """
+        shape = self.model.get_x(Environment.TRAIN).shape
 
         if self.improved_nn:
             seq_model = self.__get_improved_sequential_model(n_classes, shape, is_categorical)
@@ -79,21 +119,20 @@ class ConvolutionalNeuralNetwork(INeuralNetwork):
         # building a linear stack of layers with the sequential model
         sequential_model = Sequential()
 
-        # convolutional layer
+        # Input layer: convolutional layer
         sequential_model.add(Conv2D(25, kernel_size=(3, 3), strides=(1, 1), padding='valid', activation='relu',
                                     input_shape=(shape[1], shape[2], 1)))
 
-        # pooling Layers: Prevent overfitting
+        # Hidden layer: pooling Layers: Prevent overfitting
         sequential_model.add(MaxPool2D(pool_size=(1, 1)))
 
-        # flatten output of conv
+        # Hidden layer: flatten output of conv
         sequential_model.add(Flatten())
 
-        # hidden layer
+        # Hidden layer
         sequential_model.add(Dense(100, activation='relu'))
 
-        # output layer ->   the softmax activation function selects the neuron with the highest probability as its
-        #                   output, voting that the image belongs to that class
+        # Output layer
         sequential_model.add(Dense(n_classes, activation='softmax'))
 
         return sequential_model

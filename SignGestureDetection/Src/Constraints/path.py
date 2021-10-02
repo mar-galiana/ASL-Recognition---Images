@@ -1,3 +1,7 @@
+"""
+Path of the folders and files used in the project 
+"""
+
 import os
 
 # ASSETS_PATH = os.getcwd() + "/../Assets/"
@@ -5,13 +9,14 @@ ASSETS_PATH = os.getcwd() + "/Assets/"
 
 # Dataset
 DATASET_PATH = ASSETS_PATH + "Dataset/"
-PICKELS_PATH = DATASET_PATH + "Pickels/"
+PICKLES_PATH = DATASET_PATH + "Pickles/"
 IMAGES_PATH = DATASET_PATH + "Images/"
+SIGNS_IMAGES = DATASET_PATH + "Signs/"
 SIGNS_FILE = DATASET_PATH + "signs.json"
 
 # Model Structures
 MODEL_STRUCTURES_PATH = ASSETS_PATH + "ModelStructures/"
-MODEL_PICKELS_FILE = MODEL_STRUCTURES_PATH + "model_pickels.json"
+MODEL_PICKLES_FILE = MODEL_STRUCTURES_PATH + "model_pickles.json"
 
 # Model Structures --> Categorical Neural Network
 CATEGORICAL_NEURAL_NETWORK_MODEL_PATH = MODEL_STRUCTURES_PATH + "CategoricalNeuralNetworkModel/"

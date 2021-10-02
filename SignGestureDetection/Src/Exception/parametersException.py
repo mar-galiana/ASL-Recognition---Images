@@ -1,5 +1,5 @@
 class IncorrectVariableType(Exception):
-    """Exception raised for errors in the model.
+    """Exception raised for errors in the vatiable type.
 
         Attributes:
             message -- explanation of the error
@@ -14,7 +14,7 @@ class IncorrectVariableType(Exception):
 
 
 class IncorrectNumberOfParameters(Exception):
-    """Exception raised for errors in the model.
+    """Exception raised for errors in the number of parameters.
 
         Attributes:
             message -- explanation of the error

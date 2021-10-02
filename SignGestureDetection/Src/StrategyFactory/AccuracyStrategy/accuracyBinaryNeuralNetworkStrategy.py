@@ -3,18 +3,59 @@ import numpy as np
 from Model.modelEnum import Environment
 from Structures.iUtilStructure import Structure
 from StrategyFactory.iStrategy import IStrategy
-from Exception.inputOutputException import InputException
-from Exception.modelException import DifferentPickelsException
 from Structures.NeuralNetworks.neuralNetworkEnum import ClassifierEnum
 from Structures.NeuralNetworks.neuralNetworkEnum import LabelsRequirement
 from Constraints.path import TMP_BINARY_NEURAL_NETWORK_MODEL_PATH, BINARY_NEURAL_NETWORK_MODEL_PATH
 
 
 class AccuracyBinaryNeuralNetworkStrategy(IStrategy):
+    """
+    A class to test the accuracy of a set of binary neural networks models
+
+    Attributes
+    ----------
+    ACCURACY_PERCENTAGE : number
+        Limit set to define that a result is successful
+    logger : Logger
+        A class used to show the execution information
+    model : Model
+        A class used to sync up all the functionalities that refer to the database
+    nn_util : NeuralNetworkUtil
+        A class to execute the common functionalities of a neural network structure
+    accuracy_util : AccuracyUtil
+        A class to execute the common functionalities in accuracy strategies
+    bnn_util : BinaryNeuralNetworkUtil
+        A class to execute the common functionalities in the binary neural networks strategies
+    storage_controller : StorageController
+        A class used to remove and create the directories and files used in the execution
+    model_name : string
+        Name of the model to test
+
+    Methods
+    -------
+    execute()
+        Show the accuracy of a set of binary neural network models, previously trained, using the test database
+    """
 
     ACCURACY_PERCENTAGE = 0.60
 
     def __init__(self, logger, model, nn_util, accuracy_util, bnn_util, storage_controller, arguments):
+        """
+        logger : Logger
+            A class used to show the execution information
+        model : Model
+            A class used to sync up all the functionalities that refer to the database
+        nn_util : NeuralNetworkUtil
+            A class to execute the common functionalities of a neural network structure
+        accuracy_util : AccuracyUtil
+            A class to execute the common functionalities in accuracy strategies
+        bnn_util : BinaryNeuralNetworkUtil
+            A class to execute the common functionalities in the binary neural networks strategies
+        storage_controller : StorageController
+            A class used to remove and create the directories and files used in the execution
+        arguments : array
+            Array of arguments entered in the execution
+        """
         self.logger = logger
         self.model = model
         self.nn_util = nn_util
@@ -24,37 +65,33 @@ class AccuracyBinaryNeuralNetworkStrategy(IStrategy):
 
         self.__show_arguments_entered(arguments)
 
-        if arguments[0] not in LabelsRequirement._value2member_map_:
-            raise InputException(self.execution_strategy + " is not a valid sign requirement")
-
-        self.labels_requirement = LabelsRequirement(arguments[0])
-        self.models_names = arguments[1:]
+        self.model_name = arguments[0]
 
     def __show_arguments_entered(self, arguments):
         info_arguments = "Arguments entered:\n" \
-                         "\t* Signs to train: " + arguments[0] + "\n" \
-                         "\t* Neural Network model file: " + ", ".join(arguments[1:])
+                         "\t* Neural Network model file: " + arguments[0]
         self.logger.write_info(info_arguments)
 
     def execute(self):
+        """Show the accuracy of a set of binary neural network models, previously trained, using the test database
+        """
+        
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-        classifiers = self.__get_classifiers()
+        classifiers, labels_requirement = self.__get_classifiers()
 
-        self.bnn_util.remove_not_wanted_labels(Environment.TEST, self.labels_requirement)
+        self.bnn_util.remove_not_wanted_labels(Environment.TEST, labels_requirement)
 
-        self.perform_test_data(classifiers)
+        self.__perform_test_data(classifiers)
 
         self.logger.write_info("Strategy executed successfully")
 
-    def perform_test_data(self, classifiers):
+    def __perform_test_data(self, classifiers):
         predictions = []
 
-        shape = self.model.get_x(Environment.TEST).shape
-
-        self.model.resize_data(Structure.BinaryNeuralNetwork, Environment.TEST, shape)
+        self.model.resize_data(Structure.BinaryNeuralNetwork, Environment.TEST)
         x_test = self.model.get_x(Environment.TEST)
-        y_test = self.model.get_sign_values(self.model.get_y(Environment.TEST))
+        y_test = self.model.get_signs_values(self.model.get_y(Environment.TEST))
 
         for classifier_dict in classifiers:
             classifier = classifier_dict[ClassifierEnum.CLASSIFIER.value]
@@ -68,32 +105,23 @@ class AccuracyBinaryNeuralNetworkStrategy(IStrategy):
         order_signs = np.array([self.model.get_sign_value(sign[ClassifierEnum.SIGN.value]) for sign in classifiers])
         self.__show_global_accuracy(y_test, predictions, order_signs)
 
-    def __get_model_pickels(self, model_name):
-        pickels = self.nn_util.get_pickels_used_in_binary_zip(model_name)
-
-        return pickels
-
     def __get_classifiers(self):
-        classifiers = []
-        global_pickels = None
 
-        for model_name in self.models_names:
-            model_pickels = self.__get_model_pickels(model_name)
-            classifiers += self.__get_classifiers_from_specific_models(model_name)
-            self.__remove_temporal_files(model_name)
+        model_pickles, labels_requirement = self.__get_model_information(self.model_name)
+        classifiers = self.__get_classifiers_from_model(self.model_name)
+        
+        self.__remove_temporal_files(self.model_name)
 
-            if global_pickels is None:
-                global_pickels = model_pickels
+        self.model.set_pickles_name(model_pickles)
 
-            elif set(model_pickels) != set(global_pickels):
-                raise DifferentPickelsException("Selected models use different pickles, be sure to select models "
-                                                "trained with the same pickles.")
+        return classifiers, labels_requirement
 
-        self.model.set_pickels_name(global_pickels)
+    def __get_model_information(self, model_name):
+        pickles, labels_requirement = self.nn_util.get_pickles_used_in_binary_zip(model_name)
 
-        return classifiers
+        return pickles, LabelsRequirement(labels_requirement)
 
-    def __get_classifiers_from_specific_models(self, model_name):
+    def __get_classifiers_from_model(self, model_name):
         source_path = BINARY_NEURAL_NETWORK_MODEL_PATH + model_name
         destination_path = TMP_BINARY_NEURAL_NETWORK_MODEL_PATH + model_name[:-len(".zip")]
         model_files_path = self.storage_controller.extract_compressed_files(source_path, destination_path)
@@ -104,7 +132,9 @@ class AccuracyBinaryNeuralNetworkStrategy(IStrategy):
             sign_array = model_path[:-len(".h5")].split('_')
             sign = sign_array[len(sign_array)-1]
 
+            # Get classifier
             classifier = self.nn_util.read_model(model_path)
+            
             classifiers.append({
                 ClassifierEnum.CLASSIFIER.value: classifier,
                 ClassifierEnum.SIGN.value: sign
