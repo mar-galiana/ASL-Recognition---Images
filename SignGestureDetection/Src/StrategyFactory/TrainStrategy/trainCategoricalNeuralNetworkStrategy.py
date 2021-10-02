@@ -54,7 +54,7 @@ class TrainCategoricalNeuralNetworkStrategy(IStrategy):
             NeuralNetworkTypeEnum.ANN.value: ArtificialNeuralNetwork(self.logger, self.model, self.nn_util),
             NeuralNetworkTypeEnum.CNN.value: ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util),
             NeuralNetworkTypeEnum.IMPROVED_CNN.value: ConvolutionalNeuralNetwork(self.logger, self.model, self.nn_util,
-                                                                                improved_nn=True)
+                                                                                 improved_nn=True)
         }
 
     def __show_arguments_entered(self, arguments):

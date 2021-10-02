@@ -83,8 +83,7 @@ class HyperparameterOptimization:
 
     def __prepare_data(self):
         shape_train = self.model.get_x(Environment.TRAIN).shape
-        shape_test = self.model.get_x(Environment.TEST).shape
-        n_classes = self.cnn.prepare_images(shape_train, shape_test)
+        n_classes = self.cnn.prepare_images()
         return n_classes, shape_train[1:]
 
     def __train_convolutional_neural_network(self, grid):

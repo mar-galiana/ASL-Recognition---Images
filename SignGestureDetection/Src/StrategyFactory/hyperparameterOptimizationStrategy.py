@@ -60,7 +60,7 @@ class HyperparameterOptimizationStrategy(IStrategy):
 
     def __show_arguments_entered(self, arguments):
         info_arguments = "Arguments entered:\n" \
-                         "\t* Attribute to tune: " + arguments[0] + "\n" \
+                         "\t* Attribute to optimize: " + arguments[0] + "\n" \
                          "\t* Pickles selected: " + ", ".join(arguments[1:])
         self.logger.write_info(info_arguments)
 

@@ -7,7 +7,7 @@ class HelpStrategy(IStrategy):
     """
     A class to print the information of each strategy
 
-    Attributes
+    AttributesA
     ----------
     logger : Logger
         A class used to show the execution information.

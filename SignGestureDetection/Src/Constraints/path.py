@@ -4,8 +4,8 @@ Path of the folders and files used in the project
 
 import os
 
-# ASSETS_PATH = os.getcwd() + "/../Assets/"
-ASSETS_PATH = os.getcwd() + "/Assets/"
+ASSETS_PATH = os.getcwd() + "/../Assets/"
+# ASSETS_PATH = os.getcwd() + "/Assets/"
 
 # Dataset
 DATASET_PATH = ASSETS_PATH + "Dataset/"

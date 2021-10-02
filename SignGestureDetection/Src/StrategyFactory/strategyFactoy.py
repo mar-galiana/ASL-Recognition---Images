@@ -279,8 +279,8 @@ class ExecutionFactory:
         PredictStrategy
             Returns an object implementing the IStrategy interface.
         """
-        if len(self.arguments) < 1:
-            raise InputException("This strategy requires one or more arguments to be executed")
+        if len(self.arguments) < 3:
+            raise InputException("This strategy requires three arguments to be executed")
 
         return PredictStrategy(self.logger, self.model, self.nn_util, self.decision_tree_util, self.arguments)
 

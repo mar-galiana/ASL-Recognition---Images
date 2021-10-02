@@ -4,9 +4,9 @@ import numpy as np
 from skimage import io
 import _pickle as cPickle
 from skimage.transform import resize
-from Constraints.path import IMAGES_PATH, PICKLES_PATH
 from sklearn.model_selection import train_test_split
 from Exception.modelException import DatasetException
+from Constraints.path import IMAGES_PATH, PICKLES_PATH
 from Model.modelEnum import Environment, Image, Dataset
 from Exception.inputOutputException import PathDoesNotExistException
 
@@ -93,9 +93,10 @@ class OutputModel:
         """
         if not os.path.exists(src):
             raise PathDoesNotExistException("Image " + src + " does not exist.")
-        
+
         image = io.imread(src, as_gray=as_gray)
         image = resize(image, (self.width, self.height))
+
         return image
 
     def __get_data(self, dataset, environments_separated):
@@ -109,6 +110,7 @@ class OutputModel:
         }
 
         image_path = f"{IMAGES_PATH}{dataset.value}/"
+
         if environments_separated:
             data[Environment.TEST] = self.__read_images(image_path + "test/")
             data[Environment.TRAIN] = self.__read_images(image_path + "train/")

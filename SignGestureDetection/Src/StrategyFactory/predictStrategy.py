@@ -2,9 +2,9 @@ import os
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
+from Constraints.path import SIGNS_IMAGES
 from StrategyFactory.iStrategy import IStrategy
 from Structures.iUtilStructure import Structure
-from Constraints.path import IMAGES_PATH, SIGNS_IMAGES
 from Exception.inputOutputException import InputException
 
 
@@ -77,9 +77,13 @@ class PredictStrategy(IStrategy):
         """
 
         os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-        
-        image = self.model.load_image(IMAGES_PATH + self.image_name, True)
+
+        # image = self.model.load_image(IMAGES_PATH + self.image_name, True)
+        image = self.model.load_image(self.image_name, True)
+
+        # normalizing the data to help with the training
         structure_model, resized_image = self.__get_model(image)
+
         prediction = structure_model.predict(resized_image)
         sign_value = np.int16(np.argmax(prediction)).item()
         sign = self.model.get_sign_based_on_value(sign_value)

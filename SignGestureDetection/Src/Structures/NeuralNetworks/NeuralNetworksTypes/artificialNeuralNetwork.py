@@ -41,8 +41,9 @@ class ArtificialNeuralNetwork(INeuralNetwork):
     def train_neural_network(self):
         """Trains the artificial neural network model based on the training samples of the database
         """
+        shape_train = self.model.get_x(Environment.TRAIN).shape
         n_classes = self.__prepare_images()
-        sequential_model = self.__build_sequential_model(n_classes)
+        sequential_model = self.__build_sequential_model(n_classes, shape_train)
         self.nn_util.save_model(sequential_model, NeuralNetworkTypeEnum.ANN)
 
     def __prepare_images(self):
@@ -52,9 +53,7 @@ class ArtificialNeuralNetwork(INeuralNetwork):
         n_classes = self.model.convert_to_one_hot_data()
         return n_classes
 
-    def __build_sequential_model(self, n_classes):
-        shape_train = self.model.get_x(Environment.TRAIN).shape
-
+    def __build_sequential_model(self, n_classes, shape_train):
         sequential_model = Sequential()
        
         # Input layer
